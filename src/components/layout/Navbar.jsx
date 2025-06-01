@@ -1,118 +1,117 @@
 import { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { FiMenu, FiX } from 'react-icons/fi';
-import { FaShieldAlt } from 'react-icons/fa';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 10);
+      const isScrolled = window.scrollY > 10;
+      if (isScrolled !== scrolled) {
+        setScrolled(isScrolled);
+      }
     };
+
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [scrolled]);
 
-  const navLinks = [
-    { name: 'Home', path: '/' },
-    { name: 'About', path: '/about' },
-    { name: 'Solutions', path: '/solutions' },
-    { name: 'Contact', path: '/contact' },
-  ];
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+    if (!isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+  };
 
-  const toggleMenu = () => setIsOpen(!isOpen);
+  const NavLinks = ({ isMobile = false }) => {
+    const links = [
+      { name: 'Home', path: '/' },
+      { name: 'About', path: '/about' },
+      { name: 'Solutions', path: '/solutions' },
+      { name: 'Contact', path: '/contact' },
+    ];
+
+    return (
+      <ul className={`${isMobile ? 'flex flex-col items-center space-y-8' : 'flex items-center space-x-10'}`}>
+        {links.map((link) => (
+          <li key={link.name}>
+            <Link
+              to={link.path}
+              className={`relative group text-lg font-medium ${
+                isMobile
+                  ? 'text-accent hover:text-primary text-2xl py-2'
+                  : 'text-accent hover:text-primary transition-colors duration-300'
+              }`}
+              onClick={() => isMobile && toggleMenu()}
+            >
+              {link.name}
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    );
+  };
 
   return (
-    <header className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-white/90 backdrop-blur-md shadow-sm' : 'bg-transparent'}`}>
-      <nav className="container mx-auto px-4 py-4 flex justify-between items-center">
+    <header className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-background/95 backdrop-blur-sm py-2' : 'bg-transparent py-6'}`}>
+      <div className="container-custom flex justify-between items-center">
         {/* Logo */}
-        <Link to="/" className="flex items-center space-x-2">
-          <FaShieldAlt className="text-primary-600 text-2xl" />
-          <span className="text-xl font-bold bg-gradient-to-r from-primary-600 to-secondary-500 bg-clip-text text-transparent">
-            phi9.space
-          </span>
+        <Link to="/" className="group">
+          <div className="flex flex-col leading-none">
+            <span className="logo-text text-5xl md:text-6xl text-primary group-hover:text-primary-light transition-colors duration-300">194 PHi</span>
+            <span className="logo-subtext text-sm md:text-base text-accent mt-1">DOT SPACE</span>
+          </div>
         </Link>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center space-x-8">
-          {navLinks.map((link) => (
-            <Link
-              key={link.path}
-              to={link.path}
-              className={`px-3 py-2 text-sm font-medium transition-colors ${
-                location.pathname === link.path
-                  ? 'text-primary-600'
-                  : 'text-gray-700 hover:text-primary-600'
-              }`}
-            >
-              {link.name}
-            </Link>
-          ))}
-          <Link
-            to="/contact"
-            className="ml-4 px-6 py-2 bg-gradient-to-r from-primary-600 to-secondary-500 text-white rounded-md text-sm font-medium hover:opacity-90 transition-opacity"
+        <nav className="hidden md:flex items-center space-x-10">
+          <NavLinks />
+          <Link 
+            to="/contact" 
+            className="btn btn-primary ml-4"
           >
-            Get in Touch
+            Contact Us
           </Link>
-        </div>
+        </nav>
 
         {/* Mobile menu button */}
-        <div className="md:hidden">
+        <div className="md:hidden z-50">
           <button
             onClick={toggleMenu}
-            className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-primary-600 focus:outline-none"
-            aria-expanded="false"
+            className="text-accent hover:text-primary focus:outline-none transition-colors duration-300"
+            aria-label="Toggle menu"
           >
-            <span className="sr-only">Open main menu</span>
             {isOpen ? (
-              <FiX className="block h-6 w-6" />
+              <FiX className="h-8 w-8" />
             ) : (
-              <FiMenu className="block h-6 w-6" />
+              <FiMenu className="h-8 w-8" />
             )}
           </button>
         </div>
-      </nav>
+      </div>
 
-      {/* Mobile menu */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.2 }}
-            className="md:hidden bg-white shadow-lg"
+      {/* Mobile Navigation */}
+      <div 
+        className={`fixed inset-0 md:hidden bg-background/95 backdrop-blur-sm z-40 transition-all duration-300 ease-in-out transform ${
+          isOpen ? 'translate-x-0' : 'translate-x-full'
+        }`}
+      >
+        <div className="h-full flex flex-col justify-center items-center space-y-12">
+          <NavLinks isMobile={true} />
+          <Link
+            to="/contact"
+            className="btn btn-primary px-12 py-4 text-lg"
+            onClick={toggleMenu}
           >
-            <div className="px-2 pt-2 pb-3 space-y-1">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.path}
-                  to={link.path}
-                  className={`block px-3 py-2 rounded-md text-base font-medium ${
-                    location.pathname === link.path
-                      ? 'bg-primary-50 text-primary-600'
-                      : 'text-gray-700 hover:bg-gray-50 hover:text-primary-600'
-                  }`}
-                  onClick={() => setIsOpen(false)}
-                >
-                  {link.name}
-                </Link>
-              ))}
-              <Link
-                to="/contact"
-                className="block w-full text-center px-4 py-2 mt-2 bg-gradient-to-r from-primary-600 to-secondary-500 text-white rounded-md text-base font-medium"
-                onClick={() => setIsOpen(false)}
-              >
-                Get in Touch
-              </Link>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            Contact Us
+          </Link>
+        </div>
+      </div>
     </header>
   );
 };
