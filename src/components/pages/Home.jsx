@@ -1,151 +1,215 @@
 import { motion } from 'framer-motion';
-import { FaShieldAlt, FaRobot, FaNetworkWired, FaBrain } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-
-// Animation variants
-const container = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.3,
-    },
-  },
-};
-
-const item = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.5 } },
-};
+import { FiArrowRight, FiShield, FiGlobe, FiCpu, FiCode } from 'react-icons/fi';
 
 const Home = () => {
   const features = [
     {
-      icon: <FaShieldAlt className="h-8 w-8 text-primary-600" />,
-      title: 'Indigenous Mastery',
-      description: 'Engineered in India, for India. Our solutions are tailored to our nation\'s unique strategic needs.',
+      icon: <FiShield className="w-8 h-8 text-primary" />,
+      title: 'Advanced Security',
+      description: 'State-of-the-art security protocols to protect against emerging threats.'
     },
     {
-      icon: <FaRobot className="h-8 w-8 text-primary-600" />,
-      title: 'AI-Powered',
-      description: 'Harnessing artificial intelligence to transform data into decisive battlefield advantage.',
+      icon: <FiGlobe className="w-8 h-8 text-primary" />,
+      title: 'Global Reach',
+      description: 'Solutions designed for global defense operations and intelligence.'
     },
     {
-      icon: <FaNetworkWired className="h-8 w-8 text-primary-600" />,
-      title: 'Networked Resilience',
-      description: 'Secure, self-healing networks that ensure continuous operation in contested environments.',
+      icon: <FiCpu className="w-8 h-8 text-primary" />,
+      title: 'Cutting-Edge AI',
+      description: 'Leveraging artificial intelligence for next-generation defense systems.'
     },
     {
-      icon: <FaBrain className="h-8 w-8 text-primary-600" />,
-      title: 'Strategic Intelligence',
-      description: 'Advanced analytics for superior situational awareness and decision-making.',
-    },
+      icon: <FiCode className="w-8 h-8 text-primary" />,
+      title: 'Custom Solutions',
+      description: 'Tailored solutions to meet specific defense and security needs.'
+    }
   ];
 
   return (
-    <div className="overflow-hidden">
+    <div className="min-h-screen pt-32">
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-primary-50 to-white -z-10" />
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <motion.div
-              variants={container}
-              initial="hidden"
-              animate="show"
-              className="space-y-8"
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-background to-background-dark">
+        {/* Background pattern */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute inset-0 bg-grid-pattern bg-grid"></div>
+        </div>
+        
+        {/* Animated gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/5"></div>
+        
+        <div className="container-custom relative z-10 py-20">
+          <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-12">
+            {/* Logo and text content */}
+            <motion.div 
+              className="text-left"
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
             >
-              <motion.div variants={item}>
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-                  <span className="gradient-text">Securing India's Future</span> with
-                  <br />
-                  <span className="text-gray-900">AI-Powered Defense Solutions</span>
-                </h1>
-              </motion.div>
+              {/* Logo */}
+              <div className="mb-8">
+                <img 
+                  src="/Logo.svg" 
+                  alt="PHI9 Logo" 
+                  className="h-20 w-auto"
+                />
+              </div>
               
-              <motion.p variants={item} className="text-xl text-gray-600 max-w-3xl mx-auto">
-                Pioneering the next generation of defense technology with artificial intelligence, 
-                autonomous systems, and unbreakable networked resilience.
-              </motion.p>
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-heading font-bold text-white mb-6 leading-tight">
+                <span className="block">SECURING</span>
+                <span className="text-primary">TOMORROW&apos;S</span>
+                <span className="block">DEFENSE</span>
+              </h1>
               
-              <motion.div variants={item} className="flex flex-col sm:flex-row justify-center gap-4 mt-8">
-                <Link
-                  to="/solutions"
-                  className="btn btn-primary"
+              <div className="h-1 w-24 bg-primary my-6"></div>
+              
+              <p className="text-xl text-gray-300 max-w-2xl mb-10 leading-relaxed">
+                Pioneering indigenous defense technologies to safeguard national security through innovation, integrity, and excellence.
+              </p>
+              
+              <div className="flex flex-col sm:flex-row gap-6">
+                <Link 
+                  to="/solutions" 
+                  className="btn btn-primary group flex items-center justify-center sm:justify-start"
                 >
-                  Explore Our Solutions
+                  Explore Solutions
+                  <FiArrowRight className="ml-2 transition-transform group-hover:translate-x-1" />
                 </Link>
-                <Link
-                  to="/contact"
-                  className="btn btn-outline"
+                <Link 
+                  to="/contact" 
+                  className="btn btn-outline text-white border-white/30 hover:bg-white/5 hover:border-white/50"
                 >
-                  Get in Touch
+                  Contact Us
                 </Link>
-              </motion.div>
+              </div>
+            </motion.div>
+            
+            {/* Visual element - can be an image or 3D model */}
+            <motion.div 
+              className="relative h-96 lg:h-[600px]"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent rounded-3xl border border-white/10 backdrop-blur-sm overflow-hidden">
+                {/* Animated grid pattern */}
+                <div className="absolute inset-0 opacity-30">
+                  <div className="absolute inset-0 bg-grid-pattern bg-grid"></div>
+                </div>
+                
+                {/* Floating background elements */}
+                <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-primary/10 blur-xl rounded-lg transform rotate-12 animate-float"></div>
+                <div className="absolute bottom-1/3 right-1/4 w-24 h-24 bg-white/5 blur-lg rounded-lg transform -rotate-6 animate-float" style={{ animationDelay: '1s' }}></div>
+                <div className="absolute top-1/3 right-1/3 w-20 h-20 bg-primary/15 blur-md rounded-full animate-float" style={{ animationDelay: '2s' }}></div>
+                
+                {/* Main 3D model container */}
+                <div className="absolute inset-4 rounded-2xl border border-white/10 bg-gradient-to-br from-background/50 to-background/30 backdrop-blur-sm overflow-hidden">
+                  <div className="relative w-full h-full">
+                    {/* Center cluster */}
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                      {/* Large center cube */}
+                      <div className="w-40 h-40 bg-gradient-to-br from-primary/20 to-primary/5 rounded-lg transform rotate-45 animate-float">
+                        <div className="absolute -inset-1 bg-gradient-to-br from-primary/30 to-transparent rounded-lg blur"></div>
+                      </div>
+                      
+                      {/* Medium cubes */}
+                      <div className="absolute -top-6 -left-6 w-24 h-24 bg-gradient-to-br from-white/15 to-white/5 rounded-lg transform rotate-12 animate-float" style={{ animationDelay: '0.8s' }}></div>
+                      <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-gradient-to-br from-primary/25 to-primary/10 rounded-lg transform -rotate-6 animate-float" style={{ animationDelay: '1.2s' }}></div>
+                      
+                      {/* Small cubes */}
+                      <div className="absolute -top-10 -right-10 w-16 h-16 bg-gradient-to-br from-white/10 to-transparent rounded-lg transform -rotate-12 animate-float" style={{ animationDelay: '0.4s' }}></div>
+                      <div className="absolute -bottom-10 -left-10 w-16 h-16 bg-gradient-to-br from-primary/20 to-transparent rounded-lg transform rotate-12 animate-float" style={{ animationDelay: '1.6s' }}></div>
+                    </div>
+                    
+                    {/* Orbiting elements - Layer 1 */}
+                    <div className="absolute top-1/4 left-1/4 w-20 h-20 bg-gradient-to-br from-primary/15 to-transparent rounded-lg transform rotate-45 animate-float" style={{ animationDelay: '0.6s' }}></div>
+                    <div className="absolute bottom-1/3 right-1/4 w-16 h-16 bg-gradient-to-br from-white/10 to-transparent rounded-lg transform -rotate-12 animate-float" style={{ animationDelay: '1.4s' }}></div>
+                    <div className="absolute top-1/3 right-1/3 w-14 h-14 bg-gradient-to-br from-primary/20 to-transparent rounded-lg transform rotate-6 animate-float" style={{ animationDelay: '0.9s' }}></div>
+                    
+                    {/* Orbiting elements - Layer 2 */}
+                    <div className="absolute top-1/6 right-1/6 w-12 h-12 bg-gradient-to-br from-white/15 to-transparent rounded-lg transform -rotate-6 animate-float" style={{ animationDelay: '1.1s' }}></div>
+                    <div className="absolute bottom-1/4 left-1/4 w-10 h-10 bg-gradient-to-br from-primary/25 to-transparent rounded-lg transform rotate-12 animate-float" style={{ animationDelay: '0.5s' }}></div>
+                    
+                    {/* Floating triangles */}
+                    <div className="absolute top-1/5 left-1/5 w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-b-[34.6px] border-b-primary/20 transform rotate-45 animate-float" style={{ animationDelay: '1.3s' }}></div>
+                    <div className="absolute bottom-1/5 right-1/4 w-0 h-0 border-l-[15px] border-l-transparent border-r-[15px] border-r-transparent border-t-[26px] border-t-primary/15 transform -rotate-12 animate-float" style={{ animationDelay: '0.7s' }}></div>
+                    <div className="absolute top-3/4 right-1/5 w-0 h-0 border-l-[18px] border-l-transparent border-r-[18px] border-r-transparent border-b-[31.2px] border-b-white/10 transform -rotate-45 animate-float" style={{ animationDelay: '1.5s' }}></div>
+                    
+                    {/* Floating circles */}
+                    <div className="absolute top-1/3 right-1/6 w-8 h-8 rounded-full bg-gradient-to-br from-white/15 to-transparent blur-sm animate-float" style={{ animationDelay: '0.3s' }}></div>
+                    <div className="absolute bottom-1/3 left-1/6 w-10 h-10 rounded-full bg-gradient-to-br from-primary/25 to-transparent blur-sm animate-float" style={{ animationDelay: '1.7s' }}></div>
+                    <div className="absolute top-1/4 left-1/3 w-6 h-6 rounded-full bg-gradient-to-br from-white/10 to-transparent blur-sm animate-float" style={{ animationDelay: '0.9s' }}></div>
+                    <div className="absolute bottom-1/4 right-1/3 w-7 h-7 rounded-full bg-gradient-to-br from-primary/20 to-transparent blur-sm animate-float" style={{ animationDelay: '1.1s' }}></div>
+                  </div>
+                </div>
+              </div>
             </motion.div>
           </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">
-              <span className="gradient-text">Our Core Technologies</span>
+      <section className="py-20 bg-background-dark relative overflow-hidden">
+        <div className="container-custom relative z-10">
+          <div className="max-w-3xl mx-auto text-center mb-20">
+            <h2 className="text-4xl md:text-5xl font-heading font-bold text-accent mb-6">
+              <span className="text-primary">//</span> OUR CORE TECHNOLOGIES
             </h2>
-            <p className="text-xl text-gray-600">
+            <div className="h-1 w-16 bg-primary mx-auto my-6"></div>
+            <p className="text-lg text-accent/80">
               Cutting-edge solutions designed to address the most complex defense challenges
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {features.map((feature, index) => (
-              <motion.div
+              <motion.div 
                 key={index}
-                variants={item}
-                initial="hidden"
-                whileInView="show"
-                viewport={{ once: true, margin: "-100px" }}
-                className="bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition-shadow"
+                className="bg-background-light p-8 rounded-lg border border-accent/10 hover:border-primary/30 transition-all duration-300 group"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: index * 0.1 }}
               >
-                <div className="w-16 h-16 flex items-center justify-center rounded-xl bg-primary-50 mb-6">
+                <div className="w-16 h-16 bg-primary/10 rounded-lg flex items-center justify-center mb-6 mx-auto group-hover:bg-primary/20 transition-colors duration-300">
                   {feature.icon}
                 </div>
-                <h3 className="text-xl font-bold mb-3 text-gray-900">{feature.title}</h3>
-                <p className="text-gray-600">{feature.description}</p>
+                <h3 className="text-xl font-bold text-accent mb-3 font-heading">{feature.title}</h3>
+                <p className="text-accent/70">{feature.description}</p>
               </motion.div>
             ))}
           </div>
         </div>
+        
+        {/* Diagonal background lines */}
+        <div className="absolute inset-0 bg-[linear-gradient(45deg,_rgba(255,255,255,0.03)_25%,_transparent_25%),_linear-gradient(-45deg,_rgba(255,255,255,0.03)_25%,_transparent_25%),_linear-gradient(45deg,_transparent_75%,_rgba(255,255,255,0.03)_75%),_linear-gradient(-45deg,_transparent_75%,_rgba(255,255,255,0.03)_75%)] bg-[length:20px_20px]"></div>
       </section>
 
       {/* CTA Section */}
-      <section className="bg-gradient-to-r from-primary-600 to-secondary-500 text-white py-20">
-        <div className="container mx-auto px-4 text-center">
-          <div className="max-w-3xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">
-              Ready to Transform India's Defense Capabilities?
+      <section className="py-20 bg-primary relative overflow-hidden">
+        <div className="container-custom relative z-10">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-4xl md:text-5xl font-heading font-bold text-white mb-6">
+              READY TO TRANSFORM YOUR DEFENSE CAPABILITIES?
             </h2>
-            <p className="text-xl mb-8 text-primary-100">
-              Join us in building a safer, more secure future with cutting-edge defense technology.
+            <div className="h-1 w-16 bg-white/50 mx-auto my-8"></div>
+            <p className="text-xl text-white/90 mb-10 max-w-3xl mx-auto">
+              Partner with us to leverage cutting-edge defense solutions tailored to your specific needs.
             </p>
-            <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <Link
-                to="/contact"
-                className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-primary-600 bg-white hover:bg-gray-50 transition-colors"
-              >
-                Contact Us
-              </Link>
-              <Link
-                to="/about"
-                className="inline-flex items-center justify-center px-8 py-3 border border-white text-base font-medium rounded-md text-white hover:bg-white/10 transition-colors"
-              >
-                Learn More
-              </Link>
-            </div>
+            <Link 
+              to="/contact" 
+              className="inline-flex items-center justify-center px-10 py-4 text-lg font-medium bg-white text-background hover:bg-accent hover:text-white transition-colors duration-300"
+            >
+              Get in Touch
+              <FiArrowRight className="ml-3 transition-transform group-hover:translate-x-1" />
+            </Link>
           </div>
+        </div>
+        
+        {/* Decorative elements */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute inset-0 bg-grid-pattern bg-grid"></div>
         </div>
       </section>
     </div>

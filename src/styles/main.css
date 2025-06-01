@@ -1,49 +1,121 @@
+@import url('https://fonts.googleapis.com/css2?family=Arimo:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Custom Styles */
+/* Custom animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes scroll {
+  0% { transform: translateY(0); opacity: 0.5; }
+  50% { transform: translateY(10px); opacity: 1; }
+  100% { transform: translateY(20px); opacity: 0; }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-pulse-slow {
+  animation: pulse 6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.animate-scroll {
+  animation: scroll 2s ease-in-out infinite;
+}
+
 @layer base {
-  html {
-    scroll-behavior: smooth;
-  }
-  
   body {
-    @apply antialiased text-gray-900 bg-gray-50;
+    @apply bg-background text-accent font-sans;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 40px 40px;
   }
   
   h1, h2, h3, h4, h5, h6 {
-    @apply font-bold tracking-tight text-gray-900;
+    @apply font-heading font-bold text-accent;
   }
   
   h1 {
-    @apply text-4xl md:text-5xl lg:text-6xl;
+    @apply text-5xl md:text-7xl;
   }
   
   h2 {
-    @apply text-3xl md:text-4xl;
+    @apply text-4xl md:text-5xl;
   }
   
   h3 {
-    @apply text-2xl md:text-3xl;
+    @apply text-3xl md:text-4xl;
   }
   
   p {
-    @apply text-gray-700 leading-relaxed;
+    @apply text-accent/80 leading-relaxed;
+  }
+  
+  .logo-text {
+    font-family: 'Arimo', sans-serif;
+    font-weight: 700;
+    line-height: 1;
+  }
+  
+  .logo-subtext {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    line-height: 1;
   }
 }
 
 @layer components {
   .btn {
-    @apply inline-flex items-center justify-center px-6 py-3 text-base font-medium rounded-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2;
+    @apply inline-flex items-center justify-center px-6 py-3 rounded-none font-medium transition-all duration-300 uppercase tracking-wider text-sm;
+  }
+  
+  .btn:focus {
+    @apply outline-none ring-2 ring-offset-2 ring-primary/50;
+  }
+  
+  .btn:disabled {
+    @apply opacity-50 cursor-not-allowed;
   }
   
   .btn-primary {
-    @apply bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500;
+    @apply bg-primary text-white hover:bg-primary-dark hover:shadow-lg transform hover:-translate-y-0.5;
   }
   
   .btn-outline {
-    @apply border border-gray-300 text-gray-700 bg-white hover:bg-gray-50 focus:ring-primary-500;
+    @apply bg-transparent border-2 border-primary text-primary hover:bg-primary/10;
+  }
+  
+  .btn-lg {
+    @apply px-8 py-4 text-base;
+  }
+  
+  .btn-sm {
+    @apply px-4 py-2 text-xs;
+  }
+  
+  .container-custom {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+  
+  .grid-bg {
+    @apply relative;
+    
+    &::before {
+      content: '';
+      @apply absolute inset-0 bg-grid-pattern opacity-10 pointer-events-none;
+    }
   }
   
   .container {
@@ -55,6 +127,6 @@
   }
   
   .gradient-text {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary-600 to-secondary-500;
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary-dark;
   }
 }
