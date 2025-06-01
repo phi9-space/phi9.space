@@ -1,32 +1,17 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import Navbar from './components/layout/Navbar';
-import Footer from './components/layout/Footer';
-import Home from './components/pages/Home';
-import About from './components/pages/About';
-import Solutions from './components/pages/Solutions';
-import Contact from './components/pages/Contact';
-import ScrollToTop from './components/ui/ScrollToTop';
+import './styles/main.css';
 
 function App() {
   return (
-    <Router>
-      <div className="min-h-screen flex flex-col">
-        <Navbar />
-        <main className="flex-grow">
-          <AnimatePresence mode="wait">
-            <ScrollToTop />
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/solutions" element={<Solutions />} />
-              <Route path="/contact" element={<Contact />} />
-            </Routes>
-          </AnimatePresence>
-        </main>
-        <Footer />
-      </div>
-    </Router>
+    <div className="min-h-screen bg-black flex items-center justify-center p-4">
+      <img 
+        src="/Cover Logo.svg" 
+        alt="PHI9" 
+        className="max-w-full max-h-[80vh] w-auto h-auto"
+      />
+    </div>
   );
 }
 
