@@ -1,5 +1,109 @@
 # phi9.space: A Manifesto for India's Defense Future
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/YOUR_DEPLOYMENT_ID/deploy-status)](https://app.netlify.com/sites/YOUR_SITE_NAME/deploys)
+
+A modern, responsive website for phi9.space, built with React, Vite, and Tailwind CSS.
+
+## Getting Started
+
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+
+### Prerequisites
+
+- Node.js (v16 or later)
+- npm (v7 or later) or Yarn
+- Git
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/yourusername/phi9.space.git
+   cd phi9.space
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   # or
+   yarn
+   ```
+
+3. **Start the development server**
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   ```
+   Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+
+4. **Build for production**
+   ```bash
+   npm run build
+   # or
+   yarn build
+   ```
+
+### Deployment
+
+This project is configured to be deployed to GitHub Pages. To deploy:
+
+1. Update the `homepage` field in `package.json` with your GitHub Pages URL:
+   ```json
+   "homepage": "https://yourusername.github.io/phi9.space"
+   ```
+
+2. Run the deploy script:
+   ```bash
+   npm run deploy
+   # or
+   yarn deploy
+   ```
+
+### Technologies Used
+
+- [React](https://reactjs.org/) - A JavaScript library for building user interfaces
+- [Vite](https://vitejs.dev/) - Next Generation Frontend Tooling
+- [Tailwind CSS](https://tailwindcss.com/) - A utility-first CSS framework
+- [Framer Motion](https://www.framer.com/motion/) - Production-ready animation library for React
+- [React Icons](https://react-icons.github.io/react-icons/) - Popular icons for React projects
+- [React Router](https://reactrouter.com/) - Declarative routing for React
+
+## Project Structure
+
+```
+phi9.space/
+├── public/              # Static files
+├── src/
+│   ├── assets/          # Images, fonts, etc.
+│   ├── components/      # Reusable UI components
+│   │   ├── layout/      # Layout components (Header, Footer, etc.)
+│   │   ├── pages/       # Page components
+│   │   └── ui/          # UI components (buttons, cards, etc.)
+│   ├── styles/          # Global styles and Tailwind directives
+│   ├── App.jsx          # Main App component
+│   └── main.jsx         # Application entry point
+├── .gitignore
+├── index.html
+├── package.json
+├── postcss.config.js
+├── README.md
+├── tailwind.config.js
+└── vite.config.js
+```
+
+## Contributing
+
+Contributions are welcome! Please read our [Contributing Guidelines](CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+# phi9.space: A Manifesto for India's Defense Future
+
 ## Introduction
 
 At phi9.space, we are actively engineering a future where India's defense capabilities are proactively intelligent, inherently resilient, and decisively superior. We are a pioneering force dedicated to revolutionizing national security through cutting-edge indigenous technology. We exist to empower the Indian armed forces with advanced, self-reliant solutions to master the complex challenges of modern warfare and unequivocally secure the sovereignty and safety of our nation.
