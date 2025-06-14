@@ -68,6 +68,9 @@ const Manifesto = () => {
     <div className="terminal-container">
       <div className="terminal-content">
         {parseContent(content)}
+        <div className="logo-banner">
+          <img src="/PHI9 BL.svg" alt="PHI9" className="phi9-logo" />
+        </div>
       </div>
     </div>
   );
