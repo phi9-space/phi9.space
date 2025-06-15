@@ -1,5 +1,5 @@
 import './styles/main.css';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation, Link } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Manifesto from './components/pages/Manifesto';
 
@@ -10,29 +10,24 @@ function NotFound() {
       width: '100vw', 
       height: '100vh', 
       display: 'flex', 
-      justifyContent: 'center', 
-      alignItems: 'center',
-      overflow: 'hidden'
-    }}>
-    <div style={{ 
-      width: '100vw', 
-      height: '100vh', 
-      display: 'flex', 
+      flexDirection: 'column',
       justifyContent: 'center', 
       alignItems: 'center',
       overflow: 'hidden'
     }}>
       <img 
-        src="/PHI9 BG.svg" 
+        src="/PHI9 LOGO.svg" 
         alt="PHI9 Background" 
         style={{ 
           maxWidth: '100%', 
-          maxHeight: '100%', 
+          maxHeight: '80%', 
           objectFit: 'contain' 
         }} 
       />
+      <p style={{ marginTop: '2rem', fontSize: '1.125rem', fontFamily: 'Montserrat, sans-serif', color: '#000000', textAlign: 'center' }}>
+        Read our manifesto <Link to="/manifesto" style={{ color: '#FF5C00', textDecoration: 'underline' }}>here</Link>.
+      </p>
     </div>
-  </div>
   );
 }
 

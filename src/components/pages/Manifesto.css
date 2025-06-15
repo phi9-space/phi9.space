@@ -33,6 +33,10 @@
   line-height: 1.3;
 }
 
+.manifesto-content .manifesto-h1 strong {
+  color: var(--color-primary);
+}
+
 .manifesto-content .manifesto-h2 {
   font-family: 'Tinos', serif;
   font-size: 1.5rem; 
@@ -53,18 +57,18 @@
 /* Inline formatting */
 .manifesto-content strong {
   font-weight: bold;
-  color: #FF5C00; /* Accent color */
+  color: var(--color-accent); /* Accent color */
 }
 
 .manifesto-content em {
   font-style: italic;
-  color: #FF5C00; /* Accent color */
+  color: var(--color-accent); /* Accent color */
 }
 
 .manifesto-content .bold-italic {
   font-weight: bold;
   font-style: italic;
-  color: #FF5C00; /* Accent color */
+  color: var(--color-accent); /* Accent color */
 }
 
 /* Responsive */

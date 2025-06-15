@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --color-base: #FCF7E9;
+  --color-primary: #000000;
+  --color-accent: #FF5C00;
+}
+
 @layer base {
   body {
     background-color: theme('colors.base');
