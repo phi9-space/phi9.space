@@ -5,7 +5,7 @@
   padding: 1.5rem 3rem;
   width: 100%;
   box-sizing: border-box;
-  background-color: #FCF7E9; /* Base color */
+  background-color: var(--color-base); /* Base color */
 }
 
 .navbar-logo .logo-img {
@@ -20,7 +20,7 @@
 .nav-link {
   font-family: 'Montserrat', sans-serif;
   font-size: 1rem; /* 16px */
-  color: #000000; /* Primary color */
+  color: var(--color-primary); /* Primary color */
   text-decoration: none;
   font-weight: 500;
   transition: color 0.3s ease;
@@ -28,7 +28,7 @@
 
 .nav-link:hover,
 .nav-link.active {
-  color: #FF5C00; /* Accent color */
+  color: var(--color-accent); /* Accent color */
 }
 
 /* Responsive */

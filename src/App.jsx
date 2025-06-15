@@ -24,8 +24,8 @@ function NotFound() {
           objectFit: 'contain' 
         }} 
       />
-      <p style={{ marginTop: '2rem', fontSize: '1.125rem', fontFamily: 'Montserrat, sans-serif', color: '#000000', textAlign: 'center' }}>
-        Read our manifesto <Link to="/manifesto" style={{ color: '#FF5C00', textDecoration: 'underline' }}>here</Link>.
+      <p style={{ marginTop: '2rem', fontSize: '1.125rem', fontFamily: 'Montserrat, sans-serif', color: 'var(--color-primary)', textAlign: 'center' }}>
+        Read our manifesto <Link to="/manifesto" style={{ color: 'var(--color-accent)', textDecoration: 'underline' }}>here</Link>.
       </p>
     </div>
   );
@@ -36,7 +36,7 @@ function App() {
   
   // Check if the path doesn't match any defined routes
   // This will handle both 404 cases and when a 200 status is triggered by Netlify
-  const validPaths = ['/', '/manifesto', '/contact'];
+  const validPaths = ['/', '/manifesto'];
   if (!validPaths.includes(location.pathname)) {
     return <NotFound />;
   }
