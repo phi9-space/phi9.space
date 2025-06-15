@@ -1,17 +1,45 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { AnimatePresence } from 'framer-motion';
-import Navbar from './components/layout/Navbar';
 import './styles/main.css';
+import { Routes, Route, useLocation } from 'react-router-dom';
+import Manifesto from './components/pages/Manifesto';
 
-function App() {
+function NotFound() {
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center p-4">
+    <div style={{ 
+      width: '100vw', 
+      height: '100vh', 
+      display: 'flex', 
+      justifyContent: 'center', 
+      alignItems: 'center',
+      overflow: 'hidden'
+    }}>
       <img 
-        src="/Cover Logo.svg" 
-        alt="PHI9" 
-        className="max-w-full max-h-[80vh] w-auto h-auto"
+        src="/PHI9 BG.svg" 
+        alt="PHI9 Background" 
+        style={{ 
+          maxWidth: '100%', 
+          maxHeight: '100%', 
+          objectFit: 'contain' 
+        }} 
       />
     </div>
+  );
+}
+
+function App() {
+  const location = useLocation();
+  
+  // Check if the path doesn't match any defined routes
+  // This will handle both 404 cases and when a 200 status is triggered by Netlify
+  if (location.pathname !== '/' && !location.pathname.startsWith('/manifesto')) {
+    return <NotFound />;
+  }
+
+  return (
+    <Routes>
+      <Route path="/" element={<Manifesto />} />
+      <Route path="/manifesto" element={<Manifesto />} />
+      <Route path="*" element={<NotFound />} />
+    </Routes>
   );
 }
 

@@ -50,7 +50,7 @@ const Home = () => {
               {/* Logo */}
               <div className="mb-8">
                 <img 
-                  src="/Logo.svg" 
+                  src="/Cover Logo 2.svg" 
                   alt="PHI9 Logo" 
                   className="h-20 w-auto"
                 />
@@ -184,6 +184,43 @@ const Home = () => {
         
         {/* Diagonal background lines */}
         <div className="absolute inset-0 bg-[linear-gradient(45deg,_rgba(255,255,255,0.03)_25%,_transparent_25%),_linear-gradient(-45deg,_rgba(255,255,255,0.03)_25%,_transparent_25%),_linear-gradient(45deg,_transparent_75%,_rgba(255,255,255,0.03)_75%),_linear-gradient(-45deg,_transparent_75%,_rgba(255,255,255,0.03)_75%)] bg-[length:20px_20px]"></div>
+      </section>
+
+      {/* Manifesto Section */}
+      <section className="py-20 bg-background relative overflow-hidden">
+        <div className="container-custom relative z-10">
+          <div className="max-w-3xl mx-auto text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-heading font-bold text-accent mb-6">
+              <span className="text-primary">//</span> OUR MANIFESTO
+            </h2>
+            <div className="h-1 w-16 bg-primary mx-auto my-6"></div>
+            <p className="text-lg text-accent/80">
+              Our vision for a future of autonomous systems and national security
+            </p>
+          </div>
+          
+          <div className="max-w-4xl mx-auto text-accent/90 leading-relaxed">
+            <h3 className="text-2xl font-bold text-accent mb-4">We See a Future.</h3>
+            <p className="mb-6">Life-saving aid <em>will</em> reach disaster zones, not <em>despite</em> broken communication, but <em>because</em> our systems are inherently autonomous. Our nation’s infrastructure <em>will</em> intelligently maintain itself, securing our future. We <em>will</em> explore the deepest oceans and highest mountains; where technology truly serves humanity—<em>uninterrupted, everywhere, under any conditions.</em></p>
+            
+            <p className="mb-6">At <strong>phi9.space</strong>, we are building the enabling foundational technology for this world: <strong>Non-GNSS autonomous systems.</strong> A new class of machines and systems that possess their <strong>own intrinsic sense of position and awareness.</strong></p>
+            
+            <h3 className="text-2xl font-bold text-accent mt-8 mb-4">Unlocking Unprecedented Value</h3>
+            <p className="mb-6">Our work is an integrated ecosystem, engineered for <strong>unprecedented impact and dominance.</strong></p>
+            <ul className="list-disc pl-5 space-y-2 mb-6">
+              <li><strong>The Foundation - Atma Nirbhar Navigational Core (ANC):</strong> Our foundational technology, the <strong>uninterruptible, unjammable and secure</strong> for true autonomy.</li>
+              <li><strong>The Intelligence - The Self-Aware System:</strong> AI platforms that construct a <em>true, intelligent, and predictive picture of the world.</em></li>
+              <li><strong>The Application - Resilient Operations:</strong> Transforming critical sectors with autonomous fleets, drones, and robotic systems.</li>
+            </ul>
+            
+            <p className="mb-6">We stand at the precipice of <strong>history's true inflection point:</strong> the singular moment where a foundational shift in autonomy will redefine global power and national security. <strong>phi9.space is India’s definitive answer.</strong></p>
+          </div>
+        </div>
+        
+        {/* Subtle background pattern */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute inset-0 bg-grid-pattern bg-grid"></div>
+        </div>
       </section>
 
       {/* CTA Section */}
