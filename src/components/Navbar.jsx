@@ -15,7 +15,7 @@ const Navbar = () => {
       <div className="navbar-links">
         <Link 
           to="/manifesto"
-          className={`nav-link ${location.pathname === '/manifesto' || location.pathname === '/' ? 'active' : ''}`}>
+          className={`nav-link ${location.pathname === '/manifesto' ? 'active' : ''}`}>
             Manifesto
         </Link>
         <a href="mailto:a3fckx@proton.me" className="nav-link">Contact</a>
