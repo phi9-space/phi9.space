@@ -1,5 +1,6 @@
 import './styles/main.css';
 import { Routes, Route, useLocation } from 'react-router-dom';
+import Navbar from './components/Navbar';
 import Manifesto from './components/pages/Manifesto';
 
 function NotFound() {
@@ -35,11 +36,14 @@ function App() {
   }
 
   return (
-    <Routes>
-      <Route path="/" element={<Manifesto />} />
-      <Route path="/manifesto" element={<Manifesto />} />
-      <Route path="*" element={<NotFound />} />
-    </Routes>
+    <>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Manifesto />} />
+        <Route path="/manifesto" element={<Manifesto />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </>
   );
 }
 

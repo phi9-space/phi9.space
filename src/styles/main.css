@@ -4,6 +4,9 @@
 
 @layer base {
   body {
-    @apply bg-white text-black;
+    background-color: theme('colors.base');
+    color: theme('colors.primary');
+    font-family: theme('fontFamily.sans');
+    overflow-x: hidden; /* Prevent horizontal scrolling */
   }
 }

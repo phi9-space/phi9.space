@@ -19,29 +19,29 @@ const Manifesto = () => {
     return lines.map((line, index) => {
       // Empty lines
       if (line.trim() === '') {
-        return <div key={index} className="empty-line">&nbsp;</div>;
+        return null;
       }
       
       // Headers
       if (line.startsWith('## ')) {
         const content = parseInlineFormatting(line.substring(3));
-        return <h2 key={index} className="terminal-h2">{content}</h2>;
+        return <h2 key={index} className="manifesto-h2">{content}</h2>;
       }
       if (line.startsWith('# ')) {
         const content = parseInlineFormatting(line.substring(2));
-        return <h1 key={index} className="terminal-h1">{content}</h1>;
+        return <h1 key={index} className="manifesto-h1">{content}</h1>;
       }
       
       // Regular paragraphs
       const content = parseInlineFormatting(line);
-      return <p key={index} className="terminal-p">{content}</p>;
+      return <p key={index} className="manifesto-p">{content}</p>;
     });
   };
 
   // Function to parse inline formatting (bold, italic)
   const parseInlineFormatting = (text) => {
     // Split by bold markers
-    const parts = text.split(/(\*\*\*[^*]+\*\*\*|\*\*[^*]+\*\*|\*[^*]+\*)/g);
+    const parts = text.split(/(\*\*\*[^\*]+\*\*\*|\*\*[^\*]+\*\*|\*[^\*]+\*)/g);
     
     return parts.map((part, index) => {
       // Bold + italic (***text***)
@@ -65,12 +65,9 @@ const Manifesto = () => {
   };
 
   return (
-    <div className="terminal-container">
-      <div className="terminal-content">
+    <div className="manifesto-container">
+      <div className="manifesto-content">
         {parseContent(content)}
-        <div className="logo-banner">
-          <img src="/PHI9 BL.svg" alt="PHI9" className="phi9-logo" />
-        </div>
       </div>
     </div>
   );
