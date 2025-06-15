@@ -19,7 +19,6 @@ const Navbar = () => {
             Manifesto
         </Link>
         {/* Add other links here as pages are created */}
-        <Link to="#" className="nav-link">Technology</Link>
         <Link to="#" className="nav-link">Contact</Link>
       </div>
     </nav>

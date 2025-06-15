@@ -3,7 +3,7 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Manifesto from './components/pages/Manifesto';
 
-function NotFound() {
+
 function NotFound() {
   return (
     <div style={{ 
@@ -30,15 +30,9 @@ function NotFound() {
           maxHeight: '100%', 
           objectFit: 'contain' 
         }} 
-        src="/PHI9 BG.svg" 
-        alt="PHI9 Background" 
-        style={{ 
-          maxWidth: '100%', 
-          maxHeight: '100%', 
-          objectFit: 'contain' 
-        }} 
       />
     </div>
+  </div>
   );
 }
 
@@ -47,7 +41,8 @@ function App() {
   
   // Check if the path doesn't match any defined routes
   // This will handle both 404 cases and when a 200 status is triggered by Netlify
-  if (location.pathname !== '/' && !location.pathname.startsWith('/manifesto')) {
+  const validPaths = ['/', '/manifesto', '/contact'];
+  if (!validPaths.includes(location.pathname)) {
     return <NotFound />;
   }
 
