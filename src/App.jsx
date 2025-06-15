@@ -4,6 +4,7 @@ import Navbar from './components/Navbar';
 import Manifesto from './components/pages/Manifesto';
 
 function NotFound() {
+function NotFound() {
   return (
     <div style={{ 
       width: '100vw', 
@@ -13,7 +14,22 @@ function NotFound() {
       alignItems: 'center',
       overflow: 'hidden'
     }}>
+    <div style={{ 
+      width: '100vw', 
+      height: '100vh', 
+      display: 'flex', 
+      justifyContent: 'center', 
+      alignItems: 'center',
+      overflow: 'hidden'
+    }}>
       <img 
+        src="/PHI9 BG.svg" 
+        alt="PHI9 Background" 
+        style={{ 
+          maxWidth: '100%', 
+          maxHeight: '100%', 
+          objectFit: 'contain' 
+        }} 
         src="/PHI9 BG.svg" 
         alt="PHI9 Background" 
         style={{ 
