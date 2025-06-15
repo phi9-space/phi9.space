@@ -7,24 +7,13 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: {
-          DEFAULT: '#ff914d',
-          dark: '#e07d3a',
-          light: '#ffa366',
-        },
-        background: {
-          DEFAULT: '#383a2c',
-          light: '#4a4d3c',
-          dark: '#2a2c21',
-        },
-        accent: {
-          DEFAULT: '#ffffff',
-          dark: '#e6e6e6',
-        },
+        'base': '#FCF7E9',
+        'primary': '#000000',
+        'accent': '#FF5C00',
       },
       fontFamily: {
         sans: ['Montserrat', 'sans-serif'],
-        heading: ['"Times New Roman"', 'serif'],
+        heading: ['Tinos', 'serif'],
         logo: ['Arimo', 'sans-serif'],
       },
       backgroundImage: {

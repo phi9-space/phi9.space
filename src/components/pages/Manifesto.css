@@ -1,0 +1,99 @@
+/* Manifesto Container */
+.manifesto-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem 2rem 2rem; 
+  box-sizing: border-box;
+}
+
+/* Logo */
+.logo-banner {
+  margin-bottom: 4rem;
+  text-align: center;
+}
+
+.phi9-logo {
+  height: 40px;
+}
+
+/* Content Area */
+.manifesto-content {
+  max-width: 900px;
+  width: 100%;
+}
+
+/* Typography */
+.manifesto-content .manifesto-h1 {
+  font-family: 'Tinos', serif;
+  font-size: 1.75rem; 
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  line-height: 1.3;
+}
+
+.manifesto-content .manifesto-h1 strong {
+  color: var(--color-primary);
+}
+
+.manifesto-content .manifesto-h2 {
+  font-family: 'Tinos', serif;
+  font-size: 1.5rem; 
+  font-weight: bold;
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+  line-height: 1.4;
+}
+
+.manifesto-content .manifesto-p {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1rem; /* 18px */
+  line-height: 1.75;
+  margin-bottom: 1.1rem;
+}
+
+
+/* Inline formatting */
+.manifesto-content strong {
+  font-weight: bold;
+  color: var(--color-accent); /* Accent color */
+}
+
+.manifesto-content em {
+  font-style: italic;
+  color: var(--color-accent); /* Accent color */
+}
+
+.manifesto-content .bold-italic {
+  font-weight: bold;
+  font-style: italic;
+  color: var(--color-accent); /* Accent color */
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .manifesto-container {
+    padding: 2rem 1rem;
+  }
+
+  .logo-banner {
+    margin-bottom: 2.5rem;
+  }
+
+  .phi9-logo {
+    height: 35px;
+  }
+
+  .manifesto-content .manifesto-h1 {
+    font-size: 1.875rem; /* 30px */
+  }
+
+  .manifesto-content .manifesto-h2 {
+    font-size: 1.375rem; /* 22px */
+  }
+
+  .manifesto-content .manifesto-p {
+    font-size: 1rem; /* 16px */
+  }
+}

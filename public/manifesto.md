@@ -1,0 +1,16 @@
+Satellite navigation systems, including sovereign ones like NavIC, are indispensable for modern operations, serving as the bedrock for everything from logistics to defense. Yet, their reliance on faint space signals creates a *single point of failure* easily lost to rugged terrain, dense forests, urban structures, or jamming.
+
+This fundamental flaw causes missions to fail, surveillance to go blind, and national security to be compromised, particularly when exploited in zones of conflict around the world. We need *Indigenous systems* that are inherently autonomous, intelligent, and secure, ensuring missions are never limited by where they operate.
+
+At **phi9.space**, we're building this certainty. We are creating **GPS denied navigation system**—a foundational technology for a future where the mission is never limited by the environment. Our systems are architected to thrive in the very places where traditional navigation fails.
+
+Not as a backup system, but at the very core of a more resilient, capable, and truly sovereign future.
+## **Our Solution**
+
+Our work represents a highly integrated ecosystem, engineered and built upon foundational proprietary IP that solves navigation and situational awareness.
+
+**Atma Nirbhar Navigational Core (ANC)** - Our core IP. It provides uninterrupted, unjammable navigation and rich environmental data through heterogeneous sensor fusion, ensuring foundational situational awareness with no external dependencies.
+
+**6XOR:**  Intelligent Edge Systems - Our all-indigenous, intelligent systems, leveraging ANC data to build secure mesh networks that operate autonomously on the edge.
+
+*The race for true autonomy has begun.* Build the foundational technology for India's autonomous future secure  operational independence.
