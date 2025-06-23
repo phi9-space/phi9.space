@@ -6,7 +6,7 @@ const Home = () => {
     <div className="home-container">
       {/* <img src="/PHI9 LOGO.svg" alt="PHI9 Logo" className="home-logo" /> */}
       <p className="home-tagline">
-        We are building GPS denied Navigation system for the next Trillion Dollar Opportunity.
+        We are building GPS denied Navigation system for the next Billion Autonous Systems.
       </p>
     </div>
   );
