@@ -4,7 +4,7 @@ This is the inevitable trajectory of technological evolution, but there's a fund
 
 *Navigation*—the foundational layer upon which every autonomous system depends—remains catastrophically fragile. For decades, we've accepted that GPS signals fade in forests, scatter in urban canyons, disappear underground, and vanish when external forces decide they should. We've built our entire autonomous future on space-based signals that may or may not reach where they're needed most.
 
-While the industry races to solve artificial intelligence, we recognize a deeper truth: *intelligence without precise navigation is operationally meaningless*. You can have the most sophisticated AI algorithms, but if your system doesn't know where it is with centimeter accuracy, it cannot fulfill its mission. Current satellite-dependent architectures create systematic vulnerabilities that scale inversely with precision requirements.
+While the industry races to solve artificial intelligence, we recognize a deeper truth: intelligence without precise navigation is operationally meaningless. You can have the most sophisticated AI algorithms, but if your system doesn't know where it is with centimeter accuracy, it cannot fulfill its mission. Current satellite-dependent architectures create systematic vulnerabilities that scale inversely with precision requirements.
 
 The utopian autonomous world requires precise navigation as its core pillar—not as an afterthought, but as the foundational infrastructure that enables everything else.
 
