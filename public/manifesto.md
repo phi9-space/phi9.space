@@ -6,9 +6,7 @@ This is the inevitable trajectory of technological evolution, but there's a fund
 
 While the industry advances artificial intelligence capabilities, we focus on a complementary frontier: intelligence requires precise spatial awareness to operate effectively. The most sophisticated AI algorithms achieve their potential only when autonomous systems understand their position with centimeter-level accuracy. 
 
-But current satellite-dependent architectures create systematic vulnerabilities that scale inversely with precision requirements.
-
-The utopian autonomous world requires precise navigation as its core pillar—not as an afterthought, but as the foundational infrastructure that enables everything else.
+But current satellite-dependent architectures create systematic vulnerabilities that scale inversely with precision requirements. The utopian autonomous world requires precise navigation as its core pillar—not as an afterthought, but as the foundational infrastructure that enables everything else.
 
 We're architecting this foundational layer. Through precision navigation technology that operates independently of external dependencies, we create navigation certainty at the edge—where traditional systems systematically fail. Our distributed sensor networks don't just provide positioning; they deliver environmental intelligence that satellites can never match.
 
