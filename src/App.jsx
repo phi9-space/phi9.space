@@ -17,7 +17,7 @@ function NotFound() {
       overflow: 'hidden'
     }}>
       <img 
-        src="/PHI9 LOGO.svg" 
+        src="/PHI9.SPACE.svg" 
         alt="PHI9 Background" 
         style={{ 
           maxWidth: '100%', 

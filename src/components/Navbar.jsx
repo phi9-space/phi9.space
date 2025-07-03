@@ -9,7 +9,7 @@ const Navbar = () => {
     <nav className="navbar-container">
       <div className="navbar-logo">
         <Link to="/">
-          <img src="/PHI9 LOGO.svg" alt="PHI9 Logo" className="logo-img" />
+          <img src="/PHI9.SPACE.svg" alt="PHI9.SPACE Logo" className="logo-img" />
         </Link>
       </div>
       <div className="navbar-links">
