@@ -16,6 +16,6 @@ At phi9.space, **We're building the navigation core the future requires**, creat
 
 Every autonomous system we enable strengthens rather than burdens the overall network. Our distributed topology creates self-reinforcing resilience where additional nodes multiply capability rather than introducing failure points.
 
-**Not incrementally improving existing systems, but a 10x** **leap from it.**
+Not incrementally improving existing systems, but a **10x** leap from it.
 
 *The next billion autonomous systems are coming and they'll achieve their intelligent potential with  the navigation infrastructure to fulfill it.*
