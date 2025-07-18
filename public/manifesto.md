@@ -10,9 +10,9 @@ Everyone else treats GPS-denied navigation as a sensor problem—better IMUs, mo
 
 The  world requires precise navigation as its core pillar— as the foundational infrastructure  that work everywhere, every time—in contested territories, underground facilities, and the vast expanses of space where traditional positioning infrastructure simply cannot exist.
 
-While the industry advances artificial intelligence capabilities, we focus on a complementary frontier: intelligence requires precise spatial awareness to operate effectively. The most sophisticated AI algorithms achieve their potential only when autonomous systems understand their position with centimeter-level accuracy.
+While the industry advances artificial intelligence capabilities, we focus on a complementary frontier; intelligence requires precise spatial awareness to operate effectively. The most sophisticated AI algorithms achieve their potential only when autonomous systems understand their position with centimeter-level accuracy.
 
-At phi9.space, **We're building the navigation core the future requires**, creating coordinate systems through pulse-based time-of-flight across wide-band frequencies. This fundamental architectural approach eliminates external dependencies that make traditional navigation vulnerable. We establish positioning networks that operate with complete technological sovereignty—no external attack vectors, no centralised vulnerabilities, no limitations imposed by terrestrial infrastructure. 
+At phi9.space, **We're building the navigation core the future requires**, creating coordinate systems through pulse-based time-of-flight across wide-band frequencies. This architectural approach eliminates external dependencies that make traditional navigation vulnerable. We establish positioning networks that operate with complete technological sovereignty—no external attack vectors, no centralised vulnerabilities, no limitations imposed by terrestrial infrastructure. 
 
 Every autonomous system we enable strengthens rather than burdens the overall network. Our distributed topology creates self-reinforcing resilience where additional nodes multiply capability rather than introducing failure points.
 
