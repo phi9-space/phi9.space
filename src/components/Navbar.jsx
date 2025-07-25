@@ -18,7 +18,7 @@ const Navbar = () => {
           className={`nav-link ${location.pathname === '/manifesto' ? 'active' : ''}`}>
             Manifesto
         </Link>
-        <a href="mailto:shubham@phi9.space" className="nav-link">Contact</a>
+        <a href="mailto:founders@phi9.space" className="nav-link">Contact</a>
         {/* Add other links here as pages are created */}
       </div>
     </nav>
