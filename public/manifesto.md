@@ -1,4 +1,4 @@
-We envision a magnificent future for humanity—one where autonomous systems deliver life-saving healthcare to remote villages, cultivate vast farmlands that eliminate hunger forever, extract precious resources from underground mines, ocean depths, and distant asteroids, and establish thriving multi-planetary civilizations. This is the extraordinary trajectory of human expansion, and we are privileged to be living and building its opening chapter.
+We have a utopian view of how the world will be. Autonomous systems operating with seamless precision everywhere—delivery drones threading through urban corridors, agricultural robots optimising vast farmlands, mining systems extracting minerals from underground networks, exploration robots venturing into inaccessible territories across planets.
 
 The next great leap forward lies in achieving *seamless physical AI —systems* that perceive, understand, and interact with the real world with unprecedented capability. We're creating embodied intelligence that can navigate any environment and operate to any challenge.
 
