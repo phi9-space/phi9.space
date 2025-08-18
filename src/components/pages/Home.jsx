@@ -6,7 +6,7 @@ const Home = () => {
     <div className="home-container">
       {/* <img src="/PHI9 LOGO.svg" alt="PHI9 Logo" className="home-logo" /> */}
       <p className="home-tagline">
-        We are enabling situational awareness in physical AI systems.
+        Enabling situational awareness in Physical AI systems.
       </p>
     </div>
   );
