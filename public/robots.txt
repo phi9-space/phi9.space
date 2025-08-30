@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Allow: /manifesto
+
+Sitemap: https://phi9.space/sitemap.xml
