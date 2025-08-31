@@ -5,9 +5,9 @@ const Home = () => {
   return (
     <div className="home-container">
       {/* <img src="/PHI9 LOGO.svg" alt="PHI9 Logo" className="home-logo" /> */}
-      <p className="home-tagline">
+      <h1 className="home-tagline">
         Enabling situational awareness in Physical AI systems.
-      </p>
+      </h1>
     </div>
   );
 };

@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+
+# Allow all content
+Allow: /
+Allow: /manifesto
+
+# Disallow access to certain files/directories if needed
+Disallow: /_redirects
+Disallow: /package.json
+Disallow: /*.json$
+
+# Sitemap
+Sitemap: https://phi9.space/sitemap.xml
