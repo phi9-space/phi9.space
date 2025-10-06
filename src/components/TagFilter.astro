@@ -1,0 +1,69 @@
+---
+interface Props {
+  tags: string[];
+  activeTag?: string | null;
+}
+
+const { tags, activeTag = null } = Astro.props as Props;
+const sorted = [...new Set(tags)].sort((a, b) => a.localeCompare(b));
+---
+<section class="tag-filter" slot="rail">
+  <p class="tag-filter__title">Tags</p>
+  <ul>
+    <li>
+      <a
+        href="/blog/"
+        class:list={{ 'tag-filter__active': !activeTag, 'glass-chip': true, 'tag-filter__link': true }}
+      >
+        All
+      </a>
+    </li>
+    {sorted.map((tag) => (
+      <li>
+        <a
+          href={`/blog/?tag=${encodeURIComponent(tag)}`}
+          class:list={{ 'tag-filter__active': activeTag === tag, 'glass-chip': true, 'tag-filter__link': true }}
+        >
+          #{tag}
+        </a>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .tag-filter {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .tag-filter__title {
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 0.75rem;
+    color: rgba(40, 40, 40, 0.55);
+    margin: 0;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .tag-filter__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.5rem 0.75rem;
+    color: rgba(32, 32, 32, 0.72);
+  }
+
+  .tag-filter__active {
+    color: var(--color-primary);
+    border-color: var(--color-border);
+    box-shadow: 0 12px 26px color-mix(in srgb, var(--color-accent) 22%, transparent);
+  }
+</style>

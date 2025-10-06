@@ -1,0 +1,298 @@
+---
+import SeoHead from '../components/SeoHead.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import AsciiShader from '../components/AsciiShader.astro';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  structuredData?: Record<string, any> | null;
+  ogImage?: string;
+  pageType?: 'website' | 'article';
+}
+
+const {
+  title = 'phi9.space',
+  description = 'Enabling situational awareness in Physical AI systems.',
+  structuredData = null,
+  ogImage = '/PHI9.SPACE.svg',
+  pageType = 'website'
+} = Astro.props as Props;
+
+const toggleId = `view-toggle-${crypto.randomUUID?.() ?? Math.random().toString(36).slice(2, 8)}`;
+const hasLeftSlot = Astro.slots.has('left');
+---
+<html lang="en" data-view-mode="human">
+  <head>
+    <SeoHead
+      title={title}
+      description={description}
+      ogImage={ogImage}
+      pageType={pageType}
+      structuredData={structuredData}
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="shader-container" aria-hidden="true">
+      <AsciiShader />
+    </div>
+    <header class="top-nav" data-nav>
+      <Navbar />
+    </header>
+    <div class="layout-shell">
+      <aside class="layout-rail layout-rail--left">
+        <div class="rail-content">
+          {hasLeftSlot ? (
+            <slot name="left" />
+          ) : (
+            <div class="rail-default glass-panel">
+              <p class="rail-default__eyebrow">phi9.space</p>
+              <h2 class="rail-default__title">Situational awareness</h2>
+              <p class="rail-default__copy">GPS-denied navigation systems and embodied intelligence for extreme environments.</p>
+            </div>
+          )}
+        </div>
+        <div class="rail-controls">
+          <div id={toggleId} class="view-toggle glass-chip" role="group" aria-label="Toggle content view">
+            <button type="button" data-mode="human" class="view-toggle__button view-toggle__button--active">Human</button>
+            <button type="button" data-mode="ai" class="view-toggle__button">AI</button>
+          </div>
+        </div>
+      </aside>
+      <main class="layout-main">
+        <article class="main-article">
+          <slot />
+        </article>
+        <Footer />
+      </main>
+      <aside class="layout-rail layout-rail--right">
+        <slot name="rail" />
+      </aside>
+    </div>
+  </body>
+</html>
+
+<style>
+  .shader-container {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    overflow: hidden;
+  }
+
+  .layout-shell {
+    display: grid;
+    grid-template-columns: minmax(0, 18vw) minmax(0, 64vw) minmax(0, 18vw);
+    min-height: 100vh;
+    padding: var(--grid-padding);
+    gap: clamp(1rem, 2.5vw, 2rem);
+  }
+
+  .layout-rail {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    position: sticky;
+    top: calc(var(--grid-padding) + clamp(2.5rem, 4vw, 3.5rem));
+    align-self: flex-start;
+    max-height: calc(100vh - var(--grid-padding) * 2);
+  }
+
+  .layout-rail--right {
+    border-left: 1px solid var(--color-border);
+    padding-left: clamp(0.75rem, 2vw, 1.25rem);
+    color: var(--color-muted);
+  }
+
+  .layout-rail--left {
+    border-right: 1px solid var(--color-border);
+    padding-right: clamp(0.75rem, 2vw, 1.25rem);
+  }
+
+  .layout-main {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(3rem, 4vw, 4.5rem);
+  }
+
+  .main-article {
+    position: relative;
+    padding: clamp(1.9rem, 3.4vw, 2.6rem);
+  }
+
+  .rail-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .rail-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .rail-default {
+    display: grid;
+    gap: 0.75rem;
+    padding: clamp(1.25rem, 2vw, 1.75rem);
+  }
+
+  .rail-default__eyebrow {
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    font-size: 0.7rem;
+    color: rgba(32, 32, 32, 0.6);
+  }
+
+  .rail-default__title {
+    margin: 0;
+    font-size: 1.4rem;
+  }
+
+  .rail-default__copy {
+    margin: 0;
+    color: rgba(32, 32, 32, 0.7);
+  }
+
+  .view-toggle {
+    display: inline-flex;
+    padding: 0.25rem;
+  }
+
+  .view-toggle__button {
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    color: rgba(34, 34, 34, 0.7);
+    font-size: 0.9rem;
+    padding: 0.4rem 0.85rem;
+    border-radius: var(--radius-chip);
+  }
+
+  .view-toggle__button--active {
+    color: var(--color-primary);
+    background: var(--color-accent-soft);
+    box-shadow: 0 8px 16px color-mix(in srgb, var(--color-accent) 25%, transparent);
+  }
+
+  .view-toggle__button:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  @media (max-width: 1280px) {
+    .layout-shell {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 50vw) minmax(0, 1fr);
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .layout-shell {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+      padding: clamp(1.25rem, 4vw, 2rem);
+    }
+
+    .layout-rail {
+      position: static;
+      max-height: none;
+      border: none;
+      padding: 0;
+    }
+
+    .layout-rail--right {
+      order: 3;
+      border: none;
+      padding: 0;
+    }
+
+    .layout-main {
+      order: 2;
+    }
+
+    .main-article {
+      padding: clamp(1.5rem, 3vw, 2.5rem);
+    }
+  }
+
+  .top-nav {
+    position: sticky;
+    top: clamp(0.75rem, 2vw, 1.5rem);
+    width: min(900px, calc(100% - clamp(2rem, 6vw, 4rem)));
+    margin: clamp(1rem, 3vw, 1.4rem) auto clamp(1.5rem, 3vw, 2rem);
+    z-index: 20;
+    transition: transform 220ms ease, opacity 220ms ease;
+  }
+
+  .top-nav.is-hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-140%);
+  }
+</style>
+
+<script is:inline>
+  const STORAGE_KEY = 'phi9-view-mode';
+  const toggle = document.getElementById('{toggleId}');
+
+  if (toggle) {
+    const buttons = Array.from(toggle.querySelectorAll('[data-mode]'));
+
+    const applyMode = (mode) => {
+      document.documentElement.dataset.viewMode = mode;
+      try {
+        localStorage.setItem(STORAGE_KEY, mode);
+      } catch (error) {
+        console.warn('Unable to persist view mode', error);
+      }
+      buttons.forEach((button) => {
+        button.classList.toggle('view-toggle__button--active', button.dataset.mode === mode);
+      });
+    };
+
+    const savedMode = (() => {
+      try {
+        return localStorage.getItem(STORAGE_KEY);
+      } catch (error) {
+        return null;
+      }
+    })();
+
+    applyMode(savedMode === 'ai' ? 'ai' : 'human');
+
+    buttons.forEach((button) => {
+      button.addEventListener('click', () => {
+        applyMode(button.dataset.mode === 'ai' ? 'ai' : 'human');
+      });
+    });
+  }
+
+  const nav = document.querySelector('[data-nav]');
+  let previousScrollY = window.scrollY;
+
+  const handleScroll = () => {
+    const currentY = window.scrollY;
+    if (!nav) return;
+
+    if (currentY > previousScrollY && currentY > 120) {
+      nav.classList.add('is-hidden');
+    } else {
+      nav.classList.remove('is-hidden');
+    }
+
+    previousScrollY = currentY;
+  };
+
+  window.addEventListener('scroll', handleScroll, { passive: true });
+</script>

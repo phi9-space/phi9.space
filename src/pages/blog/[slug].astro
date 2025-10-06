@@ -1,0 +1,165 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import MarkdownRenderer from '@components/MarkdownRenderer.astro';
+import LatestFeed from '@components/LatestFeed.astro';
+import TagFilter from '@components/TagFilter.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', (post) => !post.data.draft);
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { entry: post }
+  }));
+}
+
+const { entry } = Astro.props;
+
+const { Content, headings } = await entry.render();
+const siblingPosts = await getCollection('blog', (post) => !post.data.draft && post.slug !== entry.slug);
+const allTags = (await getCollection('blog', (post) => !post.data.draft)).flatMap((post) => post.data.tags);
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: entry.data.title,
+  description: entry.data.description,
+  datePublished: entry.data.pubDate.toISOString(),
+  dateModified: (entry.data.updatedDate ?? entry.data.pubDate).toISOString(),
+  articleSection: entry.data.tags,
+  author: {
+    '@type': 'Organization',
+    name: 'phi9.space'
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'phi9.space',
+    logo: {
+      '@type': 'ImageObject',
+      url: 'https://phi9.space/PHI9.SPACE.svg'
+    }
+  }
+};
+---
+<BaseLayout
+  title={`${entry.data.title} — phi9.space`}
+  description={entry.data.description}
+  pageType="article"
+  structuredData={structuredData}
+  ogImage={entry.data.heroImage ?? '/PHI9.SPACE.svg'}
+>
+  <section slot="left" class="post-sidebar glass-panel">
+    <p class="post-sidebar__eyebrow">blog</p>
+    <h2 class="post-sidebar__title">{entry.data.title}</h2>
+    <p class="post-sidebar__meta">
+      {entry.data.pubDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+      {entry.data.updatedDate && (
+        <span> · Updated {entry.data.updatedDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+      )}
+    </p>
+  </section>
+
+  <header class="post-hero">
+    <p class="post-hero__eyebrow">blog</p>
+    <h1>{entry.data.title}</h1>
+    <div class="post-hero__meta">
+      <time dateTime={entry.data.pubDate.toISOString()}>
+        {entry.data.pubDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+      </time>
+      {entry.data.updatedDate && (
+        <span>
+          Updated {entry.data.updatedDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+        </span>
+      )}
+    </div>
+    {entry.data.tags.length > 0 && (
+      <ul class="post-hero__tags">
+        {entry.data.tags.map((tag) => (
+          <li>
+            <a
+              href={`/blog/?tag=${encodeURIComponent(tag)}`}
+              class:list={{ 'glass-chip': true }}
+            >
+              #{tag}
+            </a>
+          </li>
+        ))}
+      </ul>
+    )}
+  </header>
+
+  <MarkdownRenderer Content={Content} raw={entry.body} headings={headings} />
+
+  <TagFilter tags={allTags} activeTag={null} />
+  <LatestFeed posts={[entry, ...siblingPosts]} title="More posts" />
+</BaseLayout>
+
+<style>
+  .post-hero {
+    display: grid;
+    gap: 0.85rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .post-hero__eyebrow {
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    font-size: 0.75rem;
+    color: rgba(32, 32, 32, 0.55);
+  }
+
+  .post-hero h1 {
+    margin: 0;
+    font-size: clamp(2.4rem, 5vw, 3.2rem);
+    color: var(--color-primary);
+  }
+
+  .post-hero__meta {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.9rem;
+    color: rgba(32, 32, 32, 0.6);
+  }
+
+  .post-hero__tags {
+    display: flex;
+    gap: 0.5rem;
+    list-style: none;
+    padding: 0;
+    margin: 0.5rem 0 0;
+  }
+
+  .post-hero__tags a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.3rem 0.65rem;
+    color: rgba(32, 32, 32, 0.76);
+  }
+
+  .post-sidebar {
+    display: grid;
+    gap: 0.75rem;
+    padding: clamp(1.25rem, 2vw, 1.75rem);
+  }
+
+  .post-sidebar__eyebrow {
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    font-size: 0.7rem;
+    color: rgba(32, 32, 32, 0.6);
+  }
+
+  .post-sidebar__title {
+    margin: 0;
+    font-size: clamp(1.6rem, 2.4vw, 1.9rem);
+  }
+
+  .post-sidebar__meta {
+    margin: 0;
+    font-size: 0.9rem;
+    color: rgba(32, 32, 32, 0.65);
+  }
+</style>

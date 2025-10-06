@@ -1,0 +1,59 @@
+<footer class="footer glass-panel">
+  <div class="footer__primary">
+    <p class="footer__headline">Building embodied intelligence for the physical world.</p>
+    <a class="footer__cta" href="mailto:hello@phi9.space">hello@phi9.space</a>
+  </div>
+  <div class="footer__meta">
+    <span>&copy; {new Date().getFullYear()} phi9.space</span>
+    <span>Made with Astro</span>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: clamp(1.5rem, 3vw, 2.25rem);
+  }
+
+  .footer__primary {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .footer__headline {
+    margin: 0;
+    font-size: clamp(1.1rem, 2vw, 1.35rem);
+    color: var(--color-primary);
+  }
+
+  .footer__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1.25rem;
+    border-radius: var(--radius-button);
+    border: 1px solid var(--color-border);
+    background: var(--color-accent-soft);
+    color: var(--color-primary);
+    font-weight: 500;
+  }
+
+  .footer__meta {
+    display: flex;
+    gap: 1.5rem;
+    font-size: 0.875rem;
+    color: rgba(34, 34, 34, 0.6);
+  }
+
+  @media (max-width: 640px) {
+    .footer__meta {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+  }
+</style>

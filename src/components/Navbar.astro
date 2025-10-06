@@ -1,0 +1,96 @@
+---
+const links = [
+  { href: '/manifesto', label: 'Manifesto' },
+  { href: '/research', label: 'Research' },
+  { href: '/blog', label: 'Blog' }
+];
+
+const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
+---
+<header class="nav">
+  <a class="nav__logo" href="/" aria-label="phi9.space home">
+    <img src="/PHI9 LOGO.svg" alt="phi9.space logotype" loading="lazy" />
+  </a>
+  <nav>
+    <ul class="nav__list">
+      {links.map(({ href, label }) => {
+        const normalised = href.replace(/\/$/, '') || '/';
+        const isActive = currentPath === normalised;
+        return (
+          <li class:list={{ nav__item: true, 'nav__item--active': isActive }}>
+            <a
+              href={href}
+              data-active={isActive ? 'true' : 'false'}
+              class:list={{ nav__link: true, 'glass-chip': true }}
+            >
+              {label}
+            </a>
+          </li>
+        );
+      })}
+    </ul>
+  </nav>
+</header>
+
+<style>
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: clamp(1rem, 1.5vw, 2rem);
+    padding: clamp(0.55rem, 1.5vw, 0.85rem) clamp(1rem, 2vw, 1.5rem);
+  }
+
+  .nav__logo {
+    display: inline-flex;
+    width: clamp(144px, 12vw, 180px);
+  }
+
+  .nav__logo img {
+    width: 100%;
+    height: auto;
+  }
+
+  .nav__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: clamp(0.4rem, 1.5vw, 0.8rem);
+  }
+
+  .nav__link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.55rem 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    color: rgba(33, 33, 33, 0.78);
+  }
+
+  .nav__item--active .nav__link,
+  .nav__link[data-active='true'] {
+    color: var(--color-accent);
+  }
+
+  @media (max-width: 768px) {
+    .nav {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 1rem;
+      padding: 0.9rem;
+    }
+
+    .nav__list {
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .nav__link {
+      padding: 0.55rem 0.75rem;
+      font-size: 0.92rem;
+    }
+  }
+</style>

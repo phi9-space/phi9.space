@@ -1,0 +1,160 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import LatestFeed from '@components/LatestFeed.astro';
+import TagFilter from '@components/TagFilter.astro';
+import { getCollection } from 'astro:content';
+
+const url = new URL(Astro.request.url);
+const activeTag = url.searchParams.get('tag');
+
+const posts = (await getCollection('blog', (entry) => !entry.data.draft))
+  .filter((entry) => !activeTag || entry.data.tags.includes(activeTag))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const allTags = (await getCollection('blog', (entry) => !entry.data.draft)).flatMap((entry) => entry.data.tags);
+---
+<BaseLayout
+  title="Blog — phi9.space"
+  description="Field logs, engineering notes, and research dispatches from phi9.space."
+  pageType="website"
+>
+  <section slot="left" class="page-sidebar glass-panel">
+    <p class="page-sidebar__eyebrow">blog</p>
+    <h2 class="page-sidebar__title">Dispatches from the lab</h2>
+    <p class="page-sidebar__subtitle">
+      Stories, field notes, and engineering updates from phi9’s navigation research.
+    </p>
+  </section>
+
+  <header class="page-hero">
+    <p class="page-hero__eyebrow">blog</p>
+    <h1>Dispatches from the lab</h1>
+    <p class="page-hero__subtitle">
+      Content-heavy notes, code snippets, and mission writeups powered by Markdown collections and surfaced via Astro.
+    </p>
+  </header>
+
+  <section class="post-grid">
+    {posts.length === 0 && (
+      <p>No posts yet for the tag “{activeTag}”. Check back soon.</p>
+    )}
+    {posts.map((post) => (
+      <article class="post-card glass-panel">
+        <a class="post-card__hit" href={`/blog/${post.slug}/`}>
+          <div class="post-card__meta">
+            <time dateTime={post.data.pubDate.toISOString()}>{post.data.pubDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</time>
+            {post.data.updatedDate && (
+              <span>Updated {post.data.updatedDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>
+            )}
+          </div>
+          <h2>{post.data.title}</h2>
+          <p>{post.data.description}</p>
+          <ul class="post-card__tags">
+            {post.data.tags.map((tag) => (
+              <li><span class="glass-chip">#{tag}</span></li>
+            ))}
+          </ul>
+        </a>
+      </article>
+    ))}
+  </section>
+
+  <TagFilter tags={allTags} activeTag={activeTag} />
+  <LatestFeed posts={posts} title="Latest posts" />
+</BaseLayout>
+
+<style>
+  .page-hero {
+    display: grid;
+    gap: 0.75rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .page-hero__eyebrow {
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    font-size: 0.75rem;
+    color: rgba(32, 32, 32, 0.55);
+  }
+
+  .page-hero__subtitle {
+    margin: 0;
+    color: rgba(32, 32, 32, 0.68);
+    max-width: 60ch;
+  }
+
+  .post-grid {
+    display: grid;
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+  }
+
+  .post-card {
+    padding: clamp(1.5rem, 3vw, 2rem);
+  }
+
+  .post-card__hit {
+    display: grid;
+    gap: 0.85rem;
+    color: inherit;
+  }
+
+  .post-card__meta {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.85rem;
+    color: rgba(32, 32, 32, 0.6);
+  }
+
+  .post-card h2 {
+    margin: 0;
+    font-size: clamp(1.6rem, 3vw, 2rem);
+    color: var(--color-primary);
+  }
+
+  .post-card p {
+    margin: 0;
+    color: rgba(32, 32, 32, 0.7);
+  }
+
+  .post-card__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    list-style: none;
+    padding: 0;
+    margin: 0.5rem 0 0;
+  }
+
+  .post-card__tags span {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.3rem 0.65rem;
+    color: rgba(32, 32, 32, 0.7);
+    font-size: 0.85rem;
+  }
+
+  .page-sidebar {
+    display: grid;
+    gap: 0.75rem;
+    padding: clamp(1.25rem, 2vw, 1.75rem);
+  }
+
+  .page-sidebar__eyebrow {
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    font-size: 0.7rem;
+    color: rgba(32, 32, 32, 0.6);
+  }
+
+  .page-sidebar__title {
+    margin: 0;
+    font-size: clamp(1.6rem, 2.4vw, 1.9rem);
+  }
+
+  .page-sidebar__subtitle {
+    margin: 0;
+    color: rgba(32, 32, 32, 0.7);
+  }
+</style>
