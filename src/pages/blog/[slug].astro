@@ -79,26 +79,11 @@ const structuredData = {
         </span>
       )}
     </div>
-    {entry.data.tags.length > 0 && (
-      <ul class="post-hero__tags">
-        {entry.data.tags.map((tag) => (
-          <li>
-            <a
-              href={`/blog/?tag=${encodeURIComponent(tag)}`}
-              class:list={{ 'glass-chip': true }}
-            >
-              #{tag}
-            </a>
-          </li>
-        ))}
-      </ul>
-    )}
   </header>
 
   <MarkdownRenderer Content={Content} raw={entry.body} headings={headings} />
 
   <section class="post-supplement">
-    <TagFilter tags={allTags} activeTag={null} placement="inline" />
     <LatestFeed posts={[entry, ...siblingPosts]} title="More posts" placement="inline" />
   </section>
 </BaseLayout>
@@ -144,27 +129,9 @@ const structuredData = {
     color: rgba(32, 32, 32, 0.6);
   }
 
-  .post-hero__tags {
-    display: flex;
-    gap: 0.5rem;
-    list-style: none;
-    padding: 0;
-    margin: 0.5rem 0 0;
-  }
-
-  .post-hero__tags a {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.25rem;
-    padding: 0.3rem 0.65rem;
-    color: rgba(32, 32, 32, 0.76);
-  }
-
   .post-toc {
     display: grid;
     gap: 1rem;
-    position: sticky;
-    top: calc(var(--grid-padding) + clamp(2.5rem, 4vw, 3.5rem));
   }
 
   .post-toc__list {

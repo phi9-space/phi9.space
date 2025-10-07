@@ -64,7 +64,13 @@ const slotName = placement === 'rail' ? 'rail' : undefined;
     color: rgba(32, 32, 32, 0.72);
     border: 1px solid rgba(32, 32, 32, 0.12);
     border-radius: var(--radius-chip);
-    transition: border-color 150ms ease, background-color 150ms ease;
+    transition: border-color 150ms ease, background-color 150ms ease, color 150ms ease;
+  }
+
+  .tag-filter__link:hover {
+    color: var(--color-primary);
+    border-color: rgba(32, 32, 32, 0.2);
+    background: rgba(0, 0, 0, 0.02);
   }
 
   .tag-filter__active {
@@ -72,6 +78,10 @@ const slotName = placement === 'rail' ? 'rail' : undefined;
     border-color: var(--color-accent);
     background: color-mix(in srgb, var(--color-accent) 15%, transparent);
     box-shadow: 0 4px 12px color-mix(in srgb, var(--color-accent) 20%, transparent);
+  }
+
+  .tag-filter__active:hover {
+    background: color-mix(in srgb, var(--color-accent) 20%, transparent);
   }
 
   .tag-filter--inline {

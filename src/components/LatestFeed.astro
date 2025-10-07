@@ -8,10 +8,10 @@ interface Props {
 }
 
 const { posts, title = 'Latest from the blog', placement = 'rail' } = Astro.props as Props;
-const sorted = [...posts].sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()).slice(0, 4);
+const sorted = [...posts].sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()).slice(0, 5);
 const slotName = placement === 'rail' ? 'rail' : undefined;
 ---
-<section class:list={{ 'latest-feed': true, 'latest-feed--inline': placement === 'inline', 'glass-panel': placement === 'rail' }} slot={slotName}>
+<section class:list={{ 'latest-feed': true, 'latest-feed--inline': placement === 'inline' }} slot={slotName}>
   <p class="latest-feed__title">{title}</p>
   <ul class="latest-feed__list">
     {sorted.map((post) => (
@@ -34,10 +34,6 @@ const slotName = placement === 'rail' ? 'rail' : undefined;
     gap: 1rem;
   }
 
-  .latest-feed.glass-panel {
-    padding: clamp(1.25rem, 2vw, 1.75rem);
-  }
-
   .latest-feed__title {
     text-transform: uppercase;
     letter-spacing: 0.18em;
@@ -57,7 +53,7 @@ const slotName = placement === 'rail' ? 'rail' : undefined;
   .latest-feed__link {
     display: grid;
     gap: 0.35rem;
-    color: rgba(32, 32, 32, 0.8);
+    color: rgba(40, 40, 40, 0.7);
     padding: 0.75rem 0;
     transition: color 150ms ease;
   }
@@ -67,13 +63,14 @@ const slotName = placement === 'rail' ? 'rail' : undefined;
   }
 
   .latest-feed__date {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     letter-spacing: 0.16em;
     text-transform: uppercase;
     color: rgba(40, 40, 40, 0.55);
   }
 
   .latest-feed__label {
+    font-size: 0.9rem;
     font-weight: 500;
   }
 

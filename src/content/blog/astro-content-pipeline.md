@@ -5,9 +5,8 @@ pubDate: 2024-05-20
 updatedDate: 2024-05-20
 tags:
   - updates
-heroImage: /PHI9.SPACE.svg
+# heroImage: /PHI9.SPACE.svg
 ---
-
 Migrating to Astro let us keep the expressive layout from the original phi9.space build while stripping client-side frameworks from the core reading experience. The result is near-zero JavaScript for static content and a handful of islands for interactivity.
 
 ```bash

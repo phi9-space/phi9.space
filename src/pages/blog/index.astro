@@ -18,13 +18,7 @@ const allTags = (await getCollection('blog', (entry) => !entry.data.draft)).flat
   description="Field logs, engineering notes, and dispatches from phi9.space."
   pageType="website"
 >
-  <header class="page-hero">
-    <p class="page-hero__eyebrow">blog</p>
-    <h1>Dispatches from the lab</h1>
-    <p class="page-hero__subtitle">
-      Content-heavy notes, code snippets, and mission writeups powered by Markdown collections and surfaced via Astro.
-    </p>
-  </header>
+  <LatestFeed slot="left" posts={posts} title="Latest posts" placement="rail" />
 
   <TagFilter tags={allTags} activeTag={activeTag} placement="inline" />
 
@@ -52,31 +46,9 @@ const allTags = (await getCollection('blog', (entry) => !entry.data.draft)).flat
       </article>
     ))}
   </section>
-
-  <LatestFeed posts={posts} title="Latest posts" placement="inline" />
 </BaseLayout>
 
 <style>
-  .page-hero {
-    display: grid;
-    gap: 0.75rem;
-    margin-bottom: 2.5rem;
-  }
-
-  .page-hero__eyebrow {
-    margin: 0;
-    text-transform: uppercase;
-    letter-spacing: 0.3em;
-    font-size: 0.75rem;
-    color: rgba(32, 32, 32, 0.55);
-  }
-
-  .page-hero__subtitle {
-    margin: 0;
-    color: rgba(32, 32, 32, 0.68);
-    max-width: 60ch;
-  }
-
   .post-grid {
     display: grid;
     gap: clamp(1.5rem, 3vw, 2.5rem);
