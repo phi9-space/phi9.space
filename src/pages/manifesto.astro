@@ -1,12 +1,10 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
 import MarkdownRenderer from '@components/MarkdownRenderer.astro';
-import LatestFeed from '@components/LatestFeed.astro';
-import { getEntry, getCollection } from 'astro:content';
+import { getEntry } from 'astro:content';
 
 const manifesto = await getEntry('pages', 'manifesto');
 const { Content, headings } = await manifesto.render();
-const blogPosts = await getCollection('blog', (entry) => !entry.data.draft);
 
 const updatedIso = (manifesto.data.updated ?? new Date()).toISOString();
 
@@ -46,8 +44,6 @@ const structuredData = {
   </header>
 
   <MarkdownRenderer Content={Content} raw={manifesto.body} headings={headings} />
-
-  <LatestFeed posts={blogPosts} title="Latest research" />
 </BaseLayout>
 
 <style>

@@ -14,8 +14,8 @@ const posts = (await getCollection('blog', (entry) => !entry.data.draft))
 const allTags = (await getCollection('blog', (entry) => !entry.data.draft)).flatMap((entry) => entry.data.tags);
 ---
 <BaseLayout
-  title="Blog — phi9.space"
-  description="Field logs, engineering notes, and research dispatches from phi9.space."
+  title="Research — phi9.space"
+  description="Field logs, engineering notes, and dispatches from phi9.space."
   pageType="website"
 >
   <header class="page-hero">

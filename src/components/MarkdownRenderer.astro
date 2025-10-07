@@ -21,7 +21,7 @@ const { Content, raw, headings = [] } = Astro.props as Props;
 </div>
 
 {headings.length > 0 && (
-  <aside slot="rail" class="markdown-renderer__toc glass-panel">
+  <aside slot="rail" class="markdown-renderer__toc">
     <p class="markdown-renderer__toc-title">On this page</p>
     <ul>
       {headings.map((heading) => (
@@ -117,7 +117,6 @@ const { Content, raw, headings = [] } = Astro.props as Props;
     top: var(--grid-padding);
     display: grid;
     gap: 1rem;
-    padding: 1.25rem;
   }
 
   .markdown-renderer__toc-title {

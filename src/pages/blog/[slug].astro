@@ -60,6 +60,12 @@ const structuredData = {
     </aside>
   )}
 
+  {entry.data.heroImage && (
+    <div class="post-hero__image">
+      <img src={entry.data.heroImage} alt={entry.data.title} />
+    </div>
+  )}
+
   <header class="post-hero">
     <p class="post-hero__eyebrow">blog</p>
     <h1>{entry.data.title}</h1>
@@ -98,6 +104,19 @@ const structuredData = {
 </BaseLayout>
 
 <style>
+  .post-hero__image {
+    width: 100%;
+    margin-bottom: 2rem;
+    border-radius: var(--radius-panel);
+    overflow: hidden;
+  }
+
+  .post-hero__image img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
   .post-hero {
     display: grid;
     gap: 0.85rem;
