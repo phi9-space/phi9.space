@@ -48,16 +48,17 @@ const structuredData = {
   structuredData={structuredData}
   ogImage={entry.data.heroImage ?? '/PHI9.SPACE.svg'}
 >
-  <section slot="left" class="post-sidebar glass-panel">
-    <p class="post-sidebar__eyebrow">blog</p>
-    <h2 class="post-sidebar__title">{entry.data.title}</h2>
-    <p class="post-sidebar__meta">
-      {entry.data.pubDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
-      {entry.data.updatedDate && (
-        <span> · Updated {entry.data.updatedDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
-      )}
-    </p>
-  </section>
+  {headings.length > 0 && (
+    <aside slot="left" class="post-toc">
+      <ul class="post-toc__list">
+        {headings.map((heading) => (
+          <li class:list={{ [`depth-${heading.depth}`]: true }}>
+            <a href={`#${heading.slug}`}>{heading.text}</a>
+          </li>
+        ))}
+      </ul>
+    </aside>
+  )}
 
   <header class="post-hero">
     <p class="post-hero__eyebrow">blog</p>
@@ -140,29 +141,45 @@ const structuredData = {
     color: rgba(32, 32, 32, 0.76);
   }
 
-  .post-sidebar {
+  .post-toc {
     display: grid;
-    gap: 0.75rem;
-    padding: clamp(1.25rem, 2vw, 1.75rem);
+    gap: 1rem;
+    position: sticky;
+    top: calc(var(--grid-padding) + clamp(2.5rem, 4vw, 3.5rem));
   }
 
-  .post-sidebar__eyebrow {
+  .post-toc__list {
+    list-style: none;
+    padding: 0;
     margin: 0;
-    text-transform: uppercase;
-    letter-spacing: 0.3em;
-    font-size: 0.7rem;
-    color: rgba(32, 32, 32, 0.6);
+    display: grid;
+    gap: 0.5rem;
   }
 
-  .post-sidebar__title {
-    margin: 0;
-    font-size: clamp(1.6rem, 2.4vw, 1.9rem);
-  }
-
-  .post-sidebar__meta {
-    margin: 0;
+  .post-toc__list li a {
+    color: rgba(40, 40, 40, 0.7);
     font-size: 0.9rem;
-    color: rgba(32, 32, 32, 0.65);
+    transition: color 150ms ease;
+  }
+
+  .post-toc__list li a:hover {
+    color: var(--color-accent);
+  }
+
+  .post-toc__list li.depth-3 {
+    padding-left: 0.75rem;
+    font-size: 0.85rem;
+  }
+
+  .post-toc__list li.depth-4 {
+    padding-left: 1.25rem;
+    font-size: 0.75rem;
+  }
+
+  @media (max-width: 1024px) {
+    .post-toc {
+      display: none;
+    }
   }
 
   .post-supplement {

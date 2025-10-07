@@ -1,19 +1,18 @@
 ---
 const links = [
-  { href: '/manifesto', label: 'Manifesto' },
-  { href: '/research', label: 'Research' },
-  { href: '/blog', label: 'Blog' }
+  { href: '/blog', label: 'Research', shortcut: 'R' },
+  { href: '/manifesto', label: 'About' }
 ];
 
 const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
 ---
 <header class="nav">
   <a class="nav__logo" href="/" aria-label="phi9.space home">
-    <img src="/PHI9 BL.svg" alt="phi9.space logotype" loading="lazy" />
+    <img src="/PHI9.SPACE.svg" alt="phi9.space logotype" loading="lazy" />
   </a>
   <nav>
     <ul class="nav__list">
-      {links.map(({ href, label }) => {
+      {links.map(({ href, label, shortcut }) => {
         const normalised = href.replace(/\/$/, '') || '/';
         const isActive = currentPath === normalised;
         return (
@@ -24,6 +23,7 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
               class:list={{ nav__link: true, 'glass-chip': true }}
             >
               {label}
+              {shortcut && <span class="nav__shortcut">{shortcut}</span>}
             </a>
           </li>
         );
@@ -43,8 +43,8 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
 
   .nav__logo {
     display: inline-flex;
-    width: clamp(40px, 5vw, 52px);
-    aspect-ratio: 1;
+    width: clamp(120px, 15vw, 180px);
+    height: auto;
   }
 
   .nav__logo img {
@@ -63,16 +63,34 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
   .nav__link {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    gap: 0.5rem;
     padding: 0.55rem 0.9rem;
     font-weight: 500;
     letter-spacing: 0.01em;
     color: rgba(33, 33, 33, 0.78);
   }
 
+  .nav__shortcut {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.25rem;
+    height: 1.25rem;
+    padding: 0 0.3rem;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: rgba(33, 33, 33, 0.6);
+    background: rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 0.25rem;
+  }
+
   .nav__item--active .nav__link,
   .nav__link[data-active='true'] {
-    color: var(--color-accent);
+    color: var(--color-primary);
+    border-color: var(--color-accent);
+    background: color-mix(in srgb, var(--color-accent) 15%, transparent);
+    box-shadow: 0 6px 14px color-mix(in srgb, var(--color-accent) 25%, transparent);
   }
 
   @media (max-width: 768px) {
@@ -95,3 +113,17 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
     }
   }
 </style>
+
+<script>
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'r' || e.key === 'R') {
+      if (!e.ctrlKey && !e.metaKey && !e.altKey) {
+        const target = e.target as HTMLElement;
+        if (target.tagName !== 'INPUT' && target.tagName !== 'TEXTAREA' && !target.isContentEditable) {
+          e.preventDefault();
+          window.location.href = '/blog';
+        }
+      }
+    }
+  });
+</script>
