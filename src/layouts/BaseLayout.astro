@@ -98,6 +98,9 @@ const hasLeftSlot = Astro.slots.has('left');
     gap: clamp(1rem, 2.5vw, 2rem);
     box-sizing: border-box;
     width: 100%;
+    max-width: 100vw;
+    margin: 0 auto;
+    overflow-x: clip;
   }
 
   .layout-rail {
@@ -108,6 +111,8 @@ const hasLeftSlot = Astro.slots.has('left');
     top: calc(var(--grid-padding) + clamp(2.5rem, 4vw, 3.5rem));
     align-self: flex-start;
     max-height: calc(100vh - var(--grid-padding) * 2);
+    box-sizing: border-box;
+    width: 100%;
   }
 
   .layout-rail--right {
@@ -125,11 +130,15 @@ const hasLeftSlot = Astro.slots.has('left');
     display: flex;
     flex-direction: column;
     gap: clamp(3rem, 4vw, 4.5rem);
+    box-sizing: border-box;
+    width: 100%;
   }
 
   .main-article {
     position: relative;
-    padding: clamp(1.9rem, 3.4vw, 2.6rem);
+    padding: clamp(1.9rem, 3.4vw, 2.6rem) 0;
+    box-sizing: border-box;
+    width: 100%;
   }
 
   .rail-controls {
@@ -205,6 +214,8 @@ const hasLeftSlot = Astro.slots.has('left');
       grid-template-columns: 1fr;
       gap: clamp(1.5rem, 4vw, 2rem);
       padding: clamp(1.25rem, 5vw, 2rem);
+      max-width: 100%;
+      overflow: visible;
     }
 
     .layout-rail {
@@ -225,7 +236,7 @@ const hasLeftSlot = Astro.slots.has('left');
     }
 
     .main-article {
-      padding: clamp(1.5rem, 3vw, 2.5rem);
+      padding: clamp(1.5rem, 3vw, 2.5rem) 0;
     }
   }
 
