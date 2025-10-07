@@ -90,8 +90,10 @@ const structuredData = {
 
   <MarkdownRenderer Content={Content} raw={entry.body} headings={headings} />
 
-  <TagFilter tags={allTags} activeTag={null} />
-  <LatestFeed posts={[entry, ...siblingPosts]} title="More posts" />
+  <section class="post-supplement">
+    <TagFilter tags={allTags} activeTag={null} placement="inline" />
+    <LatestFeed posts={[entry, ...siblingPosts]} title="More posts" placement="inline" />
+  </section>
 </BaseLayout>
 
 <style>
@@ -161,5 +163,11 @@ const structuredData = {
     margin: 0;
     font-size: 0.9rem;
     color: rgba(32, 32, 32, 0.65);
+  }
+
+  .post-supplement {
+    display: grid;
+    gap: clamp(2rem, 4vw, 3rem);
+    margin-top: clamp(3rem, 6vw, 4rem);
   }
 </style>

@@ -34,6 +34,8 @@ const allTags = (await getCollection('blog', (entry) => !entry.data.draft)).flat
     </p>
   </header>
 
+  <TagFilter tags={allTags} activeTag={activeTag} placement="inline" />
+
   <section class="post-grid">
     {posts.length === 0 && (
       <p>No posts yet for the tag “{activeTag}”. Check back soon.</p>
@@ -59,8 +61,7 @@ const allTags = (await getCollection('blog', (entry) => !entry.data.draft)).flat
     ))}
   </section>
 
-  <TagFilter tags={allTags} activeTag={activeTag} />
-  <LatestFeed posts={posts} title="Latest posts" />
+  <LatestFeed posts={posts} title="Latest posts" placement="inline" />
 </BaseLayout>
 
 <style>

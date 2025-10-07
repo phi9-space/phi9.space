@@ -4,19 +4,21 @@ import type { CollectionEntry } from 'astro:content';
 interface Props {
   posts: CollectionEntry<'blog'>[];
   title?: string;
+  placement?: 'rail' | 'inline';
 }
 
-const { posts, title = 'Latest from the blog' } = Astro.props as Props;
+const { posts, title = 'Latest from the blog', placement = 'rail' } = Astro.props as Props;
 const sorted = [...posts].sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()).slice(0, 4);
+const slotName = placement === 'rail' ? 'rail' : undefined;
 ---
-<section class="latest-feed" slot="rail">
+<section class:list={{ 'latest-feed': true, 'latest-feed--inline': placement === 'inline' }} slot={slotName}>
   <p class="latest-feed__title">{title}</p>
   <ul class="latest-feed__list">
     {sorted.map((post) => (
       <li>
         <a
           href={`/blog/${post.slug}/`}
-          class:list={{ 'glass-tile': true, 'latest-feed__link': true }}
+          class:list={{ 'latest-feed__link': true }}
         >
           <span class="latest-feed__date">{post.data.pubDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>
           <span class="latest-feed__label">{post.data.title}</span>
@@ -52,6 +54,10 @@ const sorted = [...posts].sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDa
     display: grid;
     gap: 0.35rem;
     color: rgba(32, 32, 32, 0.8);
+    padding: 0.75rem 1rem;
+    border: 1px solid rgba(32, 32, 32, 0.12);
+    border-radius: var(--radius-tile);
+    transition: border-color 150ms ease, background-color 150ms ease;
   }
 
   .latest-feed__date {
@@ -63,5 +69,14 @@ const sorted = [...posts].sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDa
 
   .latest-feed__label {
     font-weight: 500;
+  }
+
+  .latest-feed--inline {
+    margin-top: clamp(2rem, 5vw, 2.8rem);
+    width: 100%;
+  }
+
+  .latest-feed--inline .latest-feed__list {
+    gap: 0.65rem;
   }
 </style>

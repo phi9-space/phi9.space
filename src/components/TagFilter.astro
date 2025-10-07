@@ -2,18 +2,20 @@
 interface Props {
   tags: string[];
   activeTag?: string | null;
+  placement?: 'rail' | 'inline';
 }
 
-const { tags, activeTag = null } = Astro.props as Props;
+const { tags, activeTag = null, placement = 'rail' } = Astro.props as Props;
 const sorted = [...new Set(tags)].sort((a, b) => a.localeCompare(b));
+const slotName = placement === 'rail' ? 'rail' : undefined;
 ---
-<section class="tag-filter" slot="rail">
+<section class:list={{ 'tag-filter': true, 'tag-filter--inline': placement === 'inline' }} slot={slotName}>
   <p class="tag-filter__title">Tags</p>
   <ul>
     <li>
       <a
         href="/blog/"
-        class:list={{ 'tag-filter__active': !activeTag, 'glass-chip': true, 'tag-filter__link': true }}
+        class:list={{ 'tag-filter__active': !activeTag, 'tag-filter__link': true }}
       >
         All
       </a>
@@ -22,7 +24,7 @@ const sorted = [...new Set(tags)].sort((a, b) => a.localeCompare(b));
       <li>
         <a
           href={`/blog/?tag=${encodeURIComponent(tag)}`}
-          class:list={{ 'tag-filter__active': activeTag === tag, 'glass-chip': true, 'tag-filter__link': true }}
+          class:list={{ 'tag-filter__active': activeTag === tag, 'tag-filter__link': true }}
         >
           #{tag}
         </a>
@@ -35,6 +37,7 @@ const sorted = [...new Set(tags)].sort((a, b) => a.localeCompare(b));
   .tag-filter {
     display: grid;
     gap: 0.75rem;
+    width: 100%;
   }
 
   .tag-filter__title {
@@ -59,11 +62,32 @@ const sorted = [...new Set(tags)].sort((a, b) => a.localeCompare(b));
     gap: 0.35rem;
     padding: 0.5rem 0.75rem;
     color: rgba(32, 32, 32, 0.72);
+    border: 1px solid rgba(32, 32, 32, 0.12);
+    border-radius: var(--radius-chip);
+    transition: border-color 150ms ease, background-color 150ms ease;
   }
 
   .tag-filter__active {
     color: var(--color-primary);
-    border-color: var(--color-border);
-    box-shadow: 0 12px 26px color-mix(in srgb, var(--color-accent) 22%, transparent);
+    border-color: var(--color-accent);
+    background: color-mix(in srgb, var(--color-accent) 15%, transparent);
+  }
+
+  .tag-filter--inline {
+    gap: 0.5rem;
+    align-items: flex-start;
+    justify-items: flex-start;
+    margin-bottom: clamp(1.75rem, 4vw, 2.5rem);
+  }
+
+  .tag-filter--inline ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .tag-filter--inline .tag-filter__link {
+    padding: 0.35rem 0.65rem;
+    font-size: 0.85rem;
   }
 </style>
