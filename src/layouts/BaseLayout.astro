@@ -92,10 +92,12 @@ const hasLeftSlot = Astro.slots.has('left');
 
   .layout-shell {
     display: grid;
-    grid-template-columns: minmax(0, 18vw) minmax(0, 64vw) minmax(0, 18vw);
+    grid-template-columns: minmax(0, 18fr) minmax(0, 64fr) minmax(0, 18fr);
     min-height: 100vh;
     padding: var(--grid-padding);
     gap: clamp(1rem, 2.5vw, 2rem);
+    box-sizing: border-box;
+    width: 100%;
   }
 
   .layout-rail {
@@ -194,15 +196,15 @@ const hasLeftSlot = Astro.slots.has('left');
 
   @media (max-width: 1280px) {
     .layout-shell {
-      grid-template-columns: minmax(0, 1fr) minmax(0, 50vw) minmax(0, 1fr);
+      grid-template-columns: minmax(0, 1fr) minmax(0, 2fr) minmax(0, 1fr);
     }
   }
 
   @media (max-width: 1024px) {
     .layout-shell {
       grid-template-columns: 1fr;
-      gap: 2.5rem;
-      padding: clamp(1.25rem, 4vw, 2rem);
+      gap: clamp(1.5rem, 4vw, 2rem);
+      padding: clamp(1.25rem, 5vw, 2rem);
     }
 
     .layout-rail {
