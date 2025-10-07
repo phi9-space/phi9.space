@@ -35,9 +35,11 @@ body {
 .glass-chip {
   position: relative;
   overflow: hidden;
-  background: var(--color-surface);
-  border: 1px solid rgba(32, 32, 32, 0.12);
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+  background: color-mix(in srgb, var(--color-surface) 75%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-primary) 10%, transparent);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 .glass-panel {
@@ -50,7 +52,7 @@ body {
 
 .glass-chip {
   border-radius: var(--radius-chip);
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.05);
 }
 
 main {
