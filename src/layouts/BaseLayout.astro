@@ -57,12 +57,12 @@ const hasLeftSlot = Astro.slots.has('left');
         <article class="main-article">
           <slot />
         </article>
-        <Footer />
       </main>
       <aside class="layout-rail layout-rail--right">
         <slot name="rail" />
       </aside>
     </div>
+    <Footer />
   </body>
 </html>
 

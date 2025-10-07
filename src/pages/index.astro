@@ -1,102 +1,18 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
-import MarkdownRenderer from '@components/MarkdownRenderer.astro';
-import LatestFeed from '@components/LatestFeed.astro';
-import { getEntry, getCollection } from 'astro:content';
-
-const manifesto = await getEntry('pages', 'manifesto');
-const { Content, headings } = await manifesto.render();
-const blogPosts = await getCollection('blog', (entry) => !entry.data.draft);
 
 const structuredData = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
   name: 'phi9.space',
   url: 'https://phi9.space',
-  description: manifesto.data.description,
+  description: 'Physical AI situational awareness and GPS-denied navigation systems',
   logo: 'https://phi9.space/PHI9.SPACE.svg',
   sameAs: ['https://github.com/a3fckx/phi9.space']
 };
 ---
 <BaseLayout
   title="phi9.space — Physical AI situational awareness"
-  description={manifesto.data.description}
+  description="Physical AI situational awareness and GPS-denied navigation systems"
   structuredData={structuredData}
->
-  <section class="hero">
-    <p class="hero__eyebrow">physical ai systems</p>
-    <h1 class="hero__title">Enabling situational awareness in Physical AI systems.</h1>
-    <p class="hero__lede">
-      We build the enabling technology for GPS-denied navigation. From subterranean mines to orbital habitats, phi9 orchestrates embodied intelligence that can perceive, decide, and act without losing context.
-    </p>
-  </section>
-
-  <MarkdownRenderer Content={Content} raw={manifesto.body} headings={headings} />
-
-  <section class="cta glass-panel">
-    <h2>Partner with phi9</h2>
-    <p>
-      We collaborate with research labs, public agencies, and industrial operators to deploy resilient navigation stacks. Reach out to co-design trials, share datasets, or explore mission support.
-    </p>
-    <a class="cta__link" href="mailto:hello@phi9.space">Schedule a briefing</a>
-  </section>
-
-  <LatestFeed posts={blogPosts} />
-</BaseLayout>
-
-<style>
-  .hero {
-    display: grid;
-    gap: 1rem;
-    margin-bottom: clamp(2.5rem, 6vw, 4rem);
-  }
-
-  .hero__eyebrow {
-    margin: 0;
-    text-transform: uppercase;
-    letter-spacing: 0.4em;
-    font-size: 0.75rem;
-    color: rgba(32, 32, 32, 0.55);
-  }
-
-  .hero__title {
-    font-size: clamp(2.8rem, 6vw, 4rem);
-    line-height: 1.05;
-    margin: 0;
-  }
-
-  .hero__lede {
-    font-size: clamp(1.15rem, 2.4vw, 1.3rem);
-    margin: 0;
-    color: var(--color-muted);
-    max-width: 58ch;
-  }
-
-  .cta {
-    margin-top: clamp(3rem, 7vw, 5rem);
-    padding: clamp(1.5rem, 3vw, 2.5rem);
-    display: grid;
-    gap: 1rem;
-  }
-
-  .cta h2 {
-    margin: 0;
-    font-size: clamp(1.6rem, 3vw, 2rem);
-  }
-
-  .cta p {
-    margin: 0;
-    color: rgba(32, 32, 32, 0.72);
-    max-width: 60ch;
-  }
-
-  .cta__link {
-    align-self: flex-start;
-    padding: 0.75rem 1.25rem;
-    border-radius: var(--radius-button);
-    color: var(--color-primary);
-    font-weight: 500;
-    border: 1px solid var(--color-border);
-    background: rgba(255, 255, 255, 0.7);
-  }
-</style>
+/>

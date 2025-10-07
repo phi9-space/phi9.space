@@ -1,11 +1,10 @@
 <footer class="footer glass-panel">
   <div class="footer__primary">
-    <p class="footer__headline">Building embodied intelligence for the physical world.</p>
+    <p class="footer__headline">We're enabling situational awareness in physical AI</p>
     <a class="footer__cta" href="mailto:contact@phi9.space">contact@phi9.space</a>
   </div>
   <div class="footer__meta">
     <span>&copy; {new Date().getFullYear()} phi9.space</span>
-    <span>Made with Astro</span>
   </div>
 </footer>
 
@@ -15,6 +14,8 @@
     flex-direction: column;
     gap: 1.5rem;
     padding: clamp(1.5rem, 3vw, 2.25rem);
+    width: min(900px, calc(100% - clamp(2rem, 6vw, 4rem)));
+    margin: 0 auto clamp(1rem, 3vw, 1.4rem);
   }
 
   .footer__primary {

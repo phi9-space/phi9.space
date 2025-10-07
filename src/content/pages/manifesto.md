@@ -2,7 +2,7 @@
 title: Manifesto
 description: Our vision for the future of embodied intelligence and how phi9 is building situational awareness for autonomous systems across any environment.
 heroSubtitle: Enabling situational awareness in Physical AI systems.
-updated: 2024-05-01
+# updated: 2025-07-01
 ---
 
 We have a utopian view of how the world will be. Autonomous systems operating with seamless precision everywhere—delivery drones threading through urban corridors, agricultural robots optimising vast farmlands, mining systems extracting minerals from underground networks, exploration robots venturing into inaccessible territories across planets.
