@@ -4,30 +4,32 @@ import LatestFeed from '@components/LatestFeed.astro';
 import TagFilter from '@components/TagFilter.astro';
 import { getCollection } from 'astro:content';
 
-const url = new URL(Astro.request.url);
-const activeTag = url.searchParams.get('tag');
+const activeTag = Astro.request ? new URL(Astro.request.url).searchParams.get('tag') : null;
 
-const posts = (await getCollection('blog', (entry) => !entry.data.draft))
-  .filter((entry) => !activeTag || entry.data.tags.includes(activeTag))
+const entries = await getCollection('blog', (entry) => !entry.data.draft);
+const posts = entries
+  .slice()
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const filteredPosts = activeTag ? posts.filter((entry) => entry.data.tags.includes(activeTag)) : posts;
+const showEmptyState = Boolean(activeTag && filteredPosts.length === 0);
 
-const allTags = (await getCollection('blog', (entry) => !entry.data.draft)).flatMap((entry) => entry.data.tags);
+const allTags = entries.flatMap((entry) => entry.data.tags);
 ---
 <BaseLayout
   title="Research — phi9.space"
   description="Field logs, engineering notes, and dispatches from phi9.space."
   pageType="website"
 >
-  <LatestFeed slot="left" posts={posts} title="Latest posts" placement="rail" />
+  <LatestFeed slot="left" posts={filteredPosts} title="Latest posts" placement="rail" />
 
   <TagFilter tags={allTags} activeTag={activeTag} placement="inline" />
 
   <section class="post-grid">
-    {posts.length === 0 && (
-      <p>No posts yet for the tag "{activeTag}". Check back soon.</p>
-    )}
+    <p class="post-grid__empty" data-tag-empty hidden={!showEmptyState}>
+      No posts yet for the tag "<span data-tag-label>{activeTag ?? ''}</span>". Check back soon.
+    </p>
     {posts.map((post) => (
-      <article class="post-card glass-panel">
+      <article class="post-card glass-panel" data-tagged-post data-tags={JSON.stringify(post.data.tags)}>
         <a class="post-card__hit" href={`/blog/${post.slug}/`}>
           <div class="post-card__meta">
             <time dateTime={post.data.pubDate.toISOString()}>{post.data.pubDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</time>
@@ -47,6 +49,70 @@ const allTags = (await getCollection('blog', (entry) => !entry.data.draft)).flat
     ))}
   </section>
 </BaseLayout>
+
+<script>
+  const runTagFilter = () => {
+    const params = new URLSearchParams(window.location.search);
+    const activeTag = params.get('tag');
+    const normalized = activeTag ? activeTag.toLowerCase() : null;
+
+    const tagLinks = document.querySelectorAll('[data-tag-link]');
+    tagLinks.forEach((link) => {
+      const linkTag = link.dataset.tag ? link.dataset.tag.toLowerCase() : '';
+      const isActive = (!normalized && !linkTag) || (normalized && linkTag === normalized);
+      link.classList.toggle('tag-filter__active', isActive);
+      if (isActive) {
+        link.setAttribute('aria-current', 'true');
+      } else {
+        link.removeAttribute('aria-current');
+      }
+    });
+
+    const posts = document.querySelectorAll('[data-tagged-post]');
+    let visibleCount = 0;
+
+    posts.forEach((post) => {
+      const raw = post.dataset.tags;
+      if (!raw) return;
+
+      let tags = [];
+      try {
+        tags = JSON.parse(raw);
+      } catch {
+        tags = raw.split(',').map((value) => value.trim());
+      }
+
+      const matches = !normalized || tags.some((tag) => tag.toLowerCase() === normalized);
+      post.hidden = !matches;
+      if (matches) {
+        visibleCount += 1;
+      }
+    });
+
+    const emptyState = document.querySelector('[data-tag-empty]');
+    const tagLabel = document.querySelector('[data-tag-label]');
+    if (emptyState) {
+      if (normalized && visibleCount === 0) {
+        emptyState.hidden = false;
+        if (tagLabel) {
+          tagLabel.textContent = activeTag ?? '';
+        }
+      } else {
+        emptyState.hidden = true;
+      }
+    }
+  };
+
+  const init = () => runTagFilter();
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init, { once: true });
+  } else {
+    init();
+  }
+
+  document.addEventListener('astro:page-load', init);
+</script>
 
 <style>
   .post-grid {
@@ -97,5 +163,9 @@ const allTags = (await getCollection('blog', (entry) => !entry.data.draft)).flat
     padding: 0.3rem 0.65rem;
     color: rgba(32, 32, 32, 0.7);
     font-size: 0.85rem;
+  }
+
+  .post-grid__empty {
+    margin: 0;
   }
 </style>

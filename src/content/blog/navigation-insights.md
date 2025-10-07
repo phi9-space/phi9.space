@@ -4,8 +4,10 @@ description: Field insights from running autonomous navigation stacks in mines, 
 pubDate: 2024-04-12
 updatedDate: 2024-04-25
 tags:
+  - google
   - research
-heroImage: /PHI9 LOGO.svg
+# heroImage: /PHI9 LOGO.svg
+draft: false
 ---
 
 The transition from lab-grade autonomy to mission-ready navigation is filled with subtle failure modes. From dust ingestion to RF reflections, every site demands its own playbook.

@@ -62,7 +62,7 @@ src/content/
 | `description` | string | ✅ | SEO description |
 | `pubDate` | date | ✅ | Publication date (YYYY-MM-DD) |
 | `updatedDate` | date | ❌ | Last update date |
-| `tags` | array | ❌ | Filter tags (e.g., ["research", "ai"]) |
+| `tags` | array | ❌ | Multiple tags for filtering (see Tag System below) |
 | `heroImage` | string | ❌ | Image path (displays at post top) |
 | `draft` | boolean | ❌ | Hide from listings (default: false) |
 
@@ -74,6 +74,40 @@ src/content/
 | `description` | string | ✅ | SEO description |
 | `heroSubtitle` | string | ❌ | Subtitle text |
 | `updated` | date | ❌ | Last update date |
+
+## Tag System
+
+### Adding Multiple Tags
+
+Tags are fully supported and automatically extracted from all blog posts. Add as many as needed:
+
+```markdown
+---
+title: "Your Post Title"
+tags:
+  - navigation
+  - robotics
+  - research
+  - field-work
+---
+```
+
+### Tag Best Practices
+
+- **Use lowercase**: `research`, not `Research`
+- **Use hyphens for multi-word**: `field-work`, not `field work`
+- **One tag per line**: Start each with `- `
+- **No duplicates needed**: System auto-deduplicates across all posts
+- **No manual registration**: Tags appear automatically in filter
+- **No limit**: Add as many tags as relevant
+
+### How Tag Filtering Works
+
+- All tags from all posts automatically populate the filter
+- Duplicates are removed (using "research" in 5 posts = 1 filter button)
+- Tags are sorted alphabetically
+- Click a tag to filter posts, click "All" to reset
+- URL updates with `?tag=tagname` for shareable filtered views
 
 ## Markdown Features
 

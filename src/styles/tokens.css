@@ -17,7 +17,7 @@
   --radius-chip: 0.6rem;
   --radius-button: 0.65rem;
 
-  --font-size-base: 18px;
+  --font-size-base: 17px;
   --line-height-base: 1.6;
   --max-content-width: 70ch;
   --grid-padding: clamp(1rem, 2vw, 2rem);
@@ -36,12 +36,12 @@
 
 @media (max-width: 1024px) {
   :root {
-    --font-size-base: 17px;
+    --font-size-base: 16px;
   }
 }
 
 @media (max-width: 640px) {
   :root {
-    --font-size-base: 16px;
+    --font-size-base: 15px;
   }
 }

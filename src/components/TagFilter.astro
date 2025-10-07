@@ -15,6 +15,9 @@ const slotName = placement === 'rail' ? 'rail' : undefined;
     <li>
       <a
         href="/blog/"
+        data-tag-link
+        data-tag=""
+        aria-current={!activeTag ? 'true' : undefined}
         class:list={{ 'tag-filter__active': !activeTag, 'tag-filter__link': true }}
       >
         All
@@ -24,6 +27,9 @@ const slotName = placement === 'rail' ? 'rail' : undefined;
       <li>
         <a
           href={`/blog/?tag=${encodeURIComponent(tag)}`}
+          data-tag-link
+          data-tag={tag}
+          aria-current={activeTag === tag ? 'true' : undefined}
           class:list={{ 'tag-filter__active': activeTag === tag, 'tag-filter__link': true }}
         >
           #{tag}
