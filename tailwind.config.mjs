@@ -13,8 +13,8 @@ export default {
         border: 'var(--color-border)'
       },
       fontFamily: {
-        sans: ['"Space Grotesk"', 'Inter', 'system-ui', 'sans-serif'],
-        mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'monospace']
+        sans: ['"Paper Mono"', '"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'monospace'],
+        mono: ['"Paper Mono"', '"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'monospace']
       },
       maxWidth: {
         prose: '65ch'

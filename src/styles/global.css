@@ -3,6 +3,16 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'Paper Mono';
+  src:
+    url('/fonts/paper-mono/PaperMono-Regular.woff2') format('woff2'),
+    url('/fonts/paper-mono/PaperMono-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 html {
   font-size: var(--font-size-base);
   scroll-behavior: smooth;
@@ -13,7 +23,8 @@ body {
   margin: 0;
   min-height: 100vh;
   color: var(--color-primary);
-  font-family: 'Roboto', 'Arial', 'Helvetica Neue', Helvetica, sans-serif;
+  font-family: 'Paper Mono', 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, Monaco, Consolas,
+    'Liberation Mono', 'Courier New', monospace;
   background: var(--color-background);
   background-attachment: fixed;
   -webkit-font-smoothing: antialiased;
@@ -83,7 +94,8 @@ a {
 }
 
 code {
-  font-family: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+  font-family: 'Paper Mono', 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, Monaco, Consolas,
+    'Liberation Mono', 'Courier New', monospace;
 }
 
 pre {
@@ -109,7 +121,8 @@ img {
 }
 
 [data-view-mode='ai'] body {
-  font-family: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+  font-family: 'Paper Mono', 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, Monaco, Consolas,
+    'Liberation Mono', 'Courier New', monospace;
   background: var(--color-background);
 }
 
