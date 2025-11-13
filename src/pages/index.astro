@@ -1,0 +1,18 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'phi9.space',
+  url: 'https://phi9.space',
+  description: 'Physical AI situational awareness and GPS-denied navigation systems',
+  logo: 'https://phi9.space/PHI9.SPACE.svg',
+  sameAs: ['https://github.com/a3fckx/phi9.space']
+};
+---
+<BaseLayout
+  title="phi9.space — Physical AI situational awareness"
+  description="Physical AI situational awareness and GPS-denied navigation systems"
+  structuredData={structuredData}
+/>

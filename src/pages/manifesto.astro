@@ -1,0 +1,82 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import MarkdownRenderer from '@components/MarkdownRenderer.astro';
+import { getEntry } from 'astro:content';
+
+const manifesto = await getEntry('pages', 'manifesto');
+const { Content, headings } = await manifesto.render();
+
+const updatedIso = (manifesto.data.updated ?? new Date()).toISOString();
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: manifesto.data.title,
+  description: manifesto.data.description,
+  dateModified: updatedIso,
+  author: {
+    '@type': 'Organization',
+    name: 'phi9.space'
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'phi9.space',
+    logo: {
+      '@type': 'ImageObject',
+      url: 'https://phi9.space/PHI9.SPACE.svg'
+    }
+  }
+};
+---
+<BaseLayout
+  title={`${manifesto.data.title} — phi9.space`}
+  description={manifesto.data.description}
+  pageType="article"
+  structuredData={structuredData}
+>
+  <header class="page-hero">
+    <p class="page-hero__eyebrow">phi9 manifesto</p>
+    <h1>{manifesto.data.title}</h1>
+    {manifesto.data.heroSubtitle && <p class="page-hero__subtitle">{manifesto.data.heroSubtitle}</p>}
+    {manifesto.data.updated && (
+      <p class="page-hero__meta">Updated {manifesto.data.updated.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</p>
+    )}
+  </header>
+
+  <MarkdownRenderer Content={Content} raw={manifesto.body} headings={headings} />
+</BaseLayout>
+
+<style>
+  .page-hero {
+    display: grid;
+    gap: 0.75rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .page-hero__eyebrow {
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    font-size: 0.75rem;
+    color: rgba(32, 32, 32, 0.55);
+  }
+
+  .page-hero h1 {
+    margin: 0;
+    font-size: clamp(2.2rem, 4.5vw, 2.9rem);
+  }
+
+  .page-hero__subtitle {
+    margin: 0;
+    color: rgba(32, 32, 32, 0.68);
+    max-width: 60ch;
+  }
+
+  .page-hero__meta {
+    margin: 0;
+    font-size: 0.85rem;
+    color: rgba(32, 32, 32, 0.6);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+</style>

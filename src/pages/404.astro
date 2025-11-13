@@ -1,0 +1,42 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+---
+<BaseLayout title="404 — phi9.space" description="The page you are looking for does not exist.">
+  <section class="not-found">
+    <h1>Lost in the void</h1>
+    <p>The path you're following dissolves here. Use the navigation to return to the mission.</p>
+    <a class="not-found__link" href="/">Return home</a>
+  </section>
+</BaseLayout>
+
+<style>
+  .not-found {
+    display: grid;
+    gap: 1rem;
+    text-align: center;
+    padding: clamp(3rem, 6vw, 4rem) 0;
+  }
+
+  .not-found h1 {
+    margin: 0;
+    font-size: clamp(2.5rem, 5vw, 3.2rem);
+    color: var(--color-primary);
+  }
+
+  .not-found p {
+    margin: 0 auto;
+    color: rgba(32, 32, 32, 0.68);
+    max-width: 40ch;
+  }
+
+  .not-found__link {
+    justify-self: center;
+    margin-top: 1.5rem;
+    padding: 0.75rem 1.25rem;
+    border-radius: var(--radius-button);
+    background: var(--color-accent-soft);
+    border: 1px solid var(--color-border);
+    color: var(--color-primary);
+    font-weight: 500;
+  }
+</style>

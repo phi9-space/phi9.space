@@ -1,0 +1,87 @@
+---
+import { getCollection } from "astro:content";
+
+const posts = await getCollection("blog");
+const latestPost = posts
+  .filter((post) => !post.data.draft)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())[0];
+---
+
+<footer class="footer">
+  <div class="footer__content">
+    <div class="footer__left">
+      {latestPost && (
+        <p class="footer__updated">
+          Last updated on {latestPost.data.pubDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
+        </p>
+      )}
+    </div>
+    <a href="/rss.xml" class="footer__rss">
+      <span aria-hidden="true">RSS</span>
+      <span class="sr-only">RSS Feed</span>
+    </a>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    width: 100%;
+    background-color: var(--color-background);
+    padding: 2rem 1.5rem;
+    margin-top: 4rem;
+  }
+
+  .footer__content {
+    max-width: 720px;
+    margin: 0 auto;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    color: var(--color-primary);
+    opacity: 0.75;
+    font-size: 0.9rem;
+  }
+
+  .footer__left {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .footer__updated {
+    font-size: 0.8rem;
+    opacity: 0.6;
+    margin: 0;
+  }
+
+  .footer__rss {
+    color: var(--color-accent);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .footer__rss:hover {
+    text-decoration: underline;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  @media (max-width: 640px) {
+    .footer__content {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+  }
+</style>

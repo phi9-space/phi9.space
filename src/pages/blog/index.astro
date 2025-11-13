@@ -1,0 +1,112 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import BlogFilterWithSidebar from '@components/react/BlogFilterWithSidebar.jsx';
+import { getCollection } from 'astro:content';
+
+const activeTag = Astro.request ? new URL(Astro.request.url).searchParams.get('tag') : null;
+
+const entries = await getCollection('blog', (entry) => !entry.data.draft);
+const posts = entries
+  .slice()
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .map((post) => ({
+    slug: post.slug,
+    title: post.data.title,
+    description: post.data.description,
+    pubDate: post.data.pubDate,
+    tags: post.data.tags || [],
+  }));
+---
+<BaseLayout
+  title="Research — phi9.space"
+  description="Field logs, engineering notes, and dispatches from phi9.space."
+  pageType="website"
+>
+  <section class="blog-index">
+    <BlogFilterWithSidebar posts={posts} initialTag={activeTag || "all"} client:load />
+  </section>
+</BaseLayout>
+
+<style>
+  .blog-index {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  /* Main Content Styles */
+  :global(.blog-content-area) {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  :global(.tag-filter-buttons) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+
+  :global(.tag-filter-btn) {
+    font-size: 0.85rem;
+    text-transform: capitalize;
+    padding: 0.35rem 0.9rem;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    background: none;
+    cursor: pointer;
+    font-family: inherit;
+  }
+
+  :global(.tag-filter-btn:hover) {
+    border-color: rgba(255, 92, 0, 0.3);
+    color: var(--color-accent);
+  }
+
+  :global(.tag-filter-btn--active) {
+    background-color: rgba(255, 92, 0, 0.1);
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+  }
+
+  :global(.blog-posts-list) {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  :global(.blog-post-card h2) {
+    font-size: clamp(1.5rem, 2.4vw, 2rem);
+    margin-bottom: 0.5rem;
+  }
+
+  :global(.blog-post-card h2 a) {
+    color: var(--color-accent);
+    text-decoration: none;
+  }
+
+  :global(.blog-post-card h2 a:hover) {
+    text-decoration: underline;
+  }
+
+  :global(.blog-post-meta) {
+    font-size: 0.9rem;
+    color: var(--color-primary);
+    opacity: 0.65;
+    margin-bottom: 0.75rem;
+  }
+
+  :global(.blog-post-excerpt) {
+    color: var(--color-primary);
+    line-height: 1.6;
+  }
+
+  :global(.empty-state) {
+    color: var(--color-primary);
+    opacity: 0.6;
+  }
+</style>

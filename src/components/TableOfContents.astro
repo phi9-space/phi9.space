@@ -1,0 +1,177 @@
+---
+export interface Heading {
+	depth: number;
+	slug: string;
+	text: string;
+}
+
+interface Props {
+	headings: Heading[];
+}
+
+const { headings } = Astro.props;
+
+// Filter to only show h2 and h3 headings
+const tocHeadings = headings.filter((h) => h.depth <= 3);
+---
+
+{
+    tocHeadings.length > 0 && (
+        <div class="toc-container">
+            <nav class="toc-nav">
+                <ul class="toc-list">
+                    {tocHeadings.map((heading) => (
+                        <li class={`toc-item toc-item--depth-${heading.depth}`}>
+                            <a href={`#${heading.slug}`} class="toc-link">
+                                {heading.text}
+                            </a>
+                        </li>
+                    ))}
+                </ul>
+            </nav>
+        </div>
+    )
+}
+
+<script>
+    // Smooth scroll behavior
+    document.addEventListener("DOMContentLoaded", () => {
+        const links = document.querySelectorAll(".toc-link");
+
+        links.forEach((link) => {
+            link.addEventListener("click", (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute("href")?.slice(1);
+                if (targetId) {
+                    const target = document.getElementById(targetId);
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: "smooth",
+                            block: "start",
+                        });
+                        // Update URL without jumping
+                        history.pushState(null, "", `#${targetId}`);
+                    }
+                }
+            });
+        });
+
+        // Highlight active section on scroll
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    const id = entry.target.getAttribute("id");
+                    const tocLink = document.querySelector(
+                        `.toc-link[href="#${id}"]`,
+                    );
+
+                    if (entry.isIntersecting) {
+                        document
+                            .querySelectorAll(".toc-link")
+                            .forEach((link) => {
+                                link.classList.remove("active");
+                            });
+                        tocLink?.classList.add("active");
+                    }
+                });
+            },
+            { rootMargin: "-100px 0px -66%" },
+        );
+
+        // Observe all headings
+        document.querySelectorAll("h2[id], h3[id]").forEach((heading) => {
+            observer.observe(heading);
+        });
+    });
+</script>
+
+<style>
+    .toc-container {
+        position: fixed;
+        bottom: 2rem;
+        left: 2rem;
+        max-width: 18vw;
+        min-width: 220px;
+        max-height: 60vh;
+        overflow-y: auto;
+        padding: 0.75rem;
+        z-index: 100;
+    }
+
+    /* Custom scrollbar */
+    .toc-container::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    .toc-container::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .toc-container::-webkit-scrollbar-thumb {
+        background: color-mix(in srgb, var(--color-primary) 20%, transparent);
+        border-radius: 2px;
+    }
+
+    .toc-nav {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .toc-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+    }
+
+    .toc-item {
+        display: flex;
+    }
+
+    .toc-link {
+        color: var(--color-primary);
+        text-decoration: none;
+        padding: 0.2rem 0;
+        padding-left: 0.5rem;
+        border-left: 1px solid color-mix(in srgb, var(--color-primary) 15%, transparent);
+        font-size: 0.8125rem;
+        line-height: 1.35;
+        display: block;
+        width: 100%;
+        opacity: 0.7;
+        font-weight: 400;
+    }
+
+    .toc-item--depth-2 .toc-link {
+        padding-left: 0.5rem;
+    }
+
+    .toc-item--depth-3 .toc-link {
+        padding-left: 1.25rem;
+        font-size: 0.75rem;
+        opacity: 0.65;
+    }
+
+    .toc-link.active {
+        border-color: var(--color-accent);
+        color: var(--color-accent);
+        font-weight: 500;
+        opacity: 1;
+    }
+
+    /* Hide on tablets and mobile */
+    @media (max-width: 1024px) {
+        .toc-container {
+            display: none;
+        }
+    }
+
+    /* Adjust for larger screens */
+    @media (min-width: 1600px) {
+        .toc-container {
+            max-width: 280px;
+        }
+    }
+</style>

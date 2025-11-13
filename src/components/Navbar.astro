@@ -1,0 +1,135 @@
+---
+const links = [
+  { href: '/blog', label: 'Research', shortcut: 'R' },
+  { href: '/manifesto', label: 'About' }
+];
+
+const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
+---
+<header class="nav">
+  <a class="nav__logo" href="/" aria-label="phi9.space home">
+    <img src="/PHI9.SPACE.svg" alt="phi9.space logotype" loading="lazy" />
+  </a>
+  <nav>
+    <ul class="nav__list">
+      {links.map(({ href, label, shortcut }) => {
+        const normalised = href.replace(/\/$/, '') || '/';
+        const isActive = currentPath === normalised;
+        return (
+          <li class:list={{ nav__item: true, 'nav__item--active': isActive }}>
+            <a
+              href={href}
+              data-active={isActive ? 'true' : 'false'}
+              class="nav__link"
+            >
+              {label}
+              {shortcut && <span class="nav__shortcut">{shortcut}</span>}
+            </a>
+          </li>
+        );
+      })}
+    </ul>
+  </nav>
+</header>
+
+<style>
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: clamp(2rem, 4vw, 4rem);
+    padding: clamp(0.75rem, 1.8vw, 1rem) clamp(1.5rem, 3vw, 2rem);
+    background: var(--color-background);
+  }
+
+  .nav__logo {
+    display: inline-flex;
+    width: clamp(120px, 15vw, 180px);
+    height: auto;
+  }
+
+  .nav__logo img {
+    width: 100%;
+    height: auto;
+  }
+
+  .nav__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+  }
+
+  .nav__link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 500;
+    font-size: clamp(0.95rem, 1.2vw, 1.05rem);
+    letter-spacing: 0.01em;
+    color: rgba(33, 33, 33, 0.65);
+    transition: color 200ms ease;
+  }
+
+  .nav__link:hover {
+    color: rgba(33, 33, 33, 0.9);
+  }
+
+  .nav__shortcut {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.25rem;
+    height: 1.25rem;
+    padding: 0 0.3rem;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: rgba(33, 33, 33, 0.5);
+    background: rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 0.25rem;
+  }
+
+  .nav__item--active .nav__link,
+  .nav__link[data-active='true'] {
+    color: var(--color-accent);
+  }
+
+  @media (max-width: 768px) {
+    .nav {
+      gap: 1rem;
+      padding: 0.75rem 1rem;
+    }
+
+    .nav__logo {
+      width: clamp(80px, 12vw, 120px);
+    }
+
+    .nav__list {
+      gap: 1rem;
+    }
+
+    .nav__link {
+      font-size: 0.85rem;
+    }
+
+    .nav__shortcut {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'r' || e.key === 'R') {
+      if (!e.ctrlKey && !e.metaKey && !e.altKey) {
+        const target = e.target as HTMLElement;
+        if (target.tagName !== 'INPUT' && target.tagName !== 'TEXTAREA' && !target.isContentEditable) {
+          e.preventDefault();
+          window.location.href = '/blog';
+        }
+      }
+    }
+  });
+</script>

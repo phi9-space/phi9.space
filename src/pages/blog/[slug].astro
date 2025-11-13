@@ -1,0 +1,126 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import MarkdownRenderer from '@components/MarkdownRenderer.astro';
+import LatestFeed from '@components/LatestFeed.astro';
+import TableOfContents from '@components/TableOfContents.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', (post) => !post.data.draft);
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { entry: post }
+  }));
+}
+
+const { entry } = Astro.props;
+
+const { Content, headings } = await entry.render();
+const siblingPosts = await getCollection('blog', (post) => !post.data.draft && post.slug !== entry.slug);
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: entry.data.title,
+  description: entry.data.description,
+  datePublished: entry.data.pubDate.toISOString(),
+  dateModified: (entry.data.updatedDate ?? entry.data.pubDate).toISOString(),
+  articleSection: entry.data.tags,
+  author: {
+    '@type': 'Organization',
+    name: 'phi9.space'
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'phi9.space',
+    logo: {
+      '@type': 'ImageObject',
+      url: 'https://phi9.space/PHI9.SPACE.svg'
+    }
+  }
+};
+---
+<BaseLayout
+  title={`${entry.data.title} — phi9.space`}
+  description={entry.data.description}
+  pageType="article"
+  structuredData={structuredData}
+  ogImage={entry.data.heroImage ?? '/PHI9.SPACE.svg'}
+>
+  <TableOfContents headings={headings} />
+
+  {entry.data.heroImage && (
+    <div class="post-hero__image">
+      <img src={entry.data.heroImage} alt={entry.data.title} />
+    </div>
+  )}
+
+  <header class="post-hero">
+    <p class="post-hero__eyebrow">blog</p>
+    <h1>{entry.data.title}</h1>
+    <div class="post-hero__meta">
+      <time dateTime={entry.data.pubDate.toISOString()}>
+        {entry.data.pubDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+      </time>
+      {entry.data.updatedDate && (
+        <span>
+          Updated {entry.data.updatedDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+        </span>
+      )}
+    </div>
+  </header>
+
+  <MarkdownRenderer Content={Content} raw={entry.body} headings={headings} />
+
+  <section class="post-supplement">
+    <LatestFeed posts={[entry, ...siblingPosts]} title="More posts" placement="inline" />
+  </section>
+</BaseLayout>
+
+<style>
+  .post-hero__image {
+    width: 100%;
+    margin-bottom: 2rem;
+    border-radius: var(--radius-panel);
+    overflow: hidden;
+  }
+
+  .post-hero__image img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .post-hero {
+    display: grid;
+    gap: 0.85rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .post-hero__eyebrow {
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    font-size: 0.75rem;
+    color: rgba(32, 32, 32, 0.55);
+  }
+
+  .post-hero h1 {
+    margin: 0;
+    font-size: clamp(2rem, 4.5vw, 2.75rem);
+    color: var(--color-primary);
+  }
+
+  .post-hero__meta {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.9rem;
+    color: rgba(32, 32, 32, 0.6);
+  }
+
+  .post-supplement {
+    display: grid;
+    gap: clamp(2rem, 4vw, 3rem);
+    margin-top: clamp(3rem, 6vw, 4rem);
+  }
+</style>
