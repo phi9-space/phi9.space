@@ -2,7 +2,7 @@
 import BaseLayout from '@layouts/BaseLayout.astro';
 import MarkdownRenderer from '@components/MarkdownRenderer.astro';
 import LatestFeed from '@components/LatestFeed.astro';
-import TagFilter from '@components/TagFilter.astro';
+import TableOfContents from '@components/TableOfContents.astro';
 import { getCollection } from 'astro:content';
 
 export async function getStaticPaths() {
@@ -17,7 +17,6 @@ const { entry } = Astro.props;
 
 const { Content, headings } = await entry.render();
 const siblingPosts = await getCollection('blog', (post) => !post.data.draft && post.slug !== entry.slug);
-const allTags = (await getCollection('blog', (post) => !post.data.draft)).flatMap((post) => post.data.tags);
 
 const structuredData = {
   '@context': 'https://schema.org',
@@ -48,17 +47,7 @@ const structuredData = {
   structuredData={structuredData}
   ogImage={entry.data.heroImage ?? '/PHI9.SPACE.svg'}
 >
-  {headings.length > 0 && (
-    <aside slot="left" class="post-toc">
-      <ul class="post-toc__list">
-        {headings.map((heading) => (
-          <li class:list={{ [`depth-${heading.depth}`]: true }}>
-            <a href={`#${heading.slug}`}>{heading.text}</a>
-          </li>
-        ))}
-      </ul>
-    </aside>
-  )}
+  <TableOfContents headings={headings} />
 
   {entry.data.heroImage && (
     <div class="post-hero__image">
@@ -127,45 +116,6 @@ const structuredData = {
     gap: 1rem;
     font-size: 0.9rem;
     color: rgba(32, 32, 32, 0.6);
-  }
-
-  .post-toc {
-    display: grid;
-    gap: 1rem;
-  }
-
-  .post-toc__list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: grid;
-    gap: 0.5rem;
-  }
-
-  .post-toc__list li a {
-    color: rgba(40, 40, 40, 0.7);
-    font-size: 0.9rem;
-    transition: color 150ms ease;
-  }
-
-  .post-toc__list li a:hover {
-    color: var(--color-accent);
-  }
-
-  .post-toc__list li.depth-3 {
-    padding-left: 0.75rem;
-    font-size: 0.85rem;
-  }
-
-  .post-toc__list li.depth-4 {
-    padding-left: 1.25rem;
-    font-size: 0.75rem;
-  }
-
-  @media (max-width: 1024px) {
-    .post-toc {
-      display: none;
-    }
   }
 
   .post-supplement {

@@ -7,7 +7,7 @@ tags:
   - google
   - research
 # heroImage: /PHI9 LOGO.svg
-draft: false
+draft: true
 ---
 
 The transition from lab-grade autonomy to mission-ready navigation is filled with subtle failure modes. From dust ingestion to RF reflections, every site demands its own playbook.

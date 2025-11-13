@@ -6,7 +6,7 @@ const links = [
 
 const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
 ---
-<header class="nav glass-panel">
+<header class="nav">
   <a class="nav__logo" href="/" aria-label="phi9.space home">
     <img src="/PHI9.SPACE.svg" alt="phi9.space logotype" loading="lazy" />
   </a>
@@ -39,6 +39,7 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
     justify-content: space-between;
     gap: clamp(2rem, 4vw, 4rem);
     padding: clamp(0.75rem, 1.8vw, 1rem) clamp(1.5rem, 3vw, 2rem);
+    background: var(--color-background);
   }
 
   .nav__logo {

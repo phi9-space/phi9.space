@@ -11,10 +11,13 @@
     "netlify-build": "astro build"
   },
   "dependencies": {
-    "@astrojs/rss": "^4.0.12",
+    "@astrojs/react": "^4.4.2",
+    "@astrojs/rss": "^4.0.13",
     "@astrojs/sitemap": "^3.6.0",
     "@astrojs/tailwind": "^6.0.2",
-    "astro": "^5.14.1",
+    "astro": "^5.15.5",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
     "rehype-pretty-code": "^0.14.1",
     "remark-gfm": "^4.0.1"
   },

@@ -34,9 +34,9 @@ const hasLeftSlot = Astro.slots.has('left');
     />
     <link
       rel="preload"
-      href="/fonts/paper-mono/PaperMono-Regular.woff2"
+      href="/fonts/et-book/et-book-roman-line-figures/et-book-roman-line-figures.woff"
       as="font"
-      type="font/woff2"
+      type="font/woff"
       crossorigin
     />
   </head>
@@ -125,6 +125,8 @@ const hasLeftSlot = Astro.slots.has('left');
     padding: 0;
     box-sizing: border-box;
     width: 100%;
+    max-width: 720px;
+    margin: 0 auto;
   }
 
   .rail-content {

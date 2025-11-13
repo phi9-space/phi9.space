@@ -1,7 +1,6 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
-import LatestFeed from '@components/LatestFeed.astro';
-import TagFilter from '@components/TagFilter.astro';
+import BlogFilterWithSidebar from '@components/react/BlogFilterWithSidebar.jsx';
 import { getCollection } from 'astro:content';
 
 const activeTag = Astro.request ? new URL(Astro.request.url).searchParams.get('tag') : null;
@@ -9,163 +8,105 @@ const activeTag = Astro.request ? new URL(Astro.request.url).searchParams.get('t
 const entries = await getCollection('blog', (entry) => !entry.data.draft);
 const posts = entries
   .slice()
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
-const filteredPosts = activeTag ? posts.filter((entry) => entry.data.tags.includes(activeTag)) : posts;
-const showEmptyState = Boolean(activeTag && filteredPosts.length === 0);
-
-const allTags = entries.flatMap((entry) => entry.data.tags);
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .map((post) => ({
+    slug: post.slug,
+    title: post.data.title,
+    description: post.data.description,
+    pubDate: post.data.pubDate,
+    tags: post.data.tags || [],
+  }));
 ---
 <BaseLayout
   title="Research — phi9.space"
   description="Field logs, engineering notes, and dispatches from phi9.space."
   pageType="website"
 >
-  <LatestFeed slot="left" posts={filteredPosts} title="Latest posts" placement="rail" />
-
-  <TagFilter tags={allTags} activeTag={activeTag} placement="inline" />
-
-  <section class="post-grid">
-    <p class="post-grid__empty" data-tag-empty hidden={!showEmptyState}>
-      No posts yet for the tag "<span data-tag-label>{activeTag ?? ''}</span>". Check back soon.
-    </p>
-    {posts.map((post) => (
-      <article class="post-card glass-panel" data-tagged-post data-tags={JSON.stringify(post.data.tags)}>
-        <a class="post-card__hit" href={`/blog/${post.slug}/`}>
-          <div class="post-card__meta">
-            <time dateTime={post.data.pubDate.toISOString()}>{post.data.pubDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</time>
-            {post.data.updatedDate && (
-              <span>Updated {post.data.updatedDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>
-            )}
-          </div>
-          <h2>{post.data.title}</h2>
-          <p>{post.data.description}</p>
-          <ul class="post-card__tags">
-            {post.data.tags.map((tag) => (
-              <li><span class="glass-chip">#{tag}</span></li>
-            ))}
-          </ul>
-        </a>
-      </article>
-    ))}
+  <section class="blog-index">
+    <BlogFilterWithSidebar posts={posts} initialTag={activeTag || "all"} client:load />
   </section>
 </BaseLayout>
 
-<script>
-  const runTagFilter = () => {
-    const params = new URLSearchParams(window.location.search);
-    const activeTag = params.get('tag');
-    const normalized = activeTag ? activeTag.toLowerCase() : null;
-
-    const tagLinks = document.querySelectorAll('[data-tag-link]');
-    tagLinks.forEach((link) => {
-      const linkTag = link.dataset.tag ? link.dataset.tag.toLowerCase() : '';
-      const isActive = (!normalized && !linkTag) || (normalized && linkTag === normalized);
-      link.classList.toggle('tag-filter__active', isActive);
-      if (isActive) {
-        link.setAttribute('aria-current', 'true');
-      } else {
-        link.removeAttribute('aria-current');
-      }
-    });
-
-    const posts = document.querySelectorAll('[data-tagged-post]');
-    let visibleCount = 0;
-
-    posts.forEach((post) => {
-      const raw = post.dataset.tags;
-      if (!raw) return;
-
-      let tags = [];
-      try {
-        tags = JSON.parse(raw);
-      } catch {
-        tags = raw.split(',').map((value) => value.trim());
-      }
-
-      const matches = !normalized || tags.some((tag) => tag.toLowerCase() === normalized);
-      post.hidden = !matches;
-      if (matches) {
-        visibleCount += 1;
-      }
-    });
-
-    const emptyState = document.querySelector('[data-tag-empty]');
-    const tagLabel = document.querySelector('[data-tag-label]');
-    if (emptyState) {
-      if (normalized && visibleCount === 0) {
-        emptyState.hidden = false;
-        if (tagLabel) {
-          tagLabel.textContent = activeTag ?? '';
-        }
-      } else {
-        emptyState.hidden = true;
-      }
-    }
-  };
-
-  const init = () => runTagFilter();
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init, { once: true });
-  } else {
-    init();
-  }
-
-  document.addEventListener('astro:page-load', init);
-</script>
-
 <style>
-  .post-grid {
-    display: grid;
-    gap: clamp(1.5rem, 3vw, 2.5rem);
-  }
-
-  .post-card {
-    padding: clamp(1.5rem, 3vw, 2rem);
-  }
-
-  .post-card__hit {
-    display: grid;
-    gap: 0.85rem;
-    color: inherit;
-  }
-
-  .post-card__meta {
+  .blog-index {
     display: flex;
-    gap: 1rem;
-    font-size: 0.85rem;
-    color: rgba(32, 32, 32, 0.6);
+    flex-direction: column;
+    gap: 0;
   }
 
-  .post-card h2 {
-    margin: 0;
-    font-size: clamp(1.6rem, 3vw, 2rem);
-    color: var(--color-primary);
+  /* Main Content Styles */
+  :global(.blog-content-area) {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
   }
 
-  .post-card p {
-    margin: 0;
-    color: rgba(32, 32, 32, 0.7);
-  }
-
-  .post-card__tags {
+  :global(.tag-filter-buttons) {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
-    list-style: none;
-    padding: 0;
-    margin: 0.5rem 0 0;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
   }
 
-  .post-card__tags span {
-    display: inline-flex;
-    align-items: center;
-    padding: 0.3rem 0.65rem;
-    color: rgba(32, 32, 32, 0.7);
+  :global(.tag-filter-btn) {
     font-size: 0.85rem;
+    text-transform: capitalize;
+    padding: 0.35rem 0.9rem;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    background: none;
+    cursor: pointer;
+    font-family: inherit;
   }
 
-  .post-grid__empty {
-    margin: 0;
+  :global(.tag-filter-btn:hover) {
+    border-color: rgba(255, 92, 0, 0.3);
+    color: var(--color-accent);
+  }
+
+  :global(.tag-filter-btn--active) {
+    background-color: rgba(255, 92, 0, 0.1);
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+  }
+
+  :global(.blog-posts-list) {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  :global(.blog-post-card h2) {
+    font-size: clamp(1.5rem, 2.4vw, 2rem);
+    margin-bottom: 0.5rem;
+  }
+
+  :global(.blog-post-card h2 a) {
+    color: var(--color-accent);
+    text-decoration: none;
+  }
+
+  :global(.blog-post-card h2 a:hover) {
+    text-decoration: underline;
+  }
+
+  :global(.blog-post-meta) {
+    font-size: 0.9rem;
+    color: var(--color-primary);
+    opacity: 0.65;
+    margin-bottom: 0.75rem;
+  }
+
+  :global(.blog-post-excerpt) {
+    color: var(--color-primary);
+    line-height: 1.6;
+  }
+
+  :global(.empty-state) {
+    color: var(--color-primary);
+    opacity: 0.6;
   }
 </style>
