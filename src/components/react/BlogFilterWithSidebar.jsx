@@ -25,9 +25,7 @@ const BlogFilterWithSidebar = ({ posts, initialTag = "all" }) => {
 			setFilteredPosts(posts);
 		} else {
 			setFilteredPosts(
-				posts.filter((post) =>
-					post.tags?.some((tag) => tag.toLowerCase() === currentTag)
-				)
+				posts.filter((post) => post.tags?.some((tag) => tag.toLowerCase() === currentTag)),
 			);
 		}
 	}, [currentTag, posts]);
@@ -92,9 +90,7 @@ const BlogFilterWithSidebar = ({ posts, initialTag = "all" }) => {
 						<button
 							key={tag}
 							onClick={() => handleTagClick(tag)}
-							className={`tag-filter-btn ${
-								currentTag === tag ? "tag-filter-btn--active" : ""
-							}`}
+							className={`tag-filter-btn ${currentTag === tag ? "tag-filter-btn--active" : ""}`}
 							type="button"
 						>
 							{tag}

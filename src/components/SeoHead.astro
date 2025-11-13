@@ -1,21 +1,21 @@
 ---
 interface Props {
-  title: string;
-  description: string;
-  ogImage?: string;
-  pageType?: 'website' | 'article';
-  structuredData?: Record<string, any> | null;
+	title: string;
+	description: string;
+	ogImage?: string;
+	pageType?: "website" | "article";
+	structuredData?: Record<string, any> | null;
 }
 
 const {
-  title,
-  description,
-  ogImage = '/PHI9.SPACE.svg',
-  pageType = 'website',
-  structuredData = null
+	title,
+	description,
+	ogImage = "/PHI9.SPACE.svg",
+	pageType = "website",
+	structuredData = null,
 } = Astro.props as Props;
 
-const canonicalUrl = new URL(Astro.request.url, Astro.site ?? 'https://phi9.space').toString();
+const canonicalUrl = new URL(Astro.request.url, Astro.site ?? "https://phi9.space").toString();
 ---
 <title>{title}</title>
 <meta charset="utf-8" />

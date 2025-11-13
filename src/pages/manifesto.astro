@@ -1,31 +1,31 @@
 ---
-import BaseLayout from '@layouts/BaseLayout.astro';
-import MarkdownRenderer from '@components/MarkdownRenderer.astro';
-import { getEntry } from 'astro:content';
+import { getEntry } from "astro:content";
+import MarkdownRenderer from "@components/MarkdownRenderer.astro";
+import BaseLayout from "@layouts/BaseLayout.astro";
 
-const manifesto = await getEntry('pages', 'manifesto');
+const manifesto = await getEntry("pages", "manifesto");
 const { Content, headings } = await manifesto.render();
 
 const updatedIso = (manifesto.data.updated ?? new Date()).toISOString();
 
 const structuredData = {
-  '@context': 'https://schema.org',
-  '@type': 'Article',
-  headline: manifesto.data.title,
-  description: manifesto.data.description,
-  dateModified: updatedIso,
-  author: {
-    '@type': 'Organization',
-    name: 'phi9.space'
-  },
-  publisher: {
-    '@type': 'Organization',
-    name: 'phi9.space',
-    logo: {
-      '@type': 'ImageObject',
-      url: 'https://phi9.space/PHI9.SPACE.svg'
-    }
-  }
+	"@context": "https://schema.org",
+	"@type": "Article",
+	headline: manifesto.data.title,
+	description: manifesto.data.description,
+	dateModified: updatedIso,
+	author: {
+		"@type": "Organization",
+		name: "phi9.space",
+	},
+	publisher: {
+		"@type": "Organization",
+		name: "phi9.space",
+		logo: {
+			"@type": "ImageObject",
+			url: "https://phi9.space/PHI9.SPACE.svg",
+		},
+	},
 };
 ---
 <BaseLayout

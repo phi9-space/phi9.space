@@ -1,13 +1,13 @@
 ---
 interface Props {
-  tags: string[];
-  activeTag?: string | null;
-  placement?: 'rail' | 'inline';
+	tags: string[];
+	activeTag?: string | null;
+	placement?: "rail" | "inline";
 }
 
-const { tags, activeTag = null, placement = 'rail' } = Astro.props as Props;
+const { tags, activeTag = null, placement = "rail" } = Astro.props as Props;
 const sorted = [...new Set(tags)].sort((a, b) => a.localeCompare(b));
-const slotName = placement === 'rail' ? 'rail' : undefined;
+const slotName = placement === "rail" ? "rail" : undefined;
 ---
 <section class:list={{ 'tag-filter': true, 'tag-filter--inline': placement === 'inline' }} slot={slotName}>
   <p class="tag-filter__title">Tags</p>

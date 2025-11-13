@@ -1,43 +1,46 @@
 ---
-import BaseLayout from '@layouts/BaseLayout.astro';
-import MarkdownRenderer from '@components/MarkdownRenderer.astro';
-import LatestFeed from '@components/LatestFeed.astro';
-import TableOfContents from '@components/TableOfContents.astro';
-import { getCollection } from 'astro:content';
+import { getCollection } from "astro:content";
+import LatestFeed from "@components/LatestFeed.astro";
+import MarkdownRenderer from "@components/MarkdownRenderer.astro";
+import TableOfContents from "@components/TableOfContents.astro";
+import BaseLayout from "@layouts/BaseLayout.astro";
 
 export async function getStaticPaths() {
-  const posts = await getCollection('blog', (post) => !post.data.draft);
-  return posts.map((post) => ({
-    params: { slug: post.slug },
-    props: { entry: post }
-  }));
+	const posts = await getCollection("blog", (post) => !post.data.draft);
+	return posts.map((post) => ({
+		params: { slug: post.slug },
+		props: { entry: post },
+	}));
 }
 
 const { entry } = Astro.props;
 
 const { Content, headings } = await entry.render();
-const siblingPosts = await getCollection('blog', (post) => !post.data.draft && post.slug !== entry.slug);
+const siblingPosts = await getCollection(
+	"blog",
+	(post) => !post.data.draft && post.slug !== entry.slug,
+);
 
 const structuredData = {
-  '@context': 'https://schema.org',
-  '@type': 'BlogPosting',
-  headline: entry.data.title,
-  description: entry.data.description,
-  datePublished: entry.data.pubDate.toISOString(),
-  dateModified: (entry.data.updatedDate ?? entry.data.pubDate).toISOString(),
-  articleSection: entry.data.tags,
-  author: {
-    '@type': 'Organization',
-    name: 'phi9.space'
-  },
-  publisher: {
-    '@type': 'Organization',
-    name: 'phi9.space',
-    logo: {
-      '@type': 'ImageObject',
-      url: 'https://phi9.space/PHI9.SPACE.svg'
-    }
-  }
+	"@context": "https://schema.org",
+	"@type": "BlogPosting",
+	headline: entry.data.title,
+	description: entry.data.description,
+	datePublished: entry.data.pubDate.toISOString(),
+	dateModified: (entry.data.updatedDate ?? entry.data.pubDate).toISOString(),
+	articleSection: entry.data.tags,
+	author: {
+		"@type": "Organization",
+		name: "phi9.space",
+	},
+	publisher: {
+		"@type": "Organization",
+		name: "phi9.space",
+		logo: {
+			"@type": "ImageObject",
+			url: "https://phi9.space/PHI9.SPACE.svg",
+		},
+	},
 };
 ---
 <BaseLayout

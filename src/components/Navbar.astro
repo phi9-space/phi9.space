@@ -1,10 +1,10 @@
 ---
 const links = [
-  { href: '/blog', label: 'Research', shortcut: 'R' },
-  { href: '/manifesto', label: 'About' }
+	{ href: "/blog", label: "Research", shortcut: "R" },
+	{ href: "/manifesto", label: "About" },
 ];
 
-const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
+const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
 ---
 <header class="nav">
   <a class="nav__logo" href="/" aria-label="phi9.space home">

@@ -1,14 +1,14 @@
 ---
 interface Heading {
-  depth: number;
-  slug: string;
-  text: string;
+	depth: number;
+	slug: string;
+	text: string;
 }
 
 interface Props {
-  Content: any;
-  raw: string;
-  headings?: Heading[];
+	Content: any;
+	raw: string;
+	headings?: Heading[];
 }
 
 const { Content, raw, headings = [] } = Astro.props as Props;

@@ -1,27 +1,27 @@
 ---
-import SeoHead from '../components/SeoHead.astro';
-import Navbar from '../components/Navbar.astro';
-import Footer from '../components/Footer.astro';
-import AsciiShader from '../components/AsciiShader.astro';
-import '../styles/global.css';
+import AsciiShader from "../components/AsciiShader.astro";
+import Footer from "../components/Footer.astro";
+import Navbar from "../components/Navbar.astro";
+import SeoHead from "../components/SeoHead.astro";
+import "../styles/global.css";
 
 interface Props {
-  title?: string;
-  description?: string;
-  structuredData?: Record<string, any> | null;
-  ogImage?: string;
-  pageType?: 'website' | 'article';
+	title?: string;
+	description?: string;
+	structuredData?: Record<string, any> | null;
+	ogImage?: string;
+	pageType?: "website" | "article";
 }
 
 const {
-  title = 'phi9.space',
-  description = 'Enabling situational awareness in Physical AI systems.',
-  structuredData = null,
-  ogImage = '/PHI9.SPACE.svg',
-  pageType = 'website'
+	title = "phi9.space",
+	description = "Enabling situational awareness in Physical AI systems.",
+	structuredData = null,
+	ogImage = "/PHI9.SPACE.svg",
+	pageType = "website",
 } = Astro.props as Props;
 
-const hasLeftSlot = Astro.slots.has('left');
+const hasLeftSlot = Astro.slots.has("left");
 ---
 <html lang="en" data-view-mode="human">
   <head>
