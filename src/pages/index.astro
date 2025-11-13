@@ -6,13 +6,19 @@ const structuredData = {
 	"@type": "Organization",
 	name: "phi9.space",
 	url: "https://phi9.space",
-	description: "Physical AI situational awareness and GPS-denied navigation systems",
+	description: "Enabling situational awareness in physical agents",
 	logo: "https://phi9.space/PHI9.SPACE.svg",
 	sameAs: ["https://github.com/a3fckx/phi9.space"],
 };
 ---
 <BaseLayout
-  title="phi9.space — Physical AI situational awareness"
-  description="Physical AI situational awareness and GPS-denied navigation systems"
+  title="phi9.space — Enabling situational awareness in physical agents"
+  description="Enabling situational awareness in physical agents"
   structuredData={structuredData}
-/>
+>
+  <meta http-equiv="refresh" content="0; url=/manifesto" />
+</BaseLayout>
+
+<script>
+  window.location.href = "/manifesto";
+</script>
