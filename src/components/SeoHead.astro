@@ -38,7 +38,5 @@ const canonicalUrl = new URL(Astro.request.url, Astro.site ?? "https://phi9.spac
 <meta name="twitter:image" content={ogImage} />
 
 {structuredData && (
-  <script type="application/ld+json">
-    {JSON.stringify(structuredData)}
-  </script>
+  <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
 )}
