@@ -75,7 +75,9 @@ async function main() {
 	}
 
 	const failures = [];
-	const publishableNotes = notes.filter((note) => note.data.sourcePath !== "__placeholder__");
+	const publishableNotes = notes.filter(
+		(note) => note.data.sourcePath !== "__placeholder__" && note.data.publish !== false,
+	);
 
 	const slugSet = new Set();
 	const slugFirstPath = new Map();
@@ -87,6 +89,11 @@ async function main() {
 			continue;
 		}
 
+		// Skip unpublished notes — they are intentionally hidden
+		if (note.data.publish === false) {
+			continue;
+		}
+
 		if (slugSet.has(note.slug)) {
 			failures.push(
 				`Duplicate slug in synced content: ${note.slug} (${slugFirstPath.get(note.slug)} and ${note.relativePath})`,
@@ -95,10 +102,6 @@ async function main() {
 		slugSet.add(note.slug);
 		if (!slugFirstPath.has(note.slug)) {
 			slugFirstPath.set(note.slug, note.relativePath);
-		}
-
-		if (note.data.publish !== true) {
-			failures.push(`Synced note ${note.relativePath} must keep publish: true.`);
 		}
 		if (!ALLOWED_TYPES.has(String(note.data.type ?? "").toLowerCase())) {
 			failures.push(`Synced note ${note.relativePath} has invalid type (${note.data.type ?? "missing"}).`);

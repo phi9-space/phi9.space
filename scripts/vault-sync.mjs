@@ -381,9 +381,10 @@ function noteCanonicalUrl(note) {
 
 async function main() {
 	if (!(await pathExists(vaultNotesDir))) {
-		throw new Error(
-			`Vault folder not found at ${vaultNotesDir}. Set PHI9_VAULT_PATH or add a .vault symlink in repo root.`,
+		console.warn(
+			`[vault:sync] Vault folder not found at ${vaultNotesDir}. Set PHI9_VAULT_PATH or add a .vault symlink in repo root. Skipping sync.`,
 		);
+		return;
 	}
 
 	const markdownFiles = await walkMarkdownFiles(vaultNotesDir);

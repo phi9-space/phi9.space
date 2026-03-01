@@ -21,6 +21,7 @@ const blog = defineCollection({
 		tags: z.array(z.string()).default([]),
 		heroImage: z.string().optional(),
 		draft: z.boolean().default(false),
+		author: z.string().optional(),
 	}),
 });
 
@@ -43,6 +44,18 @@ const vault = defineCollection({
 		cover: z.string().optional(),
 		video: z.string().optional(),
 		sourcePath: z.string().optional(),
+		// HuggingFace integration
+		hfRepoId: z.string().optional(),
+		hfDownloads: z.number().optional(),
+		hfLikes: z.number().optional(),
+		hfLastModified: z.string().optional(),
+		access: z.enum(["public", "request", "private"]).optional().default("public"),
+		tier: z.number().optional().default(2),
+		domain: z.string().optional().default("tabletop"),
+		taskType: z.string().optional().default("pick-place"),
+		episodes: z.number().optional(),
+		totalHours: z.number().optional(),
+		formats: z.array(z.string()).optional(),
 	}),
 });
 

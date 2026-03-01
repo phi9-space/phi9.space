@@ -3,7 +3,7 @@ title: How Labs Collect Data
 description: >-
   A breakdown of how major robotics labs acquire training data — what they do
   internally, what they buy, and where the gaps are that Phi9 can fill.
-publish: true
+publish: false
 type: note
 category: research
 datasetKind: other

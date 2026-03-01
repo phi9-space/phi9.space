@@ -3,7 +3,7 @@ title: Phi9 Catalog Reference
 description: >-
   Technical deep dive behind the Phi9 catalog — scoring formulas, tag
   taxonomies, eval protocols, and quality dimensions.
-publish: true
+publish: false
 type: note
 category: research
 datasetKind: other

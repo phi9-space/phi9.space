@@ -158,41 +158,6 @@ const currentSection = (() => {
             <p class="vault-empty">No headings.</p>
           )}
         </section>
-
-        <section class="vault-pane__section">
-          <h2>Backlinks</h2>
-          {backlinks.length > 0 ? (
-            <ul class="vault-backlinks">
-              {backlinks.map((item) => (
-                <li>
-                  <a href={item.url}>{item.title}</a>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p class="vault-empty">No backlinks yet.</p>
-          )}
-        </section>
-
-        <section class="vault-pane__section">
-          <h2>Properties</h2>
-          {
-            Object.keys(properties).length > 0 ? (
-              <dl class="vault-properties">
-                {Object.entries(properties)
-                  .filter(([, value]) => value !== null && value !== undefined && value !== "")
-                  .map(([key, value]) => (
-                    <>
-                      <dt>{key}</dt>
-                      <dd>{Array.isArray(value) ? value.join(", ") : String(value)}</dd>
-                    </>
-                  ))}
-              </dl>
-            ) : (
-              <p class="vault-empty">No properties.</p>
-            )
-          }
-        </section>
       </aside>
     </div>
 

@@ -4,7 +4,7 @@ description: >-
   Per-domain breakdown of existing benchmarks, open datasets, SOTA numbers, and
   how Phi9 data compares across tabletop, manufacturing, household, dexterous,
   and locomotion domains.
-publish: true
+publish: false
 type: note
 category: research
 datasetKind: other

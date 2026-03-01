@@ -36,6 +36,10 @@ const updatedLabel = entry.data.updated
 const metadataItems = [
 	{ key: "Category", value: entry.data.category },
 	{ key: "Dataset Kind", value: entry.data.datasetKind },
+	{ key: "Tier", value: entry.data.tier?.toString() },
+	{ key: "Domain", value: entry.data.domain },
+	{ key: "Task Type", value: entry.data.taskType },
+	{ key: "Access", value: entry.data.access === 'public' ? 'Public' : entry.data.access === 'request' ? 'Request Access' : 'Private' },
 	{ key: "Status", value: entry.data.status },
 	{ key: "Updated", value: updatedLabel },
 	{ key: "Series", value: entry.data.series || "" },
@@ -53,9 +57,25 @@ const canonicalPath = `/datasets/${entry.slug}/`;
   <article class="dataset-detail">
     <section class="dataset-main">
       <header class="dataset-header">
-        <p class="dataset-kicker">Dataset</p>
+        <p class="dataset-kicker">Dataset {entry.data.access !== 'public' && `• ${entry.data.access === 'request' ? '🔒 Request Access' : '🔐 Private'}`}</p>
         <h1>{entry.data.title}</h1>
         {entry.data.description && <p class="dataset-description">{entry.data.description}</p>}
+
+        {entry.data.hfRepoId && (
+          <div class="hf-banner">
+            <a href={`https://huggingface.co/datasets/${entry.data.hfRepoId}`} target="_blank" rel="noopener" class="hf-link">
+              🤗 Available on HuggingFace Hub
+            </a>
+            <div class="hf-stats">
+              {entry.data.hfDownloads !== undefined && (
+                <span>⬇️ {entry.data.hfDownloads.toLocaleString()} downloads</span>
+              )}
+              {entry.data.hfLikes !== undefined && (
+                <span>❤️ {entry.data.hfLikes.toLocaleString()} likes</span>
+              )}
+            </div>
+          </div>
+        )}
 
         {entry.data.tags.length > 0 && (
           <p class="dataset-tags">
@@ -69,6 +89,11 @@ const canonicalPath = `/datasets/${entry.slug}/`;
           <a href="/vault/">Open Vault Shell</a>
           <a href="/vault/graph/">Open Graph</a>
           <a href="/datasets/">Back to Datasets</a>
+          {entry.data.hfRepoId && (
+            <a href={`https://huggingface.co/datasets/${entry.data.hfRepoId}`} target="_blank" rel="noopener" class="hf-action">
+              🤗 View on HF
+            </a>
+          )}
         </div>
       </header>
 
@@ -310,6 +335,47 @@ const canonicalPath = `/datasets/${entry.slug}/`;
   .dataset-empty {
     margin: 0;
     color: var(--color-muted);
+  }
+
+  .hf-banner {
+    margin: 1rem 0;
+    padding: 0.75rem 1rem;
+    background: color-mix(in srgb, #ffcc4d 8%, var(--color-surface));
+    border: 1px solid color-mix(in srgb, #ffcc4d 30%, transparent);
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .hf-banner .hf-link {
+    color: #d97706;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .hf-banner .hf-link:hover {
+    text-decoration: underline;
+  }
+
+  .hf-stats {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.85rem;
+    color: var(--color-muted);
+  }
+
+  .dataset-actions .hf-action {
+    background: #ffcc4d;
+    color: #92400e;
+    border-color: #f59e0b;
+  }
+
+  .dataset-actions .hf-action:hover {
+    background: #fbbf24;
+    color: #78350f;
   }
 
   @media (max-width: 1040px) {

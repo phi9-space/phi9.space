@@ -11,6 +11,10 @@ interface Props {
   status?: string;
   updated?: string;
   featured?: boolean;
+  hfRepoId?: string;
+  hfDownloads?: number;
+  hfLikes?: number;
+  access?: 'public' | 'request' | 'private';
 }
 
 const {
@@ -25,20 +29,43 @@ const {
   status = "published",
   updated,
   featured = false,
+  hfRepoId,
+  hfDownloads,
+  hfLikes,
+  access = 'public',
 } = Astro.props;
 ---
 
-<article class={`model-card ${featured ? 'featured' : ''}`}>
+<article class={`model-card ${featured ? 'featured' : ''} ${access !== 'public' ? 'access-' + access : ''}`}>
   <div class="card-header">
     <div class="card-badges">
       <span class="badge badge--tier">Tier {tier}</span>
       <span class="badge badge--domain">{domain}</span>
+      {access === 'request' && <span class="badge badge--access">🔒 Request Access</span>}
+      {access === 'private' && <span class="badge badge--private">🔐 Private</span>}
       {featured && <span class="badge badge--featured">★ Featured</span>}
     </div>
     <h3 class="card-title">
       <a href={`/datasets/${slug}/`}>{title}</a>
     </h3>
     <p class="card-description">{description}</p>
+    {hfRepoId && (
+      <div class="hf-meta">
+        <a href={`https://huggingface.co/datasets/${hfRepoId}`} target="_blank" rel="noopener" class="hf-link">
+          🤗 {hfRepoId}
+        </a>
+        {hfDownloads !== undefined && (
+          <span class="hf-stat" title="Downloads">
+            ⬇️ {hfDownloads.toLocaleString()}
+          </span>
+        )}
+        {hfLikes !== undefined && (
+          <span class="hf-stat" title="Likes">
+            ❤️ {hfLikes.toLocaleString()}
+          </span>
+        )}
+      </div>
+    )}
   </div>
 
   <div class="card-stats">
@@ -82,8 +109,19 @@ const {
   </div>
 
   <div class="card-actions">
-    <a href={`/datasets/${slug}/`} class="btn btn--primary">View Dataset</a>
-    <a href={`/datasets/${slug}/`} class="btn btn--secondary">Preview</a>
+    <a href={`/datasets/${slug}/`} class="btn btn--primary">
+      {access === 'public' ? 'View Dataset' : 'Request Access'}
+    </a>
+    {hfRepoId && access === 'public' && (
+      <a href={`https://huggingface.co/datasets/${hfRepoId}`} target="_blank" rel="noopener" class="btn btn--secondary">
+        🤗 HF Hub
+      </a>
+    )}
+    {hfRepoId && access === 'request' && (
+      <a href={`https://huggingface.co/datasets/${hfRepoId}`} target="_blank" rel="noopener" class="btn btn--secondary">
+        Request on HF
+      </a>
+    )}
   </div>
 </article>
 
@@ -142,6 +180,51 @@ const {
   .badge--featured {
     background: color-mix(in srgb, var(--color-accent) 85%, transparent);
     color: white;
+  }
+
+  .badge--access {
+    background: color-mix(in srgb, #f59e0b 20%, transparent);
+    color: #d97706;
+    border: 1px solid color-mix(in srgb, #f59e0b 40%, transparent);
+  }
+
+  .badge--private {
+    background: color-mix(in srgb, #ef4444 20%, transparent);
+    color: #dc2626;
+    border: 1px solid color-mix(in srgb, #ef4444 40%, transparent);
+  }
+
+  .hf-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--color-border);
+    font-size: 0.8rem;
+  }
+
+  .hf-link {
+    color: var(--color-accent);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .hf-link:hover {
+    text-decoration: underline;
+  }
+
+  .hf-stat {
+    color: var(--color-muted);
+  }
+
+  .model-card.access-request {
+    border-left: 3px solid #f59e0b;
+  }
+
+  .model-card.access-private {
+    border-left: 3px solid #ef4444;
+    opacity: 0.9;
   }
 
   .card-title {

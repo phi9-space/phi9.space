@@ -3,7 +3,7 @@ title: Synthetic Data Pipeline
 description: >-
   The toolchain for multiplying real-world seed data into 10x-100x training
   volume through simulation, domain randomization, and generative models.
-publish: true
+publish: false
 type: note
 category: research
 datasetKind: other

@@ -1,0 +1,158 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "@layouts/BaseLayout.astro";
+
+export async function getStaticPaths() {
+	const posts = await getCollection("blog");
+	return posts
+		.filter((post) => !post.data.draft)
+		.map((post) => ({
+			params: { slug: post.slug },
+			props: post,
+		}));
+}
+
+const post = Astro.props;
+const { Content } = await post.render();
+---
+
+<BaseLayout
+	title={`${post.data.title} — phi9.space`}
+	description={post.data.description}
+	pageType="article"
+>
+  <link slot="head" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css" />
+  <article class="research-post">
+    <header>
+      <p class="eyebrow">Research</p>
+      <h1>{post.data.title}</h1>
+      <div class="post-meta">
+        {post.data.author && <span class="post-author">{post.data.author}</span>}
+        <span class="post-date">{post.data.pubDate.toLocaleDateString()}</span>
+      </div>
+      {post.data.tags.length > 0 && (
+        <div class="post-tags">
+          {post.data.tags.map((tag) => (
+            <span class="tag">{tag}</span>
+          ))}
+        </div>
+      )}
+    </header>
+
+    <div class="post-content">
+      <Content />
+    </div>
+
+    <footer class="post-footer">
+      <a href="/research">← Back to Research</a>
+    </footer>
+  </article>
+</BaseLayout>
+
+<style>
+  .research-post {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .eyebrow {
+    margin: 0;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    font-weight: 700;
+  }
+
+  header {
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  header h1 {
+    margin: 0;
+  }
+
+  .post-meta {
+    display: flex;
+    gap: 0.75rem;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .post-author {
+    color: var(--color-accent);
+    font-weight: 600;
+  }
+
+  .post-date {
+    color: var(--color-muted);
+  }
+
+  .post-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+
+  .tag {
+    font-size: 0.72rem;
+    color: var(--color-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .post-content {
+    display: grid;
+    gap: 0.15rem;
+  }
+
+  .post-content :global(p),
+  .post-content :global(ul),
+  .post-content :global(ol),
+  .post-content :global(blockquote) {
+    max-width: var(--measure-reading);
+  }
+
+  .post-content :global(img) {
+    max-width: min(100%, 800px);
+    height: auto;
+    border-radius: 0.5rem;
+  }
+
+  .post-content :global(video) {
+    max-width: min(100%, 800px);
+    height: auto;
+    border-radius: 0.5rem;
+  }
+
+  .post-content :global(table) {
+    max-width: min(100%, 900px);
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+
+  .post-content :global(th),
+  .post-content :global(td) {
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--color-border);
+    text-align: left;
+  }
+
+  .post-content :global(th) {
+    background: var(--color-surface);
+    font-weight: 600;
+  }
+
+  .post-footer {
+    padding-top: 1rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .post-footer a {
+    color: var(--color-accent);
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+</style>

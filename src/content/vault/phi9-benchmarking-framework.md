@@ -4,7 +4,7 @@ description: >-
   The methodology for measuring and comparing robotics datasets — what
   dimensions to measure, how to measure them, and how to structure benchmark
   reports.
-publish: true
+publish: false
 type: note
 category: research
 datasetKind: other

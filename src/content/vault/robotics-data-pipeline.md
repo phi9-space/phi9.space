@@ -4,7 +4,7 @@ description: >-
   Comprehensive technical reference documenting how robotics data flows from raw
   sensor capture through training pipelines — covering formats, modalities, and
   architecture consumption patterns.
-publish: true
+publish: false
 type: note
 category: research
 datasetKind: other

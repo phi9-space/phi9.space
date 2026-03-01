@@ -64,12 +64,16 @@ const regularDatasets = datasets.filter((entry) => !entry.featured);
             title={dataset.title}
             description={dataset.excerpt || ""}
             slug={dataset.slug}
-            tier={2}
-            domain="tabletop"
-            taskType="pick-place"
+            tier={dataset.tier || 2}
+            domain={dataset.domain || "tabletop"}
+            taskType={dataset.taskType || "pick-place"}
             status={dataset.status}
             updated={dataset.updated}
             featured={dataset.featured}
+            hfRepoId={dataset.hfRepoId}
+            hfDownloads={dataset.hfDownloads}
+            hfLikes={dataset.hfLikes}
+            access={dataset.access || 'public'}
           />
         ))}
       </div>

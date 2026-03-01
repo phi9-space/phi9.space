@@ -4,7 +4,7 @@ description: >-
   Training data for robot learning — from egocentric video to full-body motion
   capture to sim-ready demonstrations. The complete catalog of Phi9 datasets and
   services.
-publish: true
+publish: false
 type: note
 category: research
 datasetKind: other

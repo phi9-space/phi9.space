@@ -3,20 +3,20 @@ import { getEntry } from "astro:content";
 import MarkdownRenderer from "@components/MarkdownRenderer.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
 
-const manifesto = await getEntry("pages", "manifesto");
-const { Content } = await manifesto.render();
+const about = await getEntry("pages", "about");
+const { Content } = await about.render();
 ---
 
 <BaseLayout
-	title={`${manifesto.data.title} — phi9.space`}
-	description={manifesto.data.description}
+	title={`${about.data.title} — phi9.space`}
+	description={about.data.description}
 	pageType="article"
 >
   <article>
-    <p class="eyebrow">Lab Manifesto</p>
-    <h1>{manifesto.data.title}</h1>
-    {manifesto.data.heroSubtitle && <p class="subtitle">{manifesto.data.heroSubtitle}</p>}
-    <MarkdownRenderer Content={Content} raw={manifesto.body} />
+    <p class="eyebrow">phi9.space</p>
+    <h1>{about.data.title}</h1>
+    {about.data.heroSubtitle && <p class="subtitle">{about.data.heroSubtitle}</p>}
+    <MarkdownRenderer Content={Content} raw={about.body} />
   </article>
 </BaseLayout>
 

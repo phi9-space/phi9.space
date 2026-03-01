@@ -3,7 +3,7 @@ title: phi9/tabletop-pick-place-v1
 description: >-
   Full-body motion capture + multi-view RGB of varied pick-and-place tasks on a
   tabletop. The first Phi9 dataset — the calling card.
-publish: true
+publish: false
 type: dataset
 category: datasets
 datasetKind: model-card

@@ -1,8 +1,8 @@
 ---
 const links = [
+	{ href: "/lab/about", label: "About" },
 	{ href: "/lab", label: "Lab" },
 	{ href: "/research", label: "Research" },
-	{ href: "/datasets", label: "Datasets" },
 ];
 
 const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
@@ -28,9 +28,16 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
     <ul>
       {links.map((item) => {
         const normalizedHref = item.href.replace(/\/$/, "") || "/";
-        const active =
+        const prefixMatch =
           currentPath === normalizedHref ||
           (normalizedHref !== "/" && currentPath.startsWith(`${normalizedHref}/`));
+        const shadowed = prefixMatch && links.some((other) => {
+          const otherHref = other.href.replace(/\/$/, "") || "/";
+          return otherHref !== normalizedHref
+            && otherHref.startsWith(`${normalizedHref}/`)
+            && (currentPath === otherHref || currentPath.startsWith(`${otherHref}/`));
+        });
+        const active = prefixMatch && !shadowed;
 
         return (
           <li>

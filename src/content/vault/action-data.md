@@ -3,7 +3,7 @@ title: Action Data
 description: >-
   The tokens of motion — how robot action data works, why it's scarce, and how
   it enables physical agents to learn from trajectories.
-publish: true
+publish: false
 type: note
 category: research
 datasetKind: other
