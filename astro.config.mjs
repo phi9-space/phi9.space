@@ -6,7 +6,6 @@ import rehypeKatex from "rehype-katex";
 import rehypePrettyCode from "rehype-pretty-code";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
-import remarkObsidian from "./src/lib/remark-obsidian.mjs";
 
 const prettyCodeOptions = {
 	theme: {
@@ -26,7 +25,7 @@ export default defineConfig({
 		sitemap(),
 	],
 	markdown: {
-		remarkPlugins: [remarkGfm, remarkMath, remarkObsidian],
+		remarkPlugins: [remarkGfm, remarkMath],
 		rehypePlugins: [rehypeKatex, [rehypePrettyCode, prettyCodeOptions]],
 	},
 });

@@ -1,26 +1,20 @@
 import rss from "@astrojs/rss";
-import manifest from "@generated/vault-manifest.json";
+import { getCollection } from "astro:content";
 
 export async function GET(context) {
-	const items = (manifest.nodes || [])
-		.filter((node) => node.type === "note")
-		.slice()
-		.sort((a, b) => {
-			const aDate = a.updated ? new Date(a.updated) : new Date(0);
-			const bDate = b.updated ? new Date(b.updated) : new Date(0);
-			return bDate.valueOf() - aDate.valueOf();
-		})
-		.map((node) => ({
-			title: node.title,
-			description: node.excerpt || "",
-			pubDate: node.updated ? new Date(node.updated) : new Date(),
-			link: node.url,
-		}));
+	const posts = (await getCollection("blog"))
+		.filter((post) => !post.data.draft)
+		.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
 	return rss({
 		title: "phi9.space research feed",
-		description: "Research notes and public lab updates from phi9.space.",
+		description: "Research notes and updates from phi9.space.",
 		site: context.site ?? "https://phi9.space",
-		items,
+		items: posts.map((post) => ({
+			title: post.data.title,
+			description: post.data.description,
+			pubDate: post.data.pubDate,
+			link: `/research/${post.slug}/`,
+		})),
 	});
 }
