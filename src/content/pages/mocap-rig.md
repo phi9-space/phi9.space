@@ -37,7 +37,7 @@ Wear the suit. Attach the head-mounted camera. Perform tasks naturally. The syst
 | **Environment** | Anywhere — homes, factories, outdoors |
 | **Setup Time** | <5 minutes |
 | **Calibration** | 30 seconds |
-| **Battery** | 6 hours continuous |
+| **Battery** | 3 hours continuous |
 | **Output Formats** | BVH, MVNX, CSV, HDF5, LeRobot v2.1 |
 
 ## Why This Matters for Physical AI
@@ -53,7 +53,7 @@ Fine-tuning needs high-quality reference data. Per-episode quality metrics. Clea
 
 ## Data Quality
 
-**Synchronized capture:** Motion and video align at the frame level. When the hand reaches for an object in video, the corresponding joint trajectory is at the exact same timestamp. <3ms drift across 6-hour sessions.
+**Synchronized capture:** Motion and video align at the frame level. When the hand reaches for an object in video, the corresponding joint trajectory is at the exact same timestamp. <3ms drift across 3-hour sessions.
 
 **Metadata-rich:** Every episode ships with task labels, subtask boundaries, object annotations, and quality scores. The metadata that makes data usable for training.
 

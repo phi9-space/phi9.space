@@ -27,7 +27,6 @@ const { Content } = await post.render();
       <p class="eyebrow">Research</p>
       <h1>{post.data.title}</h1>
       <div class="post-meta">
-        {post.data.author && <span class="post-author">{post.data.author}</span>}
         <span class="post-date">{post.data.pubDate.toLocaleDateString()}</span>
       </div>
       {post.data.tags.length > 0 && (

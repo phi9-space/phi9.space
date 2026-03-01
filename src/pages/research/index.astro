@@ -26,7 +26,6 @@ const posts = (await getCollection("blog"))
         {posts.map((post) => (
           <article class="post-entry">
             <div class="post-meta">
-              {post.data.author && <span class="post-author">{post.data.author}</span>}
               <span class="post-date">{post.data.pubDate.toLocaleDateString()}</span>
             </div>
             <h3>
