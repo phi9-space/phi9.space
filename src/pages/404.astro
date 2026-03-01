@@ -20,12 +20,12 @@ import BaseLayout from "@layouts/BaseLayout.astro";
   .not-found h1 {
     margin: 0;
     font-size: clamp(2.5rem, 5vw, 3.2rem);
-    color: var(--color-primary);
+    color: var(--color-text);
   }
 
   .not-found p {
     margin: 0 auto;
-    color: rgba(32, 32, 32, 0.68);
+    color: var(--color-muted);
     max-width: 40ch;
   }
 
@@ -33,10 +33,10 @@ import BaseLayout from "@layouts/BaseLayout.astro";
     justify-self: center;
     margin-top: 1.5rem;
     padding: 0.75rem 1.25rem;
-    border-radius: var(--radius-button);
-    background: var(--color-accent-soft);
+    border-radius: var(--radius-md);
+    background: color-mix(in srgb, var(--color-accent) 14%, transparent);
     border: 1px solid var(--color-border);
-    color: var(--color-primary);
-    font-weight: 500;
+    color: var(--color-text);
+    font-weight: 600;
   }
 </style>

@@ -6,19 +6,125 @@ const structuredData = {
 	"@type": "Organization",
 	name: "phi9.space",
 	url: "https://phi9.space",
-	description: "Enabling situational awareness in physical agents",
+	description:
+		"Physical AI research lab focused on domain-specific robotics data, post-training, and deployment intelligence.",
 	logo: "https://phi9.space/PHI9.SPACE.svg",
 	sameAs: ["https://github.com/a3fckx/phi9.space"],
 };
 ---
+
 <BaseLayout
-  title="phi9.space — Enabling situational awareness in physical agents"
-  description="Enabling situational awareness in physical agents"
-  structuredData={structuredData}
+	title="phi9.space — Physical AI Lab"
+	description="Research lab building Physical AI systems and datasets from a vault-native workflow."
+	structuredData={structuredData}
 >
-  <meta http-equiv="refresh" content="0; url=/manifesto" />
+  <div class="page-flow">
+    <section class="hero">
+      <p class="hero__kicker">PHI9 LAB</p>
+      <h1>Physical AI research, data systems, and deployable intelligence.</h1>
+      <p>
+        phi9.space is built as a vault-native publishing system. Research notes, datasets, and lab narratives
+        are authored in Obsidian and rendered on the web with deterministic sync.
+      </p>
+      <div class="hero__actions">
+        <a href="/lab/manifesto">Read manifesto →</a>
+        <a href="/research">Browse research →</a>
+        <a href="/datasets">Explore datasets →</a>
+      </div>
+    </section>
+
+    <section class="home-grid">
+      <article>
+        <h2>Lab</h2>
+        <p>Active development direction, roadmap logic, and operating notes.</p>
+        <a href="/lab">Enter Lab →</a>
+      </article>
+
+      <article>
+        <h2>Research</h2>
+        <p>Published technical writing and findings presented to users.</p>
+        <a href="/research">See Research →</a>
+      </article>
+
+      <article>
+        <h2>Datasets</h2>
+        <p>Catalogs and model-card style data artifacts for physical AI systems.</p>
+        <a href="/datasets">See Datasets →</a>
+      </article>
+    </section>
+  </div>
 </BaseLayout>
 
-<script>
-  window.location.href = "/manifesto";
-</script>
+<style>
+  .page-flow {
+    display: grid;
+    gap: clamp(1.6rem, 3vw, 2.3rem);
+  }
+
+  .hero {
+    display: grid;
+    gap: 0.85rem;
+    padding: 0;
+  }
+
+  .hero__kicker {
+    margin: 0;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    font-weight: 700;
+  }
+
+  .hero p {
+    max-width: 72ch;
+    margin: 0;
+    color: var(--color-muted);
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.95rem;
+    margin-top: 0.3rem;
+  }
+
+  .hero__actions a {
+    color: var(--color-muted);
+    font-size: 0.87rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 550;
+  }
+
+  .hero__actions a:first-child {
+    color: var(--color-accent);
+  }
+
+  .hero__actions a:hover {
+    color: var(--color-accent);
+    text-decoration: none;
+  }
+
+  .home-grid {
+    display: grid;
+    gap: 1.1rem;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+
+  .home-grid article {
+    padding: 0;
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .home-grid p {
+    margin: 0;
+    color: var(--color-muted);
+  }
+
+  .home-grid a {
+    color: var(--color-accent);
+    font-weight: 600;
+  }
+</style>

@@ -1,0 +1,115 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+	title="Lab — phi9.space"
+	description="Lab overview, operating model, and research direction for phi9.space."
+>
+  <div class="page-flow">
+    <section class="lab-hero">
+      <p class="lab-hero__kicker">LAB</p>
+      <h1>Research-first, deployment-aware Physical AI lab.</h1>
+      <p>
+        We focus on action data capture, synthetic multiplication, post-training loops, and deployment feedback.
+        The vault is the living system of record for this process.
+      </p>
+      <div class="lab-hero__actions">
+        <a href="/lab/manifesto">Read manifesto →</a>
+        <a href="/research">Browse research →</a>
+        <a href="/datasets">Explore datasets →</a>
+      </div>
+    </section>
+
+    <section class="lab-grid">
+      <article>
+        <h2>Manifesto</h2>
+        <p>Core philosophy and why we believe intelligence decouples from hardware constraints.</p>
+        <a href="/lab/manifesto">Read manifesto →</a>
+      </article>
+      <article>
+        <h2>Research operating model</h2>
+        <p>Bottom-up hypothesis loops, task decomposition, and field deployment instrumentation.</p>
+      </article>
+      <article>
+        <h2>Vault-native publishing</h2>
+        <p>Obsidian remains source of truth. Published notes are exported deterministically for the web.</p>
+        <a href="/lab/publishing">Open publishing guide →</a>
+      </article>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .page-flow {
+    display: grid;
+    gap: clamp(1.6rem, 3vw, 2.3rem);
+  }
+
+  .lab-hero {
+    display: grid;
+    gap: 0.85rem;
+    padding: 0;
+  }
+
+  .lab-hero__kicker {
+    margin: 0;
+    color: var(--color-accent);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-size: 0.73rem;
+    font-weight: 700;
+  }
+
+  .lab-hero p {
+    margin: 0;
+    max-width: 74ch;
+    color: var(--color-muted);
+  }
+
+  .lab-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.95rem;
+    margin-top: 0.3rem;
+  }
+
+  .lab-hero__actions a {
+    color: var(--color-muted);
+    font-size: 0.87rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 550;
+  }
+
+  .lab-hero__actions a:first-child {
+    color: var(--color-accent);
+  }
+
+  .lab-hero__actions a:hover {
+    color: var(--color-accent);
+    text-decoration: none;
+  }
+
+  .lab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.1rem;
+  }
+
+  .lab-grid article {
+    padding: 0;
+    display: grid;
+    gap: 0.45rem;
+  }
+
+  .lab-grid p {
+    margin: 0;
+    color: var(--color-muted);
+  }
+
+  .lab-grid a {
+    font-weight: 600;
+    color: var(--color-accent);
+  }
+</style>

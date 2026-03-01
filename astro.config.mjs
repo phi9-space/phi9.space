@@ -4,6 +4,7 @@ import tailwind from "@astrojs/tailwind";
 import { defineConfig } from "astro/config";
 import rehypePrettyCode from "rehype-pretty-code";
 import remarkGfm from "remark-gfm";
+import remarkObsidian from "./src/lib/remark-obsidian.mjs";
 
 const prettyCodeOptions = {
 	theme: {
@@ -23,7 +24,7 @@ export default defineConfig({
 		sitemap(),
 	],
 	markdown: {
-		remarkPlugins: [remarkGfm],
+		remarkPlugins: [remarkGfm, remarkObsidian],
 		rehypePlugins: [[rehypePrettyCode, prettyCodeOptions]],
 	},
 });

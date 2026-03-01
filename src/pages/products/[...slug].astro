@@ -1,5 +1,15 @@
 ---
-const target = "/research/";
+import manifest from "@generated/vault-manifest.json";
+
+export async function getStaticPaths() {
+	return (manifest.nodes || [])
+		.filter((node) => node.type === "product")
+		.map((node) => ({
+			params: { slug: node.slug },
+		}));
+}
+
+const target = "/lab/";
 Astro.response.headers.set("Location", target);
 Astro.response.status = 308;
 ---

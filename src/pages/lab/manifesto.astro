@@ -1,0 +1,38 @@
+---
+import { getEntry } from "astro:content";
+import MarkdownRenderer from "@components/MarkdownRenderer.astro";
+import BaseLayout from "@layouts/BaseLayout.astro";
+
+const manifesto = await getEntry("pages", "manifesto");
+const { Content } = await manifesto.render();
+---
+
+<BaseLayout
+	title={`${manifesto.data.title} — phi9.space`}
+	description={manifesto.data.description}
+	pageType="article"
+>
+  <article>
+    <p class="eyebrow">Lab Manifesto</p>
+    <h1>{manifesto.data.title}</h1>
+    {manifesto.data.heroSubtitle && <p class="subtitle">{manifesto.data.heroSubtitle}</p>}
+    <MarkdownRenderer Content={Content} raw={manifesto.body} />
+  </article>
+</BaseLayout>
+
+<style>
+  .eyebrow {
+    margin: 0;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    font-weight: 700;
+  }
+
+  .subtitle {
+    margin-top: -0.3rem;
+    color: var(--color-muted);
+    max-width: 70ch;
+  }
+</style>
