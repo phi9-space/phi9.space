@@ -27,6 +27,7 @@ const { Content } = await post.render();
       <p class="eyebrow">Research</p>
       <h1>{post.data.title}</h1>
       <div class="post-meta">
+        <a href="mailto:research@phi9.space" class="post-email">research@phi9.space</a>
         <span class="post-date">{post.data.pubDate.toLocaleDateString()}</span>
       </div>
       {post.data.tags.length > 0 && (
@@ -80,9 +81,14 @@ const { Content } = await post.render();
     letter-spacing: 0.04em;
   }
 
-  .post-author {
+  .post-email {
     color: var(--color-accent);
     font-weight: 600;
+    text-decoration: none;
+  }
+
+  .post-email:hover {
+    text-decoration: underline;
   }
 
   .post-date {
