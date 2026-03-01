@@ -1,87 +1,74 @@
----
-import { getCollection } from "astro:content";
-
-const posts = await getCollection("blog");
-const latestPost = posts
-	.filter((post) => !post.data.draft)
-	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())[0];
----
-
-<footer class="footer">
-  <div class="footer__content">
-    <div class="footer__left">
-      {latestPost && (
-        <p class="footer__updated">
-          Last updated on {latestPost.data.pubDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
-        </p>
-      )}
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div class="site-footer__brand">
+      <p class="site-footer__title">phi9.space</p>
+      <p>Physical AI research lab.</p>
     </div>
-    <a href="/rss.xml" class="footer__rss">
-      <span aria-hidden="true">RSS</span>
-      <span class="sr-only">RSS Feed</span>
-    </a>
+    <nav aria-label="Footer primary links" class="site-footer__links">
+      <a href="/rss.xml">RSS</a>
+      <a href="https://github.com/phi9-space" rel="noreferrer" target="_blank">GitHub</a>
+<a href="mailto:founders@phi9.space">Email</a>
+      <a href="https://discord.gg/4TaC3amBmx" rel="noreferrer" target="_blank">Discord</a>
+    </nav>
   </div>
 </footer>
 
 <style>
-  .footer {
-    width: 100%;
-    background-color: var(--color-background);
-    padding: 2rem 1.5rem;
-    margin-top: 4rem;
+  .site-footer {
+    margin-top: 3.2rem;
+    padding: 1.1rem clamp(1rem, 2vw, 2rem) 1.6rem;
+    color: var(--color-muted);
+    font-size: 0.84rem;
   }
 
-  .footer__content {
-    max-width: 720px;
+  .site-footer__inner {
+    max-width: 1180px;
     margin: 0 auto;
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 1rem;
-    color: var(--color-primary);
-    opacity: 0.75;
-    font-size: 0.9rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.95rem 1.5rem;
+    align-items: end;
   }
 
-  .footer__left {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
+  .site-footer__brand {
+    display: grid;
+    gap: 0.1rem;
   }
 
-  .footer__updated {
-    font-size: 0.8rem;
-    opacity: 0.6;
+  .site-footer__brand p {
     margin: 0;
   }
 
-  .footer__rss {
+  .site-footer__title {
+    font-weight: 600;
+    color: var(--color-text);
+    letter-spacing: 0.01em;
+  }
+
+  .site-footer__links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.35rem 0.85rem;
+  }
+
+  .site-footer__links a {
     color: var(--color-accent);
-    text-decoration: none;
-    font-weight: 500;
+    font-weight: 520;
+    font-size: 0.82rem;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
   }
 
-  .footer__rss:hover {
-    text-decoration: underline;
-  }
+  @media (max-width: 720px) {
+    .site-footer__inner {
+      grid-template-columns: 1fr;
+      align-items: start;
+      gap: 0.45rem;
+    }
 
-  .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-  }
-
-  @media (max-width: 640px) {
-    .footer__content {
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
+    .site-footer__links {
+      justify-content: flex-start;
     }
   }
 </style>

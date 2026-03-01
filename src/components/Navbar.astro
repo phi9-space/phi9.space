@@ -1,135 +1,219 @@
 ---
 const links = [
-	{ href: "/blog", label: "Research", shortcut: "R" },
-	{ href: "/manifesto", label: "About" },
+	{ href: "/lab/about", label: "About" },
+	{ href: "/lab", label: "Lab" },
+	{ href: "/research", label: "Research" },
 ];
 
 const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
 ---
-<header class="nav">
-  <a class="nav__logo" href="/" aria-label="phi9.space home">
-    <img src="/PHI9.SPACE.svg" alt="phi9.space logotype" loading="lazy" />
+
+<div class="site-nav">
+  <a class="site-nav__brand" href="/" aria-label="phi9.space home">
+    <img src="/PHI9.SPACE.svg" alt="phi9.space" loading="lazy" />
   </a>
-  <nav>
-    <ul class="nav__list">
-      {links.map(({ href, label, shortcut }) => {
-        const normalised = href.replace(/\/$/, '') || '/';
-        const isActive = currentPath === normalised;
+  <button
+    type="button"
+    class="site-nav__toggle"
+    data-nav-toggle
+    aria-label="Toggle navigation menu"
+    aria-expanded="false"
+    aria-controls="site-nav-menu"
+  >
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+    </svg>
+  </button>
+  <nav aria-label="Primary" id="site-nav-menu" class="site-nav__menu" data-nav-menu>
+    <ul>
+      {links.map((item) => {
+        const normalizedHref = item.href.replace(/\/$/, "") || "/";
+        const prefixMatch =
+          currentPath === normalizedHref ||
+          (normalizedHref !== "/" && currentPath.startsWith(`${normalizedHref}/`));
+        const shadowed = prefixMatch && links.some((other) => {
+          const otherHref = other.href.replace(/\/$/, "") || "/";
+          return otherHref !== normalizedHref
+            && otherHref.startsWith(`${normalizedHref}/`)
+            && (currentPath === otherHref || currentPath.startsWith(`${otherHref}/`));
+        });
+        const active = prefixMatch && !shadowed;
+
         return (
-          <li class:list={{ nav__item: true, 'nav__item--active': isActive }}>
-            <a
-              href={href}
-              data-active={isActive ? 'true' : 'false'}
-              class="nav__link"
-            >
-              {label}
-              {shortcut && <span class="nav__shortcut">{shortcut}</span>}
+          <li>
+            <a href={item.href} data-active={active ? "true" : "false"}>
+              {item.label}
             </a>
           </li>
         );
       })}
     </ul>
   </nav>
-</header>
+</div>
+
+<script is:inline>
+  const navRoot = document.querySelector(".site-nav");
+  const navToggle = navRoot?.querySelector("[data-nav-toggle]");
+  const navMenu = navRoot?.querySelector("[data-nav-menu]");
+  const navLinks = navMenu ? Array.from(navMenu.querySelectorAll("a")) : [];
+
+  const closeMenu = () => {
+    if (!navRoot || !navToggle) return;
+    navRoot.setAttribute("data-menu-open", "false");
+    navToggle.setAttribute("aria-expanded", "false");
+  };
+
+  const openMenu = () => {
+    if (!navRoot || !navToggle) return;
+    navRoot.setAttribute("data-menu-open", "true");
+    navToggle.setAttribute("aria-expanded", "true");
+  };
+
+  navToggle?.addEventListener("click", () => {
+    const isOpen = navRoot?.getAttribute("data-menu-open") === "true";
+    if (isOpen) {
+      closeMenu();
+    } else {
+      openMenu();
+    }
+  });
+
+  for (const link of navLinks) {
+    link.addEventListener("click", closeMenu);
+  }
+
+  window.addEventListener("resize", () => {
+    if (window.innerWidth > 900) {
+      closeMenu();
+    }
+  });
+</script>
 
 <style>
-  .nav {
+  .site-nav {
+    max-width: 1180px;
+    margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: clamp(2rem, 4vw, 4rem);
-    padding: clamp(0.75rem, 1.8vw, 1rem) clamp(1.5rem, 3vw, 2rem);
-    background: var(--color-background);
+    gap: 1.25rem;
+    padding: 0.95rem clamp(1rem, 2vw, 2rem);
   }
 
-  .nav__logo {
+  .site-nav__toggle {
+    display: none;
+    border: 1px solid var(--color-border);
+    background: var(--color-bg-elevated);
+    color: var(--color-text);
+    border-radius: 0.4rem;
+    width: 2.1rem;
+    height: 2.1rem;
+    padding: 0;
+    font: inherit;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  .site-nav__toggle svg {
+    width: 1.02rem;
+    height: 1.02rem;
+  }
+
+  .site-nav__brand {
+    width: clamp(108px, 14vw, 165px);
     display: inline-flex;
-    width: clamp(120px, 15vw, 180px);
-    height: auto;
+    align-items: center;
   }
 
-  .nav__logo img {
+  .site-nav__brand img {
     width: 100%;
     height: auto;
   }
 
-  .nav__list {
+  .site-nav__menu ul {
     list-style: none;
+    display: flex;
+    align-items: center;
+    gap: clamp(0.75rem, 2vw, 1.5rem);
     margin: 0;
     padding: 0;
-    display: flex;
-    gap: clamp(1.5rem, 3vw, 2.5rem);
   }
 
-  .nav__link {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+  .site-nav__menu a {
+    font-size: 0.9rem;
     font-weight: 500;
-    font-size: clamp(0.95rem, 1.2vw, 1.05rem);
-    letter-spacing: 0.01em;
-    color: rgba(33, 33, 33, 0.65);
-    transition: color 200ms ease;
+    color: var(--color-muted);
+    border-bottom: 1px solid transparent;
+    padding-bottom: 0.12rem;
   }
 
-  .nav__link:hover {
-    color: rgba(33, 33, 33, 0.9);
+  .site-nav__menu a:hover {
+    color: var(--color-text);
   }
 
-  .nav__shortcut {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 1.25rem;
-    height: 1.25rem;
-    padding: 0 0.3rem;
-    font-size: 0.7rem;
-    font-weight: 600;
-    color: rgba(33, 33, 33, 0.5);
-    background: rgba(0, 0, 0, 0.05);
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    border-radius: 0.25rem;
-  }
-
-  .nav__item--active .nav__link,
-  .nav__link[data-active='true'] {
+  .site-nav__menu a[data-active="true"] {
     color: var(--color-accent);
+    border-bottom-color: color-mix(in srgb, var(--color-accent) 55%, transparent);
   }
 
-  @media (max-width: 768px) {
-    .nav {
-      gap: 1rem;
-      padding: 0.75rem 1rem;
+  @media (max-width: 900px) {
+    .site-nav {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      grid-template-areas:
+        "brand toggle"
+        "menu menu";
+      align-items: center;
+      gap: 0.55rem 0.75rem;
+      padding-top: 0.85rem;
+      padding-bottom: 0.7rem;
     }
 
-    .nav__logo {
-      width: clamp(80px, 12vw, 120px);
+    .site-nav__brand {
+      grid-area: brand;
     }
 
-    .nav__list {
-      gap: 1rem;
+    .site-nav__toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      grid-area: toggle;
+      justify-self: end;
     }
 
-    .nav__link {
-      font-size: 0.85rem;
-    }
-
-    .nav__shortcut {
+    .site-nav__menu {
+      grid-area: menu;
       display: none;
+      width: 100%;
+      min-width: 0;
+      padding-top: 0.15rem;
+    }
+
+    .site-nav[data-menu-open="true"] .site-nav__menu {
+      display: block;
+    }
+
+    .site-nav__menu ul {
+      display: grid;
+      gap: 0.45rem;
+      justify-items: start;
+    }
+
+    .site-nav__menu a {
+      display: block;
+      padding-bottom: 0;
+      width: 100%;
+    }
+  }
+
+  @media (min-width: 901px) {
+    .site-nav {
+      align-items: center;
+    }
+
+    .site-nav__menu {
+      display: block !important;
     }
   }
 </style>
-
-<script>
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'r' || e.key === 'R') {
-      if (!e.ctrlKey && !e.metaKey && !e.altKey) {
-        const target = e.target as HTMLElement;
-        if (target.tagName !== 'INPUT' && target.tagName !== 'TEXTAREA' && !target.isContentEditable) {
-          e.preventDefault();
-          window.location.href = '/blog';
-        }
-      }
-    }
-  });
-</script>

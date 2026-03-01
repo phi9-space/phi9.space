@@ -1,0 +1,97 @@
+---
+import manifest from "@generated/vault-manifest.json";
+import VaultLayout from "@layouts/VaultLayout.astro";
+
+const nodes = (manifest.nodes || [])
+	.filter((node) => node.type === "note" || node.type === "dataset")
+	.slice();
+const recent = nodes
+	.sort((a, b) => {
+		const aDate = a.updated ? new Date(a.updated) : new Date(0);
+		const bDate = b.updated ? new Date(b.updated) : new Date(0);
+		return bDate.valueOf() - aDate.valueOf();
+	})
+	.slice(0, 24);
+---
+
+<VaultLayout
+	title="Vault — phi9.space"
+	description="Obsidian-native vault interface for research and datasets."
+>
+  <section>
+    <p class="section-kicker">Vault</p>
+    <h1>Obsidian-native knowledge base</h1>
+    <p class="section-intro">
+      Graph, backlinks, and folder browsing for the public research knowledge base.
+    </p>
+  </section>
+
+  <section class="vault-actions">
+    <a href="/vault/graph">Open graph view</a>
+    <a href="/research">Research index</a>
+    <a href="/datasets">Dataset index</a>
+  </section>
+
+  {
+    recent.length > 0 ? (
+      <section class="note-grid">
+        {recent.map((node) => (
+          <article class="note-card">
+            <h3>
+              <a href={node.url}>{node.title}</a>
+            </h3>
+            <p>{node.excerpt}</p>
+            <div class="note-card__meta">
+              <span>{node.type}</span>
+              <span>{node.category}</span>
+              {node.updated && <span>{new Date(node.updated).toLocaleDateString()}</span>}
+            </div>
+          </article>
+        ))}
+      </section>
+    ) : (
+      <p>
+        The public vault is still empty. Start with the publishing workflow guide at
+        <a href="/lab/publishing"> /lab/publishing</a>.
+      </p>
+    )
+  }
+</VaultLayout>
+
+<style>
+  .section-kicker {
+    margin: 0;
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+
+  .section-intro {
+    margin-top: 0.35rem;
+    color: var(--color-muted);
+    max-width: 72ch;
+  }
+
+  .vault-actions {
+    display: flex;
+    gap: 0.7rem;
+    flex-wrap: wrap;
+    margin: 1rem 0 1.2rem;
+  }
+
+  .vault-actions a {
+    display: inline-flex;
+    border: 1px solid var(--color-border);
+    border-radius: 0.35rem;
+    padding: 0.35rem 0.56rem;
+    background: var(--color-bg-elevated);
+    color: var(--color-text);
+    font-weight: 600;
+  }
+
+  .vault-actions a:first-child {
+    color: var(--color-accent);
+  }
+</style>

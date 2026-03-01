@@ -1,0 +1,643 @@
+---
+import Footer from "@components/Footer.astro";
+import Navbar from "@components/Navbar.astro";
+import SeoHead from "@components/SeoHead.astro";
+import "../styles/global.css";
+import manifest from "@generated/vault-manifest.json";
+
+interface Heading {
+	depth: number;
+	slug: string;
+	text: string;
+}
+
+interface Backlink {
+	source: string;
+	title: string;
+	url: string;
+}
+
+interface Props {
+	title: string;
+	description?: string;
+	currentSlug?: string;
+	headings?: Heading[];
+	backlinks?: Backlink[];
+	properties?: Record<string, unknown>;
+}
+
+const {
+	title,
+	description = "Obsidian-native vault for phi9.space research and datasets.",
+	currentSlug = "",
+	headings = [],
+	backlinks = [],
+	properties = {},
+} = Astro.props as Props;
+
+const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
+
+const nodes = (manifest.nodes || [])
+	.filter((node) => node.type === "note" || node.type === "dataset")
+	.slice()
+	.sort((a, b) => a.title.localeCompare(b.title));
+const nodeBySlug = new Map(nodes.map((node) => [node.slug, node]));
+const currentNode = currentSlug ? nodeBySlug.get(currentSlug) : null;
+
+const researchNodes = nodes.filter((node) => node.type === "note");
+const datasetNodes = nodes.filter((node) => node.type === "dataset");
+const tags = Array.from(new Set(nodes.flatMap((node) => node.tags || []))).sort((a, b) =>
+	a.localeCompare(b),
+);
+
+const currentSection = (() => {
+	if (currentPath.startsWith("/research")) return "note";
+	if (currentPath.startsWith("/datasets")) return "dataset";
+	if (currentNode?.type === "dataset") return "dataset";
+	return "note";
+})();
+---
+
+<html lang="en" class="vault-root">
+  <head>
+    <SeoHead title={title} description={description} pageType="website" ogImage="/PHI9.SPACE.svg" />
+  </head>
+  <body>
+    <a class="skip-link" href="#vault-content">Skip to content</a>
+
+    <header class="vault-topbar">
+      <Navbar />
+      <div class="vault-mobile-controls-shell" aria-label="Panel controls">
+        <button type="button" data-open-left aria-label="Toggle left panel" aria-pressed="false">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <rect x="3.5" y="4.5" width="17" height="15" rx="1.5" stroke="currentColor" stroke-width="1.5"></rect>
+            <path d="M9.5 4.5v15" stroke="currentColor" stroke-width="1.5"></path>
+          </svg>
+        </button>
+        <button type="button" data-open-right aria-label="Toggle right panel" aria-pressed="false">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <rect x="3.5" y="4.5" width="17" height="15" rx="1.5" stroke="currentColor" stroke-width="1.5"></rect>
+            <path d="M14.5 4.5v15" stroke="currentColor" stroke-width="1.5"></path>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <div class="vault-shell">
+      <aside class="vault-floating vault-floating--left" data-pane-left aria-hidden="true">
+        <details class="vault-folder" open={currentSection === "note"}>
+          <summary>Research</summary>
+          {researchNodes.length > 0 ? (
+            <ul class="vault-list">
+              {researchNodes.map((node) => (
+                <li>
+                  <a href={node.url} data-active={node.slug === currentSlug ? "true" : "false"}>
+                    <span class="vault-list__title">{node.title}</span>
+                    <span class="vault-list__meta">{node.category}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p class="vault-empty">No research notes yet.</p>
+          )}
+        </details>
+
+        <details class="vault-folder" open={currentSection === "dataset"}>
+          <summary>Datasets</summary>
+          {datasetNodes.length > 0 ? (
+            <ul class="vault-list">
+              {datasetNodes.map((node) => (
+                <li>
+                  <a href={node.url} data-active={node.slug === currentSlug ? "true" : "false"}>
+                    <span class="vault-list__title">{node.title}</span>
+                    <span class="vault-list__meta">{node.datasetKind || "catalog"}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p class="vault-empty">No datasets yet.</p>
+          )}
+        </details>
+
+        {
+          tags.length > 0 && (
+            <details class="vault-folder vault-folder--secondary">
+              <summary>Tags</summary>
+              <ul class="vault-tag-list">
+                {tags.map((tag) => (
+                  <li>
+                    <a href={`/vault/tags/${encodeURIComponent(tag)}/`}>#{tag}</a>
+                  </li>
+                ))}
+              </ul>
+            </details>
+          )
+        }
+      </aside>
+
+      <main id="vault-content" class="vault-main-canvas">
+        <slot />
+      </main>
+
+      <aside class="vault-floating vault-floating--right" data-pane-right aria-hidden="true">
+        <section class="vault-pane__section">
+          <h2>Outline</h2>
+          {headings.length > 0 ? (
+            <ul class="vault-outline">
+              {headings
+                .filter((heading) => heading.depth <= 3)
+                .map((heading) => (
+                  <li class={`depth-${heading.depth}`}>
+                    <a href={`#${heading.slug}`}>{heading.text}</a>
+                  </li>
+                ))}
+            </ul>
+          ) : (
+            <p class="vault-empty">No headings.</p>
+          )}
+        </section>
+      </aside>
+    </div>
+
+    <button
+      class="vault-pane-backdrop"
+      type="button"
+      hidden
+      data-pane-backdrop
+      aria-label="Close panels"
+    ></button>
+
+    <Footer />
+
+    <script is:inline>
+      const leftPane = document.querySelector("[data-pane-left]");
+      const rightPane = document.querySelector("[data-pane-right]");
+      const openLeft = document.querySelector("[data-open-left]");
+      const openRight = document.querySelector("[data-open-right]");
+      const backdrop = document.querySelector("[data-pane-backdrop]");
+      const desktopQuery = window.matchMedia("(min-width: 1121px)");
+      let panelOpen = null;
+      let hideTimer = null;
+      let hoveringPanel = null;
+      const EDGE_DISTANCE = 74;
+      const HIDE_DELAY_MS = 820;
+
+      const applyState = () => {
+        const leftOpen = panelOpen === "left";
+        const rightOpen = panelOpen === "right";
+        const isMobileLike = !desktopQuery.matches;
+
+        leftPane?.classList.toggle("is-open", leftOpen);
+        rightPane?.classList.toggle("is-open", rightOpen);
+
+        if (leftPane) {
+          leftPane.setAttribute("aria-hidden", leftOpen ? "false" : "true");
+        }
+        if (rightPane) {
+          rightPane.setAttribute("aria-hidden", rightOpen ? "false" : "true");
+        }
+
+        openLeft?.setAttribute("aria-pressed", leftOpen ? "true" : "false");
+        openRight?.setAttribute("aria-pressed", rightOpen ? "true" : "false");
+
+        if (backdrop) {
+          const showBackdrop = isMobileLike && (leftOpen || rightOpen);
+          backdrop.hidden = !showBackdrop;
+          backdrop.classList.toggle("is-active", showBackdrop);
+        }
+      };
+
+      const clearHideTimer = () => {
+        if (hideTimer) {
+          window.clearTimeout(hideTimer);
+          hideTimer = null;
+        }
+      };
+
+      const openPanel = (which) => {
+        panelOpen = which;
+        clearHideTimer();
+        applyState();
+      };
+
+      const closePanel = () => {
+        panelOpen = null;
+        clearHideTimer();
+        applyState();
+      };
+
+      const scheduleDesktopHide = () => {
+        if (!desktopQuery.matches) return;
+        clearHideTimer();
+        hideTimer = window.setTimeout(() => {
+          if (hoveringPanel) return;
+          closePanel();
+        }, HIDE_DELAY_MS);
+      };
+
+      openLeft?.addEventListener("click", () => {
+        if (desktopQuery.matches) return;
+        panelOpen = panelOpen === "left" ? null : "left";
+        applyState();
+      });
+
+      openRight?.addEventListener("click", () => {
+        if (desktopQuery.matches) return;
+        panelOpen = panelOpen === "right" ? null : "right";
+        applyState();
+      });
+
+      const registerPaneHover = (pane, side) => {
+        pane?.addEventListener("mouseenter", () => {
+          if (!desktopQuery.matches) return;
+          hoveringPanel = side;
+          openPanel(side);
+        });
+
+        pane?.addEventListener("mouseleave", () => {
+          if (!desktopQuery.matches) return;
+          hoveringPanel = null;
+          scheduleDesktopHide();
+        });
+      };
+
+      registerPaneHover(leftPane, "left");
+      registerPaneHover(rightPane, "right");
+
+      const handleDesktopEdgeReveal = (x) => {
+        if (!desktopQuery.matches) return;
+        if (x <= EDGE_DISTANCE) {
+          openPanel("left");
+          return;
+        }
+        if (x >= window.innerWidth - EDGE_DISTANCE) {
+          openPanel("right");
+          return;
+        }
+        if (!hoveringPanel) {
+          scheduleDesktopHide();
+        }
+      };
+
+      window.addEventListener(
+        "mousemove",
+        (event) => {
+          handleDesktopEdgeReveal(event.clientX);
+        },
+        { passive: true },
+      );
+
+      window.addEventListener(
+        "wheel",
+        (event) => {
+          if (!desktopQuery.matches) return;
+          const x = typeof event.clientX === "number" ? event.clientX : window.innerWidth / 2;
+          handleDesktopEdgeReveal(x);
+        },
+        { passive: true },
+      );
+
+      backdrop?.addEventListener("click", closePanel);
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") closePanel();
+      });
+
+      leftPane?.addEventListener("click", (event) => {
+        if (event.target instanceof Element && event.target.closest("a")) {
+          if (!desktopQuery.matches) closePanel();
+        }
+      });
+
+      rightPane?.addEventListener("click", (event) => {
+        if (event.target instanceof Element && event.target.closest("a")) {
+          if (!desktopQuery.matches) closePanel();
+        }
+      });
+
+      const handleViewportChange = (event) => {
+        clearHideTimer();
+        hoveringPanel = null;
+        if (event.matches) {
+          closePanel();
+        } else {
+          closePanel();
+        }
+      };
+
+      if (desktopQuery.addEventListener) {
+        desktopQuery.addEventListener("change", handleViewportChange);
+      } else if (desktopQuery.addListener) {
+        desktopQuery.addListener(handleViewportChange);
+      }
+
+      applyState();
+    </script>
+  </body>
+</html>
+
+<style>
+  .skip-link {
+    position: absolute;
+    left: 1rem;
+    top: -100px;
+    background: var(--color-bg-elevated);
+    color: var(--color-text);
+    padding: 0.45rem 0.65rem;
+    border: 1px solid var(--color-border);
+    border-radius: 0.35rem;
+    z-index: 80;
+  }
+
+  .skip-link:focus {
+    top: 0.75rem;
+  }
+
+  .vault-root {
+    min-height: 100%;
+    background: var(--color-bg);
+  }
+
+  .vault-root body {
+    min-height: 100vh;
+    background: var(--color-bg);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .vault-topbar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--color-bg);
+  }
+
+  .vault-mobile-controls-shell {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 clamp(1rem, 2vw, 2rem) 0.25rem;
+    display: flex;
+    justify-content: space-between;
+    gap: 0.45rem;
+  }
+
+  .vault-mobile-controls-shell button {
+    border: 1px solid var(--color-border);
+    background: var(--color-bg-elevated);
+    color: var(--color-muted);
+    border-radius: 0.42rem;
+    width: 2.1rem;
+    height: 2.1rem;
+    padding: 0;
+    font: inherit;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  .vault-mobile-controls-shell button[aria-pressed="true"] {
+    color: var(--color-accent);
+    border-color: color-mix(in srgb, var(--color-accent) 45%, transparent);
+  }
+
+  .vault-mobile-controls-shell button svg {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .vault-shell {
+    max-width: 1180px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0.15rem clamp(1rem, 2vw, 2rem) 1.1rem;
+    flex: 1;
+  }
+
+  .vault-main-canvas {
+    width: 100%;
+    padding: clamp(0.6rem, 2vw, 1rem) 0;
+    min-height: calc(100vh - 128px);
+    background: transparent;
+  }
+
+  .vault-floating {
+    position: fixed;
+    top: 96px;
+    bottom: 14px;
+    width: min(340px, calc(100vw - 1.4rem));
+    padding: 0.45rem 0.35rem;
+    background: var(--color-bg);
+    opacity: 0;
+    pointer-events: none;
+    overflow: auto;
+    z-index: 65;
+    transition:
+      transform 200ms ease,
+      opacity 180ms ease;
+  }
+
+  .vault-floating--left {
+    left: 0.7rem;
+    transform: translateX(-108%);
+  }
+
+  .vault-floating--right {
+    right: 0.7rem;
+    transform: translateX(108%);
+  }
+
+  .vault-floating.is-open {
+    transform: translateX(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .vault-pane-backdrop {
+    position: fixed;
+    inset: 0;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    background: color-mix(in srgb, var(--color-bg) 85%, transparent);
+    opacity: 0;
+    transition: opacity 180ms ease;
+    z-index: 60;
+    cursor: pointer;
+  }
+
+  .vault-pane-backdrop.is-active {
+    opacity: 1;
+  }
+
+  .vault-folder {
+    margin: 0;
+  }
+
+  .vault-folder + .vault-folder {
+    margin-top: 0.36rem;
+  }
+
+  .vault-folder summary {
+    list-style: none;
+    cursor: pointer;
+    font-size: 0.74rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--color-muted);
+    padding: 0.18rem 0.22rem;
+    border-radius: 0;
+  }
+
+  .vault-folder summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .vault-folder summary:hover {
+    color: var(--color-text);
+  }
+
+  .vault-folder[open] summary {
+    color: var(--color-accent);
+  }
+
+  .vault-folder ul,
+  .vault-folder p {
+    margin-top: 0.28rem;
+  }
+
+  .vault-list,
+  .vault-tag-list,
+  .vault-outline,
+  .vault-backlinks {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.2rem;
+  }
+
+  .vault-list a,
+  .vault-tag-list a,
+  .vault-outline a,
+  .vault-backlinks a {
+    display: block;
+    border-radius: 0;
+    padding: 0.32rem 0.4rem;
+    color: var(--color-muted);
+    border: none;
+  }
+
+  .vault-list a:hover,
+  .vault-tag-list a:hover,
+  .vault-outline a:hover,
+  .vault-backlinks a:hover {
+    color: var(--color-text);
+    text-decoration: underline;
+  }
+
+  .vault-list a[data-active="true"] {
+    color: var(--color-accent);
+    text-decoration: underline;
+  }
+
+  .vault-list__title {
+    display: block;
+    font-size: 0.88rem;
+    color: inherit;
+    line-height: 1.35;
+  }
+
+  .vault-list__meta {
+    display: block;
+    font-size: 0.68rem;
+    opacity: 0.7;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .vault-pane__section + .vault-pane__section {
+    margin-top: 0.9rem;
+  }
+
+  .vault-pane__section h2 {
+    margin: 0 0 0.45rem;
+    font-size: 0.74rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-muted);
+  }
+
+  .vault-outline .depth-3 a {
+    padding-left: 1.05rem;
+    font-size: 0.87rem;
+  }
+
+  .vault-empty {
+    margin: 0;
+    color: var(--color-muted);
+    font-size: 0.84rem;
+  }
+
+  .vault-properties {
+    margin: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.22rem;
+  }
+
+  .vault-properties dt {
+    color: var(--color-muted);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .vault-properties dd {
+    margin: 0;
+    color: var(--color-text);
+    font-size: 0.86rem;
+    word-break: break-word;
+  }
+
+  @media (max-width: 1120px) {
+    .vault-main-canvas {
+      min-height: auto;
+    }
+
+    .vault-floating {
+      top: 86px;
+      bottom: 10px;
+      width: min(330px, calc(100vw - 1rem));
+    }
+
+    .vault-floating--left {
+      left: 0.5rem;
+    }
+
+    .vault-floating--right {
+      right: 0.5rem;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .vault-mobile-controls-shell {
+      padding-top: 0.1rem;
+      padding-bottom: 0.3rem;
+    }
+
+    .vault-mobile-controls-shell button {
+      width: 2rem;
+      height: 2rem;
+    }
+  }
+
+  @media (min-width: 1121px) {
+    .vault-mobile-controls-shell {
+      display: none;
+    }
+  }
+</style>

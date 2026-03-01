@@ -1,0 +1,18 @@
+---
+const target = "/lab/";
+Astro.response.headers.set("Location", target);
+Astro.response.status = 308;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="refresh" content={`0; url=${target}`} />
+    <title>Redirecting…</title>
+    <link rel="canonical" href={target} />
+  </head>
+  <body>
+    <p>Redirecting to <a href={target}>{target}</a>.</p>
+  </body>
+</html>

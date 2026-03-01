@@ -6,19 +6,117 @@ const structuredData = {
 	"@type": "Organization",
 	name: "phi9.space",
 	url: "https://phi9.space",
-	description: "Enabling situational awareness in physical agents",
+	description:
+		"Physical AI research lab focused on domain-specific robotics data, post-training, and deployment intelligence.",
 	logo: "https://phi9.space/PHI9.SPACE.svg",
 	sameAs: ["https://github.com/a3fckx/phi9.space"],
 };
 ---
+
 <BaseLayout
-  title="phi9.space — Enabling situational awareness in physical agents"
-  description="Enabling situational awareness in physical agents"
-  structuredData={structuredData}
+	title="phi9.space — Physical AI Lab"
+	description="Research lab building Physical AI systems and datasets from a vault-native workflow."
+	structuredData={structuredData}
 >
-  <meta http-equiv="refresh" content="0; url=/manifesto" />
+  <div class="page-flow">
+    <section class="hero">
+      <p class="hero__kicker">PHI9 LAB</p>
+      <h1>Physical AI research, data systems, and deployable intelligence.</h1>
+      <p>
+        We build one of the cheapest pipelines for capturing high-fidelity physical AI training data at scale —
+        full-body motion capture, multi-view video, and structured action datasets ready for post-training.
+      </p>
+      <div class="hero__actions">
+        <a href="/lab/about">About us →</a>
+      </div>
+    </section>
+
+    <section class="home-grid">
+      <article>
+        <h2>Lab</h2>
+        <p>Experiments, interactive tools, and products built from our research pipeline.</p>
+        <a href="/lab">Enter Lab →</a>
+      </article>
+
+      <article>
+        <h2>Research</h2>
+        <p>Technical notes, benchmarks, and findings from our work on physical AI systems.</p>
+        <a href="/research">See Research →</a>
+      </article>
+    </section>
+  </div>
 </BaseLayout>
 
-<script>
-  window.location.href = "/manifesto";
-</script>
+<style>
+  .page-flow {
+    display: grid;
+    gap: clamp(1.6rem, 3vw, 2.3rem);
+  }
+
+  .hero {
+    display: grid;
+    gap: 0.85rem;
+    padding: 0;
+  }
+
+  .hero__kicker {
+    margin: 0;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    font-weight: 700;
+  }
+
+  .hero p {
+    max-width: 72ch;
+    margin: 0;
+    color: var(--color-muted);
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.95rem;
+    margin-top: 0.3rem;
+  }
+
+  .hero__actions a {
+    color: var(--color-muted);
+    font-size: 0.87rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 550;
+  }
+
+  .hero__actions a:first-child {
+    color: var(--color-accent);
+  }
+
+  .hero__actions a:hover {
+    color: var(--color-accent);
+    text-decoration: none;
+  }
+
+  .home-grid {
+    display: grid;
+    gap: 1.1rem;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+
+  .home-grid article {
+    padding: 0;
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .home-grid p {
+    margin: 0;
+    color: var(--color-muted);
+  }
+
+  .home-grid a {
+    color: var(--color-accent);
+    font-weight: 600;
+  }
+</style>

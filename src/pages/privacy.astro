@@ -1,0 +1,47 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+	title="Privacy — phi9.space"
+	description="Privacy policy for phi9.space."
+>
+  <article class="legal-page">
+    <p class="legal-page__kicker">Legal</p>
+    <h1>Privacy</h1>
+    <p>
+      phi9.space publishes research and dataset content for informational purposes. We minimize personal data
+      collection and use basic analytics and operational logs to maintain site reliability.
+    </p>
+    <p>
+      If you contact us directly, your message metadata may be retained for support and response workflows.
+      For data-related requests, contact
+      <a href="mailto:hello@phi9.space"> hello@phi9.space</a>.
+    </p>
+    <p>
+      This page is a baseline policy and will be updated with your final legal language.
+    </p>
+  </article>
+</BaseLayout>
+
+<style>
+  .legal-page {
+    max-width: 76ch;
+    display: grid;
+    gap: 0.9rem;
+  }
+
+  .legal-page__kicker {
+    margin: 0;
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+
+  .legal-page p {
+    margin: 0;
+    color: var(--color-muted);
+  }
+</style>

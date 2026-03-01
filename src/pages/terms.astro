@@ -1,0 +1,46 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+	title="Terms — phi9.space"
+	description="Terms for use of phi9.space."
+>
+  <article class="legal-page">
+    <p class="legal-page__kicker">Legal</p>
+    <h1>Terms</h1>
+    <p>
+      Content on phi9.space is provided as-is for research communication and dataset documentation. No warranty
+      is made regarding completeness, fitness, or uninterrupted availability.
+    </p>
+    <p>
+      Dataset and research references may include third-party materials under their own licenses. Users are
+      responsible for reviewing and complying with downstream licensing and usage constraints.
+    </p>
+    <p>
+      This page is a baseline terms set and will be updated with your final legal text.
+    </p>
+  </article>
+</BaseLayout>
+
+<style>
+  .legal-page {
+    max-width: 76ch;
+    display: grid;
+    gap: 0.9rem;
+  }
+
+  .legal-page__kicker {
+    margin: 0;
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+
+  .legal-page p {
+    margin: 0;
+    color: var(--color-muted);
+  }
+</style>
