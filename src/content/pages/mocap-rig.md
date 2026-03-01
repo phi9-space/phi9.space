@@ -120,4 +120,4 @@ Pre-training corpora, domain-specific mid-training, fine-tuning datasets. The da
 
 Building physical AI? You need data infrastructure that scales.
 
-**Contact:** founders@phi9.space
+**Contact:** research@phi9.space
