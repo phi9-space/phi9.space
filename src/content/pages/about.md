@@ -8,7 +8,7 @@ We are researchers building physical AI systems. We train our own policies, buil
 
 Our work spans the full stack: high-fidelity motion capture at scale, synthetic data multiplication, post-training loops, and deployment feedback. We own every layer from raw sensor data to running autonomous operations.
 
-We capture training data using one of the cheapest full-body motion capture pipelines available — multi-view video, structured action datasets, and rich metadata ready for policy training. This data feeds directly into our research on manipulation, navigation, and multi-task learning.
+We capture training data using SOTA full-body motion capture pipelines — multi-view video, structured action datasets, and rich metadata ready for policy training. This data feeds directly into our research on manipulation, navigation, and multi-task learning.
 
 > phi9.space builds products that accelerate development in physical AI — through data capture, algorithmic innovation, and tools that others can use.
 
