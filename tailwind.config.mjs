@@ -3,22 +3,32 @@ export default {
 	theme: {
 		extend: {
 			colors: {
-				background: "var(--color-background)",
+				background: "var(--color-bg)",
 				surface: "var(--color-surface)",
 				accent: "var(--color-accent)",
 				muted: "var(--color-muted)",
-				primary: "var(--color-primary)",
+				primary: "var(--color-text)",
 				border: "var(--color-border)",
 			},
 			fontFamily: {
-				sans: ['"Paper Mono"', '"JetBrains Mono"', "ui-monospace", "SFMono-Regular", "monospace"],
-				mono: ['"Paper Mono"', '"JetBrains Mono"', "ui-monospace", "SFMono-Regular", "monospace"],
+				heading: ["var(--font-heading)"],
+				body: ["var(--font-body)"],
+				mono: ["var(--font-mono)"],
 			},
 			maxWidth: {
 				prose: "65ch",
+				site: "var(--max-width)",
 			},
 			boxShadow: {
-				soft: "0 20px 35px rgba(0, 0, 0, 0.12)",
+				sm: "var(--shadow-sm)",
+				md: "var(--shadow-md)",
+				lg: "var(--shadow-lg)",
+			},
+			borderRadius: {
+				sm: "var(--radius-sm)",
+				md: "var(--radius-md)",
+				lg: "var(--radius-lg)",
+				xl: "var(--radius-xl)",
 			},
 		},
 	},

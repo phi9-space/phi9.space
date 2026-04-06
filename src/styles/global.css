@@ -1,6 +1,8 @@
-@import "@fontsource/ibm-plex-sans/400.css";
-@import "@fontsource/ibm-plex-sans/500.css";
-@import "@fontsource/ibm-plex-sans/600.css";
+@import "@fontsource/source-serif-pro/400.css";
+@import "@fontsource/source-serif-pro/600.css";
+@import "@fontsource/radio-canada-big/400.css";
+@import "@fontsource/radio-canada-big/500.css";
+@import "@fontsource/radio-canada-big/600.css";
 @import "./tokens.css";
 @tailwind base;
 @tailwind components;
@@ -16,9 +18,10 @@ body {
 	padding: 0;
 	background: var(--color-bg);
 	color: var(--color-text);
-	font-family: var(--font-sans);
+	font-family: var(--font-body);
 	line-height: var(--leading-body);
 	font-size: var(--type-size-base);
+	letter-spacing: var(--tracking-body);
 	overflow-x: hidden;
 }
 
@@ -41,6 +44,7 @@ div {
 a {
 	color: var(--color-link);
 	text-decoration: none;
+	transition: color 0.15s ease;
 }
 
 a:hover {
@@ -61,23 +65,24 @@ h3,
 h4,
 h5,
 h6 {
+	font-family: var(--font-heading);
 	line-height: var(--leading-heading);
 	margin: 0 0 0.75rem;
-	font-weight: 600;
-	letter-spacing: -0.012em;
+	font-weight: 500;
+	letter-spacing: var(--tracking-heading);
 	color: var(--color-text);
 }
 
 h1 {
-	font-size: clamp(1.9rem, 2.8vw, 2.65rem);
+	font-size: clamp(1.875rem, 3vw, 2.5rem);
 }
 
 h2 {
-	font-size: clamp(1.4rem, 2.1vw, 1.85rem);
+	font-size: clamp(1.375rem, 2.2vw, 1.75rem);
 }
 
 h3 {
-	font-size: clamp(1.1rem, 1.6vw, 1.4rem);
+	font-size: clamp(1.125rem, 1.6vw, 1.375rem);
 }
 
 p,
@@ -102,17 +107,17 @@ pre {
 }
 
 code {
-	background: color-mix(in srgb, var(--color-bg-elevated) 84%, transparent);
-	padding: 0.08rem 0.32rem;
-	border-radius: 0.25rem;
-	border: 1px solid color-mix(in srgb, var(--color-border) 65%, transparent);
-	font-size: 0.88em;
+	background: var(--color-bg-elevated);
+	padding: 0.1rem 0.35rem;
+	border-radius: var(--radius-sm);
+	border: 1px solid var(--color-border);
+	font-size: 0.875em;
 }
 
 pre {
 	border: 1px solid var(--color-border);
 	border-radius: var(--radius-md);
-	background: var(--color-surface);
+	background: var(--color-bg-elevated);
 	padding: 0.9rem 1rem;
 	overflow-x: auto;
 }
@@ -158,6 +163,61 @@ textarea {
 	color: inherit;
 }
 
+/* ── Utility classes ── */
+
+.container {
+	max-width: var(--max-width);
+	margin: 0 auto;
+	padding: 0 clamp(1rem, 3vw, 2rem);
+	width: 100%;
+}
+
+.section {
+	padding: clamp(3rem, 5vw, 4rem) 0;
+}
+
+/* ── Buttons ── */
+
+.btn {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	padding: 0.625rem 1.25rem;
+	font-family: var(--font-mono);
+	font-size: 0.875rem;
+	font-weight: 500;
+	border-radius: var(--radius-md);
+	border: none;
+	cursor: pointer;
+	text-decoration: none;
+	transition: all 0.2s ease;
+}
+
+.btn-primary {
+	background: var(--color-text);
+	color: var(--color-bg);
+}
+
+.btn-primary:hover {
+	background: var(--color-accent);
+	color: #fff;
+	text-decoration: none;
+}
+
+.btn-secondary {
+	background: transparent;
+	color: var(--color-text);
+	border: 1px solid var(--color-border);
+}
+
+.btn-secondary:hover {
+	border-color: var(--color-accent);
+	color: var(--color-accent);
+	text-decoration: none;
+}
+
+/* ── Content components ── */
+
 .wiki-note {
 	display: grid;
 	gap: 1rem;
@@ -182,7 +242,7 @@ textarea {
 
 .wikilink--unresolved {
 	background: transparent;
-	color: color-mix(in srgb, var(--gruvbox-red) 86%, var(--color-text));
+	color: var(--color-muted);
 	border: none;
 	text-decoration: underline dotted;
 }
@@ -197,7 +257,7 @@ textarea {
 
 .note-embed__title {
 	margin: 0;
-	font-weight: 650;
+	font-weight: 600;
 }
 
 .note-embed__excerpt {
@@ -215,7 +275,7 @@ textarea {
 
 .vault-media--video video {
 	width: 100%;
-	border-radius: 0.35rem;
+	border-radius: var(--radius-md);
 }
 
 .vault-media--file a {
@@ -242,10 +302,10 @@ textarea {
 
 .embed-blocked {
 	padding: 0.75rem;
-	border: 1px dashed color-mix(in srgb, var(--gruvbox-red) 35%, transparent);
+	border: 1px dashed var(--color-border);
 	border-radius: var(--radius-sm);
-	color: color-mix(in srgb, var(--gruvbox-red) 75%, var(--color-text));
-	background: color-mix(in srgb, var(--gruvbox-red) 12%, transparent);
+	color: var(--color-muted);
+	background: var(--color-bg-elevated);
 }
 
 .note-grid {
@@ -280,7 +340,21 @@ textarea {
 	gap: 0.4rem;
 	flex-wrap: wrap;
 	font-size: 0.75rem;
+	font-family: var(--font-mono);
 	color: var(--color-muted);
 	text-transform: uppercase;
 	letter-spacing: 0.04em;
+}
+
+/* ── Scroll reveal animation ── */
+
+.reveal {
+	opacity: 0;
+	transform: translateY(24px);
+	transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal.visible {
+	opacity: 1;
+	transform: translateY(0);
 }

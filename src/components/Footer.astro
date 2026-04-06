@@ -1,74 +1,110 @@
 <footer class="site-footer">
-  <div class="site-footer__inner">
-    <div class="site-footer__brand">
-      <p class="site-footer__title">phi9.space</p>
-      <p>Physical AI research lab.</p>
+  <div class="site-footer__inner container">
+    <!-- Columns -->
+    <div class="site-footer__columns">
+      <div class="site-footer__col">
+        <span class="site-footer__col-title">Products</span>
+        <a href="/lab/mocap-rig">MoCap Rig</a>
+        <a href="/lab">Lab</a>
+      </div>
+      <div class="site-footer__col">
+        <span class="site-footer__col-title">Research</span>
+        <a href="/research">All posts</a>
+      </div>
+      <div class="site-footer__col">
+        <span class="site-footer__col-title">Company</span>
+        <a href="/lab/about">About</a>
+        <a href="/terms">Terms of service</a>
+        <a href="/privacy">Privacy policy</a>
+      </div>
+      <div class="site-footer__col">
+        <span class="site-footer__col-title">Socials</span>
+        <a href="https://huggingface.co/phi9-space" rel="noreferrer" target="_blank">Hugging Face</a>
+        <a href="https://discord.gg/4TaC3amBmx" rel="noreferrer" target="_blank">Discord</a>
+        <a href="https://linkedin.com/company/phi9space" rel="noreferrer" target="_blank">LinkedIn</a>
+        <a href="https://github.com/phi9-space" rel="noreferrer" target="_blank">GitHub</a>
+        <a href="https://x.com/phi9space" rel="noreferrer" target="_blank">X</a>
+      </div>
     </div>
-    <nav aria-label="Footer primary links" class="site-footer__links">
-      <a href="/rss.xml">RSS</a>
-      <a href="https://github.com/phi9-space" rel="noreferrer" target="_blank">GitHub</a>
-<a href="mailto:research@phi9.space">Email</a>
-      <a href="https://discord.gg/4TaC3amBmx" rel="noreferrer" target="_blank">Discord</a>
-    </nav>
+
+    <!-- Full-width banner logo -->
+    <div class="site-footer__banner">
+      <a href="/" aria-label="phi9.space home" class="site-footer__banner-link">
+        <img src="/PHI9 BL.svg" alt="" class="site-footer__banner-icon" loading="lazy" />
+        <img src="/PHI9.SPACE.svg" alt="phi9.space" class="site-footer__banner-wordmark" loading="lazy" />
+      </a>
+    </div>
   </div>
 </footer>
 
 <style>
   .site-footer {
-    margin-top: 3.2rem;
-    padding: 1.1rem clamp(1rem, 2vw, 2rem) 1.6rem;
-    color: var(--color-muted);
-    font-size: 0.84rem;
+    margin-top: auto;
+    padding: clamp(3rem, 6vw, 4rem) 0 2rem;
   }
 
   .site-footer__inner {
-    max-width: 1180px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 0.95rem 1.5rem;
-    align-items: end;
-  }
-
-  .site-footer__brand {
-    display: grid;
-    gap: 0.1rem;
-  }
-
-  .site-footer__brand p {
-    margin: 0;
-  }
-
-  .site-footer__title {
-    font-weight: 600;
-    color: var(--color-text);
-    letter-spacing: 0.01em;
-  }
-
-  .site-footer__links {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-    gap: 0.35rem 0.85rem;
+    flex-direction: column;
+    gap: 2.5rem;
   }
 
-  .site-footer__links a {
-    color: var(--color-accent);
-    font-weight: 520;
-    font-size: 0.82rem;
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
+  /* Banner logo — full width */
+  .site-footer__banner-link {
+    display: flex;
+    align-items: center;
+    gap: clamp(1rem, 2.5vw, 2rem);
+    width: 100%;
   }
 
-  @media (max-width: 720px) {
-    .site-footer__inner {
-      grid-template-columns: 1fr;
-      align-items: start;
-      gap: 0.45rem;
-    }
+  .site-footer__banner-icon {
+    width: 12%;
+    height: auto;
+    flex-shrink: 0;
+  }
 
-    .site-footer__links {
-      justify-content: flex-start;
+  .site-footer__banner-wordmark {
+    width: 88%;
+    height: auto;
+    flex-shrink: 0;
+  }
+
+  /* Columns */
+  .site-footer__columns {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+  }
+
+  .site-footer__col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .site-footer__col-title {
+    font-family: var(--font-heading);
+    font-weight: 500;
+    font-size: 0.9375rem;
+    color: var(--color-text);
+    margin-bottom: 0.25rem;
+  }
+
+  .site-footer__col a {
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    transition: color 0.15s ease;
+  }
+
+  .site-footer__col a:hover {
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  @media (max-width: 640px) {
+    .site-footer__columns {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
     }
   }
 </style>

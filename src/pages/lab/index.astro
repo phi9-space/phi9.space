@@ -4,97 +4,292 @@ import BaseLayout from "@layouts/BaseLayout.astro";
 
 <BaseLayout
 	title="Lab — phi9.space"
-	description="Lab overview, operating model, and research direction for phi9.space."
+	description="Lab overview, products, and research direction for phi9.space."
+	fullWidth={true}
 >
-  <div class="page-flow">
-    <section class="lab-hero">
-      <p class="lab-hero__kicker">LAB</p>
-      <h1>Research-first, deployment-aware Physical AI lab.</h1>
-      <p>
-        We focus on action data capture, synthetic multiplication, post-training loops, and deployment feedback.
+  <!-- Hero -->
+  <section class="lab-hero">
+    <div class="lab-hero__bg"></div>
+    <div class="lab-hero__content container">
+      <span class="eyebrow">Lab</span>
+      <h1>Research-first, deployment-aware physical AI lab.</h1>
+      <p class="lab-hero__sub">
+        We focus on action data capture, synthetic multiplication,
+        post-training loops, and deployment feedback.
       </p>
-    </section>
+    </div>
+  </section>
 
-    <section class="lab-grid">
-      <article>
-        <h2>MoCap Rig v1</h2>
-        <p>Full-body motion capture synchronized with egocentric video. The data infrastructure for humanoid robotics.</p>
-        <a href="/lab/mocap-rig">Learn more →</a>
-      </article>
-    </section>
-  </div>
+  <!-- Products -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section-heading reveal">Products & Experiments</h2>
+      <div class="products-grid">
+        <a href="/lab/mocap-rig" class="product-card reveal">
+          <div class="product-card__image">
+            <div class="product-card__placeholder">
+              <svg viewBox="0 0 100 100" fill="none" class="product-card__icon">
+                <circle cx="50" cy="50" r="40" stroke="var(--color-accent)" stroke-width="1.5" opacity="0.25" />
+                <circle cx="50" cy="50" r="22" stroke="var(--color-accent)" stroke-width="1.5" opacity="0.4" />
+                <circle cx="50" cy="50" r="8" fill="var(--color-accent)" opacity="0.6" />
+              </svg>
+            </div>
+          </div>
+          <div class="product-card__body">
+            <span class="product-card__label">Product</span>
+            <h3>MoCap Rig v1</h3>
+            <p>Full-body motion capture synchronized with egocentric video. The data infrastructure for humanoid robotics.</p>
+            <span class="product-card__link">Learn more →</span>
+          </div>
+        </a>
+
+        <div class="product-card product-card--coming reveal" style="transition-delay: 0.1s">
+          <div class="product-card__image">
+            <div class="product-card__placeholder product-card__placeholder--muted">
+              <span>Coming soon</span>
+            </div>
+          </div>
+          <div class="product-card__body">
+            <span class="product-card__label">Dataset</span>
+            <h3>Data Catalog</h3>
+            <p>Domain-specific robotics datasets — tabletop manipulation, navigation, and multi-task benchmarks.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How we work -->
+  <section class="section how-section">
+    <div class="container">
+      <h2 class="section-heading reveal">How we work</h2>
+      <div class="how-grid reveal">
+        <div class="how-step">
+          <span class="how-step__num">01</span>
+          <h3>Capture real data</h3>
+          <p>SOTA motion capture pipelines — multi-view video, body tracking, and structured action labels.</p>
+        </div>
+        <div class="how-step">
+          <span class="how-step__num">02</span>
+          <h3>Multiply through simulation</h3>
+          <p>Physics-based synthetic generation. A few real demos become thousands of training variants.</p>
+        </div>
+        <div class="how-step">
+          <span class="how-step__num">03</span>
+          <h3>Train & evaluate</h3>
+          <p>Post-training loops with domain-specific benchmarks. We measure what matters.</p>
+        </div>
+        <div class="how-step">
+          <span class="how-step__num">04</span>
+          <h3>Deploy & learn</h3>
+          <p>Every deployment generates feedback data. The loop closes and policies get better.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section">
+    <div class="container">
+      <div class="lab-cta reveal">
+        <h2>Interested in our work?</h2>
+        <p>We work openly and welcome collaborators across the physical AI ecosystem.</p>
+        <div class="lab-cta__actions">
+          <a href="mailto:research@phi9.space" class="btn btn-primary">Get in touch</a>
+          <a href="/research" class="btn btn-secondary">Read our research</a>
+        </div>
+      </div>
+    </div>
+  </section>
 </BaseLayout>
 
 <style>
-  .page-flow {
-    display: grid;
-    gap: clamp(1.6rem, 3vw, 2.3rem);
-  }
-
+  /* Hero */
   .lab-hero {
-    display: grid;
-    gap: 0.85rem;
-    padding: 0;
+    position: relative;
+    padding: clamp(7rem, 12vw, 10rem) 0 clamp(3rem, 6vw, 4rem);
+    overflow: hidden;
   }
 
-  .lab-hero__kicker {
-    margin: 0;
-    color: var(--color-accent);
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    font-size: 0.73rem;
-    font-weight: 700;
+  .lab-hero__bg {
+    position: absolute;
+    inset: 0;
+    background: var(--gradient-hero);
   }
 
-  .lab-hero p {
-    margin: 0;
-    max-width: 74ch;
-    color: var(--color-muted);
-  }
-
-  .lab-hero__actions {
+  .lab-hero__content {
+    position: relative;
     display: flex;
-    flex-wrap: wrap;
-    gap: 0.95rem;
-    margin-top: 0.3rem;
+    flex-direction: column;
+    gap: 0.75rem;
   }
 
-  .lab-hero__actions a {
-    color: var(--color-muted);
-    font-size: 0.87rem;
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    font-weight: 550;
+    color: var(--color-accent);
+    font-weight: 500;
   }
 
-  .lab-hero__actions a:first-child {
-    color: var(--color-accent);
+  .lab-hero__content h1 {
+    max-width: 20ch;
+    margin: 0;
   }
 
-  .lab-hero__actions a:hover {
-    color: var(--color-accent);
+  .lab-hero__sub {
+    max-width: 50ch;
+    color: var(--color-muted);
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  /* Section heading */
+  .section-heading { margin-bottom: 2rem; }
+
+  /* Products */
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .product-card {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    color: var(--color-text);
+    transition: border-color 0.2s ease, box-shadow 0.25s ease, transform 0.25s ease;
+  }
+
+  a.product-card:hover {
+    border-color: var(--color-accent);
     text-decoration: none;
   }
 
-  .lab-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 1.1rem;
+  .product-card__image {
+    overflow: hidden;
   }
 
-  .lab-grid article {
-    padding: 0;
-    display: grid;
-    gap: 0.45rem;
+  .product-card__placeholder {
+    aspect-ratio: 16/9;
+    background: var(--color-bg-elevated);
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  .lab-grid p {
+  .product-card__placeholder--muted {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    color: var(--color-muted);
+    letter-spacing: 0.04em;
+  }
+
+  .product-card__icon {
+    width: 80px;
+    height: 80px;
+  }
+
+  .product-card__body {
+    padding: 1.25rem 1.5rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .product-card__label {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-accent);
+    font-weight: 500;
+  }
+
+  .product-card__body h3 {
+    margin: 0;
+    font-size: 1.125rem;
+  }
+
+  .product-card__body p {
     margin: 0;
     color: var(--color-muted);
+    font-size: 0.9375rem;
+    line-height: 1.5;
   }
 
-  .lab-grid a {
-    font-weight: 600;
+  .product-card__link {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
     color: var(--color-accent);
+    font-weight: 500;
+    margin-top: 0.25rem;
+  }
+
+  .product-card--coming {
+    opacity: 0.7;
+  }
+
+  /* How we work */
+  .how-section {
+    background: #f5f6f8;
+  }
+
+  .how-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 2rem;
+  }
+
+  .how-step {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .how-step__num {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    color: var(--color-accent);
+    font-weight: 500;
+  }
+
+  .how-step h3 {
+    margin: 0;
+    font-size: 1.0625rem;
+  }
+
+  .how-step p {
+    margin: 0;
+    color: var(--color-muted);
+    font-size: 0.9375rem;
+    line-height: 1.5;
+  }
+
+  /* CTA */
+  .lab-cta {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: clamp(2rem, 5vw, 3rem) 0;
+  }
+
+  .lab-cta h2 { margin: 0; }
+
+  .lab-cta p {
+    color: var(--color-muted);
+    max-width: 45ch;
+    margin: 0;
+  }
+
+  .lab-cta__actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-top: 0.5rem;
   }
 </style>

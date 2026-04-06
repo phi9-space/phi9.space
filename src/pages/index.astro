@@ -1,122 +1,679 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+const allPosts = await getCollection("blog", ({ data }) => !data.draft);
+const latestPosts = allPosts
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
 
 const structuredData = {
-	"@context": "https://schema.org",
-	"@type": "Organization",
-	name: "phi9.space",
-	url: "https://phi9.space",
-	description:
-		"Physical AI research lab focused on domain-specific robotics data, post-training, and deployment intelligence.",
-	logo: "https://phi9.space/PHI9.SPACE.svg",
-	sameAs: ["https://github.com/phi9-space"],
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "phi9.space",
+  url: "https://phi9.space",
+  description: "Physical AI research lab building data systems for embodied intelligence.",
 };
+
+const features = [
+  {
+    id: "capture",
+    num: "001",
+    title: "Capture",
+    desc: "Record real-world demonstrations through full-body motion capture, multimodal sensor streams, synchronized video, and structured action data.",
+    visual: "Rig, recording session, sensor layout",
+  },
+  {
+    id: "multiply",
+    num: "002",
+    title: "Multiply",
+    desc: "Extend scarce demonstrations through simulation, retargeting, augmentation, and synthetic generation.",
+    visual: "Pipeline diagram, simulated variants",
+  },
+  {
+    id: "train",
+    num: "003",
+    title: "Train",
+    desc: "Use structured physical data to post-train policies for manipulation, navigation, and multi-step behavior.",
+    visual: "Policy rollouts, optimization loop",
+  },
+  {
+    id: "evaluate",
+    num: "004",
+    title: "Evaluate",
+    desc: "Measure performance through benchmarks, transfer tests, and failure analysis to understand what generalizes.",
+    visual: "Charts, task success, comparison grids",
+  },
+];
 ---
 
-<BaseLayout
-	title="phi9.space — Physical AI Lab"
-	description="Physical AI research lab building data systems, training policies, and deployable intelligence."
-	structuredData={structuredData}
->
-  <div class="page-flow">
-    <section class="hero">
-      <p class="hero__kicker">PHI9 LAB</p>
-      <h1>Physical AI research, data systems, and deployable intelligence.</h1>
-      <p>
-        We build SOTA pipelines for capturing high-fidelity physical AI training data at scale —
-        full-body motion capture, multi-view video, and structured action datasets ready for post-training.
-      </p>
-      <div class="hero__actions">
-        <a href="/lab/about">About us →</a>
+<BaseLayout fullWidth={true} structuredData={structuredData}>
+
+  <!-- ═══ HERO ═══ -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero__grid">
+        <div class="hero__content reveal">
+          <h1>Physical AI research, data systems, and deployable intelligence.</h1>
+          <p class="hero__sub">
+            We capture the physical world in forms machines can learn from. From full-body motion capture and multimodal sensor data to structured action datasets and post-training systems, Phi9 builds the loop between human demonstration and autonomous behavior.
+          </p>
+          <div class="hero__actions">
+            <a href="/lab" class="btn btn-primary">Explore the Lab</a>
+            <a href="/research" class="btn btn-secondary">Read our Research</a>
+          </div>
+        </div>
+        <div class="hero__visual reveal">
+          <div class="hero__frame">
+            <div class="hero__cells">
+              <div class="hero__cell hero__cell--a"></div>
+              <div class="hero__cell hero__cell--b"></div>
+              <div class="hero__cell hero__cell--c"></div>
+              <div class="hero__cell hero__cell--d"></div>
+            </div>
+            <span class="hero__frame-label">phi9 data pipeline</span>
+          </div>
+        </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="home-grid">
-      <article>
-        <h2>Lab</h2>
-        <p>Experiments, interactive tools, and products built from our research pipeline.</p>
-        <a href="/lab">Enter Lab →</a>
-      </article>
+  <!-- ═══ FEATURES — INTERACTIVE TABS ═══ -->
+  <section class="section features" data-features>
+    <div class="container">
+      <h2 class="features__heading reveal">From capture to evaluation, the physical AI loop</h2>
+      <div class="features__grid">
+        <div class="features__visual reveal">
+          {features.map((f, i) => (
+            <div
+              class={`features__image ${i === 0 ? "features__image--active" : ""}`}
+              data-feature-image={f.id}
+            >
+              <span class="features__image-num">{f.num}</span>
+              <span class="features__image-title">{f.title}</span>
+              <span class="features__image-sub">{f.visual}</span>
+            </div>
+          ))}
+        </div>
+        <div class="features__tabs reveal">
+          {features.map((f, i) => (
+            <button
+              class={`features__tab ${i === 0 ? "features__tab--active" : ""}`}
+              data-feature-tab={f.id}
+              type="button"
+            >
+              <span class="features__tab-num">{f.num}</span>
+              <span class="features__tab-title">{f.title}</span>
+              <div class="features__tab-desc">
+                <p>{f.desc}</p>
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
 
-      <article>
-        <h2>Research</h2>
-        <p>Technical notes, benchmarks, and findings from our work on physical AI systems.</p>
-        <a href="/research">See Research →</a>
-      </article>
-    </section>
-  </div>
+  <!-- ═══ SHOWCASE ═══ -->
+  <section class="section showcase">
+    <div class="container">
+      <div class="showcase__grid">
+        <div class="showcase__image reveal">
+          <div class="showcase__placeholder">
+            <svg class="showcase__circles" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="200" cy="200" r="60" stroke="var(--color-accent)" stroke-width="1.5" opacity="0.6">
+                <animate attributeName="r" values="60;70;60" dur="4s" repeatCount="indefinite" />
+              </circle>
+              <circle cx="200" cy="200" r="100" stroke="var(--color-border)" stroke-width="1" opacity="0.4">
+                <animate attributeName="r" values="100;115;100" dur="5s" repeatCount="indefinite" />
+              </circle>
+              <circle cx="200" cy="200" r="150" stroke="var(--color-border)" stroke-width="0.75" opacity="0.25">
+                <animate attributeName="r" values="150;160;150" dur="6s" repeatCount="indefinite" />
+              </circle>
+            </svg>
+          </div>
+        </div>
+        <div class="showcase__content reveal">
+          <span class="showcase__label">Featured Product</span>
+          <h2>MoCap Rig v1</h2>
+          <p>
+            A full-body motion capture rig designed for collecting high-fidelity human demonstration data. Built for research environments where every joint angle, contact event, and spatial trajectory matters.
+          </p>
+          <a href="/lab/mocap-rig" class="btn btn-primary">View the rig</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ RESEARCH CARDS ═══ -->
+  <section class="section research">
+    <div class="container">
+      <div class="research__header reveal">
+        <h2>From the research log</h2>
+        <a href="/research" class="research__view-all">View all &rarr;</a>
+      </div>
+      <div class="research__grid">
+        {latestPosts.map((post) => (
+          <a href={`/research/${post.slug}`} class="research__card reveal">
+            <div class="research__card-image">
+              {post.data.heroImage ? (
+                <img src={post.data.heroImage} alt="" loading="lazy" />
+              ) : (
+                <div class="research__card-placeholder"></div>
+              )}
+            </div>
+            <div class="research__card-meta">
+              {post.data.tags[0] && <span class="research__card-tag">{post.data.tags[0]}</span>}
+              <time datetime={post.data.pubDate.toISOString()}>
+                {post.data.pubDate.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
+              </time>
+            </div>
+            <h3 class="research__card-title">{post.data.title}</h3>
+            <p class="research__card-desc">{post.data.description}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ QUOTE ═══ -->
+  <section class="quote-section">
+    <div class="container">
+      <blockquote class="quote reveal">
+        <p>
+          "Just as software moved from precision mechanisms to generalization, physical agents will move from hardcoded control to intelligent emergence."
+        </p>
+        <cite>&mdash; phi9.space founding manifesto</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- ═══ CTA ═══ -->
+  <section class="section cta">
+    <div class="container">
+      <div class="cta__inner reveal">
+        <h2>Collaborate with Phi9</h2>
+        <p>
+          We collaborate with researchers, labs, and companies working on the future of physical intelligence.
+        </p>
+        <div class="cta__actions">
+          <a href="mailto:research@phi9.space" class="btn btn-primary">Get in touch</a>
+          <a href="#" class="btn btn-secondary">Join Discord</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
 </BaseLayout>
 
+<!-- ═══ FEATURES TAB SCRIPT ═══ -->
+<script is:inline>
+  (function () {
+    const section = document.querySelector("[data-features]");
+    if (!section) return;
+
+    const tabs = section.querySelectorAll("[data-feature-tab]");
+    const images = section.querySelectorAll("[data-feature-image]");
+    let autoTimer = null;
+    let currentIndex = 0;
+
+    function activate(id) {
+      tabs.forEach((t) => t.classList.remove("features__tab--active"));
+      images.forEach((img) => img.classList.remove("features__image--active"));
+
+      const activeTab = section.querySelector('[data-feature-tab="' + id + '"]');
+      const activeImage = section.querySelector('[data-feature-image="' + id + '"]');
+      if (activeTab) activeTab.classList.add("features__tab--active");
+      if (activeImage) activeImage.classList.add("features__image--active");
+    }
+
+    function autoRotate() {
+      currentIndex = (currentIndex + 1) % tabs.length;
+      activate(tabs[currentIndex].getAttribute("data-feature-tab"));
+    }
+
+    function startAuto() {
+      stopAuto();
+      autoTimer = setInterval(autoRotate, 5000);
+    }
+
+    function stopAuto() {
+      if (autoTimer) {
+        clearInterval(autoTimer);
+        autoTimer = null;
+      }
+    }
+
+    tabs.forEach(function (tab, i) {
+      tab.addEventListener("click", function () {
+        currentIndex = i;
+        activate(tab.getAttribute("data-feature-tab"));
+        stopAuto();
+      });
+    });
+
+    startAuto();
+  })();
+</script>
+
 <style>
-  .page-flow {
-    display: grid;
-    gap: clamp(1.6rem, 3vw, 2.3rem);
-  }
-
+  /* ── Hero ── */
   .hero {
+    background: var(--gradient-hero);
+    padding-top: clamp(7rem, 12vw, 10rem);
+    padding-bottom: clamp(3rem, 5vw, 4rem);
+  }
+
+  .hero__grid {
     display: grid;
-    gap: 0.85rem;
-    padding: 0;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2rem, 4vw, 3rem);
+    align-items: center;
   }
 
-  .hero__kicker {
-    margin: 0;
-    font-size: 0.72rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--color-accent);
-    font-weight: 700;
+  .hero__content h1 {
+    margin-bottom: 1rem;
   }
 
-  .hero p {
-    max-width: 72ch;
-    margin: 0;
+  .hero__sub {
     color: var(--color-muted);
+    font-size: 1rem;
+    max-width: 540px;
+    margin-bottom: 1.5rem;
   }
 
   .hero__actions {
     display: flex;
+    gap: 0.75rem;
     flex-wrap: wrap;
-    gap: 0.95rem;
-    margin-top: 0.3rem;
   }
 
-  .hero__actions a {
+  .hero__visual {
+    display: flex;
+    justify-content: center;
+  }
+
+  .hero__frame {
+    width: 100%;
+    max-width: 420px;
+    aspect-ratio: 1;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    background: var(--color-bg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1.5rem;
+  }
+
+  .hero__cells {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    width: 100%;
+    flex: 1;
+  }
+
+  .hero__cell {
+    border-radius: var(--radius-md);
+    opacity: 0.7;
+  }
+
+  .hero__cell--a { background: var(--phi9-coral); opacity: 0.85; }
+  .hero__cell--b { background: #a8d3ff; }
+  .hero__cell--c { background: #c4b5fd; }
+  .hero__cell--d { background: var(--neutral-300); }
+
+  .hero__frame-label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
     color: var(--color-muted);
-    font-size: 0.87rem;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    font-weight: 550;
+    letter-spacing: 0.06em;
   }
 
-  .hero__actions a:first-child {
+  /* ── Features ── */
+  .features__heading {
+    margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+  }
+
+  .features__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+    align-items: start;
+  }
+
+  .features__visual {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    background: var(--color-bg-elevated);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+    overflow: hidden;
+  }
+
+  .features__image {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    opacity: 0;
+    transform: scale(0.97);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    pointer-events: none;
+  }
+
+  .features__image--active {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: auto;
+  }
+
+  .features__image-num {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .features__image-title {
+    font-family: var(--font-heading);
+    font-size: clamp(1.25rem, 2vw, 1.5rem);
+    font-weight: 500;
+    color: var(--color-text);
+  }
+
+  .features__image-sub {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--color-muted);
+  }
+
+  .features__tabs {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .features__tab {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 1rem 1.25rem;
+    border: none;
+    border-left: 3px solid var(--color-border);
+    background: transparent;
+    text-align: left;
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+  }
+
+  .features__tab:hover {
+    border-left-color: var(--color-muted);
+  }
+
+  .features__tab--active {
+    border-left-color: var(--color-accent);
+  }
+
+  .features__tab-num {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--color-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .features__tab-title {
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--color-text);
+  }
+
+  .features__tab-desc {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease;
+  }
+
+  .features__tab-desc p {
+    margin: 0.5rem 0 0;
+    font-size: 0.9rem;
+    color: var(--color-muted);
+    line-height: 1.5;
+  }
+
+  .features__tab--active .features__tab-desc {
+    max-height: 200px;
+  }
+
+  /* ── Showcase ── */
+  .showcase__grid {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: clamp(2rem, 4vw, 3rem);
+    align-items: center;
+  }
+
+  .showcase__image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .showcase__placeholder {
+    width: 100%;
+    aspect-ratio: 1;
+    max-width: 400px;
+    position: relative;
+  }
+
+  .showcase__circles {
+    width: 100%;
+    height: 100%;
+  }
+
+  .showcase__label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
     color: var(--color-accent);
+    margin-bottom: 0.5rem;
+    display: block;
   }
 
-  .hero__actions a:hover {
+  .showcase__content h2 {
+    margin-bottom: 0.75rem;
+  }
+
+  .showcase__content p {
+    color: var(--color-muted);
+    max-width: 480px;
+    margin-bottom: 1.5rem;
+  }
+
+  /* ── Research cards ── */
+  .research__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: clamp(1.25rem, 2vw, 2rem);
+  }
+
+  .research__header h2 {
+    margin: 0;
+  }
+
+  .research__view-all {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--color-muted);
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+
+  .research__view-all:hover {
     color: var(--color-accent);
     text-decoration: none;
   }
 
-  .home-grid {
+  .research__grid {
     display: grid;
-    gap: 1.1rem;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(1.25rem, 2vw, 2rem);
   }
 
-  .home-grid article {
-    padding: 0;
-    display: grid;
+  .research__card {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
     gap: 0.5rem;
   }
 
-  .home-grid p {
-    margin: 0;
-    color: var(--color-muted);
+  .research__card:hover {
+    text-decoration: none;
   }
 
-  .home-grid a {
+  .research__card-image {
+    aspect-ratio: 16 / 10;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    margin-bottom: 0.25rem;
+  }
+
+  .research__card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .research__card-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--color-bg-elevated) 0%, var(--color-surface) 100%);
+  }
+
+  .research__card-meta {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--color-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .research__card-tag {
     color: var(--color-accent);
-    font-weight: 600;
+  }
+
+  .research__card-title {
+    font-size: 1.05rem;
+    margin: 0;
+    transition: color 0.15s ease;
+  }
+
+  .research__card:hover .research__card-title {
+    color: var(--color-accent);
+  }
+
+  .research__card-desc {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--color-muted);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* ── Quote ── */
+  .quote-section {
+    background: #f5f6f8;
+    padding: clamp(3rem, 6vw, 5rem) 0;
+  }
+
+  .quote {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto;
+    border-left: none;
+    padding-left: 0;
+    color: var(--color-text);
+  }
+
+  .quote p {
+    font-size: clamp(1.1rem, 1.8vw, 1.35rem);
+    font-style: italic;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+
+  .quote cite {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--color-muted);
+    font-style: normal;
+  }
+
+  /* ── CTA ── */
+  .cta__inner {
+    text-align: center;
+    max-width: 560px;
+    margin: 0 auto;
+  }
+
+  .cta__inner h2 {
+    margin-bottom: 0.5rem;
+  }
+
+  .cta__inner > p {
+    color: var(--color-muted);
+    margin-bottom: 1.5rem;
+  }
+
+  .cta__actions {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 800px) {
+    .hero__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .hero__visual {
+      order: -1;
+    }
+
+    .hero__frame {
+      max-width: 300px;
+    }
+
+    .features__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .showcase__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .research__grid {
+      grid-template-columns: 1fr;
+    }
   }
 </style>
