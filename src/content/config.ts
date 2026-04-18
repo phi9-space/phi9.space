@@ -6,7 +6,10 @@ const pages = defineCollection({
 		title: z.string(),
 		description: z.string().min(50),
 		heroSubtitle: z.string().optional(),
+		published: z.coerce.date().optional(),
 		updated: z.coerce.date().optional(),
+		author: z.string().optional(),
+		tags: z.array(z.string()).default([]),
 		navTitle: z.string().optional(),
 	}),
 });

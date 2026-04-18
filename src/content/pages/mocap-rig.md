@@ -2,6 +2,12 @@
 title: Phi9 MoCap Rig v1
 description: Full-body motion capture synchronized with egocentric video. Built for physical AI data capture at scale.
 heroSubtitle: The motion capture system built for physical AI.
+published: 2026-04-18
+updated: 2026-04-18
+author: Phi9
+tags:
+  - Lab
+  - Product
 ---
 
 ## The Problem with Current Robotics Data
@@ -120,4 +126,4 @@ Pre-training corpora, domain-specific mid-training, fine-tuning datasets. The da
 
 Building physical AI? You need data infrastructure that scales.
 
-**Contact:** research@phi9.space
+**Contact:** [research@phi9.space](mailto:research@phi9.space)

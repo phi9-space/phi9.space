@@ -2,8 +2,8 @@
 import { getEntry } from "astro:content";
 import DocumentLayout from "@layouts/DocumentLayout.astro";
 
-const page = await getEntry("pages", "manifesto");
+const page = await getEntry("pages", "data");
 const { Content } = await page.render();
 ---
 
-<DocumentLayout entry={page} Content={Content} eyebrow="Manifesto" />
+<DocumentLayout entry={page} Content={Content} eyebrow="Data" />

@@ -2,21 +2,11 @@
 
 :root {
 	/* Brand */
-	--phi9-coral: #E8553A;
-	--phi9-coral-light: #F06D55;
-
-	/* Neutral scale */
-	--neutral-50: #fafafa;
-	--neutral-100: #f5f5f5;
-	--neutral-200: #e5e5e5;
-	--neutral-300: #d4d4d4;
-	--neutral-400: #a3a3a3;
-	--neutral-500: #737373;
-	--neutral-600: #525252;
-	--neutral-700: #404040;
-	--neutral-800: #262626;
-	--neutral-900: #171717;
-	--neutral-950: #0a0a0a;
+	--brand-signal: #ff5c00;
+	--brand-ink: #16161d;
+	--brand-paper: #fcf7e9;
+	--brand-paper-warm: #f4eee0;
+	--brand-paper-stone: #ede7db;
 
 	/* Typography */
 	--font-heading:
@@ -42,9 +32,9 @@
 	--radius-xl: 1rem;
 
 	/* Shadows */
-	--shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-	--shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
-	--shadow-lg: 0 20px 35px rgba(0, 0, 0, 0.1);
+	--shadow-sm: 0 1px 2px rgba(22, 22, 29, 0.05);
+	--shadow-md: 0 4px 12px rgba(22, 22, 29, 0.08);
+	--shadow-lg: 0 20px 35px rgba(22, 22, 29, 0.1);
 
 	/* Layout */
 	--max-width: 1200px;
@@ -55,39 +45,40 @@
 :root,
 :root.theme-light {
 	color-scheme: light;
-	--color-bg: #ffffff;
-	--color-bg-elevated: var(--neutral-50);
-	--color-surface: var(--neutral-100);
-	--color-border: #dbe0ec;
-	--color-text: var(--neutral-950);
-	--color-muted: #6c6c6c;
-	--color-accent: var(--phi9-coral);
-	--color-accent-hover: var(--phi9-coral-light);
-	--color-link: var(--phi9-coral);
-	--color-success: #16a34a;
-	--color-warning: #ca8a04;
+	--color-bg: var(--brand-paper);
+	--color-bg-elevated: color-mix(in srgb, var(--brand-paper) 92%, var(--brand-ink) 8%);
+	--color-surface: var(--brand-paper-warm);
+	--color-surface-alt: var(--brand-paper-stone);
+	--color-border: color-mix(in srgb, var(--brand-paper) 84%, var(--brand-ink) 16%);
+	--color-text: var(--brand-ink);
+	--color-text-inverse: var(--brand-paper);
+	--color-muted: color-mix(in srgb, var(--brand-ink) 66%, var(--brand-paper) 34%);
+	--color-accent: var(--brand-signal);
+	--color-accent-hover: color-mix(in srgb, var(--brand-signal) 86%, var(--brand-ink) 14%);
+	--color-accent-soft: color-mix(in srgb, var(--brand-signal) 10%, var(--brand-paper) 90%);
+	--color-link: var(--brand-signal);
 
-	/* Hero gradient */
 	--gradient-hero:
-		linear-gradient(135deg, rgba(168, 211, 255, 0.3) 0%, rgba(232, 85, 58, 0.08) 100%);
+		linear-gradient(180deg, var(--brand-paper) 0%, var(--brand-paper) 100%);
 }
 
 /* ── Dark theme ── */
 :root.theme-dark,
 [data-theme="dark"] {
 	color-scheme: dark;
-	--color-bg: var(--neutral-950);
-	--color-bg-elevated: var(--neutral-900);
-	--color-surface: var(--neutral-800);
-	--color-border: var(--neutral-700);
-	--color-text: var(--neutral-100);
-	--color-muted: var(--neutral-400);
-	--color-accent: var(--phi9-coral-light);
-	--color-accent-hover: var(--phi9-coral);
-	--color-link: var(--phi9-coral-light);
-	--color-success: #22c55e;
-	--color-warning: #eab308;
+	--color-bg: var(--brand-ink);
+	--color-bg-elevated: color-mix(in srgb, var(--brand-ink) 92%, var(--brand-paper) 8%);
+	--color-surface: color-mix(in srgb, var(--brand-ink) 88%, var(--brand-paper) 12%);
+	--color-surface-alt: color-mix(in srgb, var(--brand-ink) 80%, var(--brand-paper) 20%);
+	--color-border: color-mix(in srgb, var(--brand-ink) 72%, var(--brand-paper) 28%);
+	--color-text: var(--brand-paper);
+	--color-text-inverse: var(--brand-ink);
+	--color-muted: color-mix(in srgb, var(--brand-paper) 62%, var(--brand-ink) 38%);
+	--color-accent: var(--brand-signal);
+	--color-accent-hover: color-mix(in srgb, var(--brand-signal) 86%, var(--brand-paper) 14%);
+	--color-accent-soft: color-mix(in srgb, var(--brand-signal) 20%, var(--brand-ink) 80%);
+	--color-link: var(--brand-signal);
 
 	--gradient-hero:
-		linear-gradient(135deg, rgba(30, 58, 95, 0.5) 0%, rgba(60, 40, 20, 0.4) 100%);
+		linear-gradient(180deg, var(--brand-ink) 0%, var(--brand-ink) 100%);
 }

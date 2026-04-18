@@ -108,7 +108,7 @@ const tocHeadings = headings.filter((h) => h.depth <= 3);
     }
 
     .toc-container::-webkit-scrollbar-thumb {
-        background: color-mix(in srgb, var(--color-primary) 20%, transparent);
+        background: color-mix(in srgb, var(--color-accent) 20%, transparent);
         border-radius: 2px;
     }
 
@@ -131,11 +131,11 @@ const tocHeadings = headings.filter((h) => h.depth <= 3);
     }
 
     .toc-link {
-        color: var(--color-primary);
+        color: var(--color-accent);
         text-decoration: none;
         padding: 0.2rem 0;
         padding-left: 0.5rem;
-        border-left: 1px solid color-mix(in srgb, var(--color-primary) 15%, transparent);
+        border-left: 1px solid color-mix(in srgb, var(--color-accent) 15%, transparent);
         font-size: 0.8125rem;
         line-height: 1.35;
         display: block;

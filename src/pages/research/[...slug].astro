@@ -1,6 +1,8 @@
 ---
 import { getCollection } from "astro:content";
+import LongformArticleShell from "@components/LongformArticleShell.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
+import { formatLongDate, getReadingTime } from "@lib/site";
 
 export async function getStaticPaths() {
 	const posts = await getCollection("blog");
@@ -19,6 +21,7 @@ const allPosts = (await getCollection("blog"))
 	.filter((p) => !p.data.draft && p.slug !== post.slug)
 	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
 	.slice(0, 3);
+const updatedLabel = post.data.updatedDate ? formatLongDate(post.data.updatedDate) : null;
 ---
 
 <BaseLayout
@@ -29,44 +32,18 @@ const allPosts = (await getCollection("blog"))
 >
   <link slot="head" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css" />
 
-  <article class="article">
-    <!-- Centered meta -->
-    <div class="article__meta">
-      {post.data.tags[0] && <span>{post.data.tags[0]}</span>}
-      <span>·</span>
-      <span>{Math.ceil(post.body.split(/\s+/).length / 200)} min</span>
-    </div>
-
-    <!-- Centered title -->
-    <h1 class="article__title">{post.data.title}</h1>
-
-    <!-- Full-width hero image -->
-    <div class="article__hero">
-      <div class="article__hero-placeholder"></div>
-    </div>
-
-    <!-- Sidebar + Content -->
-    <div class="article__grid container">
-      <aside class="article__sidebar">
-        <div class="article__sidebar-group">
-          <span class="article__sidebar-label">Published</span>
-          <span class="article__sidebar-value">
-            {post.data.pubDate.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}
-          </span>
-        </div>
-        {post.data.author && (
-          <div class="article__sidebar-group">
-            <span class="article__sidebar-label">Author</span>
-            <span class="article__sidebar-value">{post.data.author}</span>
-          </div>
-        )}
-      </aside>
-
-      <div class="article__body">
-        <Content />
-      </div>
-    </div>
-  </article>
+  <LongformArticleShell
+    title={post.data.title}
+    dek={post.data.description}
+    leadTag={post.data.tags[0] ?? "Research"}
+    readingTime={getReadingTime(post.body)}
+    publishedLabel={formatLongDate(post.data.pubDate)}
+    updatedLabel={updatedLabel}
+    authorLabel={post.data.author ?? "Phi9"}
+  >
+    {post.data.heroImage && <img slot="hero" src={post.data.heroImage} alt="" loading="lazy" />}
+    <Content />
+  </LongformArticleShell>
 
   <!-- Recent articles -->
   {allPosts.length > 0 && (
@@ -79,12 +56,18 @@ const allPosts = (await getCollection("blog"))
         <div class="recent__grid">
           {allPosts.map((p) => (
             <a href={`/research/${p.slug}/`} class="recent__card">
-              <div class="recent__image"></div>
+              <div class="recent__image">
+                {p.data.heroImage ? (
+                  <img src={p.data.heroImage} alt="" loading="lazy" />
+                ) : (
+                  <div class="recent__image-placeholder"></div>
+                )}
+              </div>
               <h3>{p.data.title}</h3>
               <span class="recent__meta">
                 {p.data.tags[0] && <span>{p.data.tags[0]}</span>}
                 <span>·</span>
-                <span>{Math.ceil((p.body?.split(/\s+/).length || 200) / 200)} min</span>
+                <span>{getReadingTime(p.body)} min</span>
               </span>
               <p>{p.data.description}</p>
             </a>
@@ -96,148 +79,9 @@ const allPosts = (await getCollection("blog"))
 </BaseLayout>
 
 <style>
-  /* ── Article header (centered) ── */
-  .article {
-    padding-top: clamp(6rem, 10vw, 8rem);
-  }
-
-  .article__meta {
-    display: flex;
-    justify-content: center;
-    gap: 0.5rem;
-    font-family: var(--font-mono);
-    font-size: 0.8125rem;
-    color: var(--color-muted);
-    letter-spacing: 0.02em;
-    padding: 0 clamp(1rem, 3vw, 2rem);
-    margin-bottom: 1.25rem;
-  }
-
-  .article__title {
-    font-size: clamp(2rem, 4vw, 3rem);
-    text-align: center;
-    max-width: 20ch;
-    margin: 0 auto 2.5rem;
-    padding: 0 clamp(1rem, 3vw, 2rem);
-  }
-
-  /* Full-width hero image */
-  .article__hero {
-    width: 100%;
-    max-width: var(--max-width);
-    margin: 0 auto 3rem;
-    padding: 0 clamp(1rem, 3vw, 2rem);
-  }
-
-  .article__hero-placeholder {
-    width: 100%;
-    aspect-ratio: 1240/500;
-    background: linear-gradient(135deg, #dde3ed 0%, rgba(232, 85, 58, 0.08) 100%);
-    border-radius: var(--radius-lg);
-  }
-
-  /* ── Sidebar + Content grid ── */
-  .article__grid {
-    display: grid;
-    grid-template-columns: 220px 1fr;
-    gap: 4rem;
-    align-items: start;
-    padding-bottom: 4rem;
-  }
-
-  .article__sidebar {
-    position: sticky;
-    top: 5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1.75rem;
-    padding-top: 0.25rem;
-  }
-
-  .article__sidebar-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.2rem;
-  }
-
-  .article__sidebar-label {
-    font-family: var(--font-body);
-    font-size: 0.875rem;
-    color: var(--color-muted);
-  }
-
-  .article__sidebar-value {
-    font-family: var(--font-heading);
-    font-size: 1rem;
-    font-weight: 500;
-    color: var(--color-text);
-  }
-
-  /* ── Content body ── */
-  .article__body {
-    max-width: 680px;
-  }
-
-  .article__body :global(p),
-  .article__body :global(ul),
-  .article__body :global(ol) {
-    font-size: 1.0625rem;
-    line-height: 1.7;
-    margin-bottom: 1.25rem;
-  }
-
-  .article__body :global(h2) {
-    margin-top: 2.5rem;
-    margin-bottom: 0.75rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--color-border);
-  }
-
-  .article__body :global(h3) {
-    margin-top: 1.75rem;
-    margin-bottom: 0.5rem;
-  }
-
-  .article__body :global(blockquote) {
-    line-height: 1.6;
-  }
-
-  .article__body :global(img),
-  .article__body :global(video) {
-    max-width: 100%;
-    height: auto;
-    border-radius: var(--radius-lg);
-    margin: 1.5rem 0;
-  }
-
-  .article__body :global(table) {
-    font-size: 0.9rem;
-  }
-
-  .article__body :global(th) {
-    background: #f5f6f8;
-    font-weight: 600;
-  }
-
-  @media (max-width: 800px) {
-    .article__grid {
-      grid-template-columns: 1fr;
-      gap: 2rem;
-    }
-
-    .article__sidebar {
-      position: static;
-      flex-direction: row;
-      flex-wrap: wrap;
-      gap: 1.5rem;
-      padding-bottom: 1.5rem;
-      border-bottom: 1px solid var(--color-border);
-    }
-  }
-
   /* ── Recent articles ── */
   .recent {
-    background: #f5f6f8;
+    background: var(--color-surface);
     padding: clamp(3rem, 6vw, 5rem) 0;
   }
 
@@ -284,9 +128,23 @@ const allPosts = (await getCollection("blog"))
   .recent__image {
     width: 100%;
     aspect-ratio: 4/3;
-    background: linear-gradient(135deg, #e2e5eb 0%, rgba(232, 85, 58, 0.06) 100%);
-    border-radius: var(--radius-md);
     margin-bottom: 0.25rem;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: var(--gradient-hero);
+  }
+
+  .recent__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .recent__image-placeholder {
+    width: 100%;
+    height: 100%;
+    background: var(--gradient-hero);
   }
 
   .recent__card h3 {

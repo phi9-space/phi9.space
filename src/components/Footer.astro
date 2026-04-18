@@ -1,37 +1,30 @@
+---
+import { footerLinkGroups, siteBrandCopy } from "@lib/site";
+---
+
 <footer class="site-footer">
   <div class="site-footer__inner container">
-    <!-- Columns -->
     <div class="site-footer__columns">
-      <div class="site-footer__col">
-        <span class="site-footer__col-title">Products</span>
-        <a href="/lab/mocap-rig">MoCap Rig</a>
-        <a href="/lab">Lab</a>
+      <div class="site-footer__brand">
+        <p class="site-footer__brand-copy">{siteBrandCopy}</p>
+        <p class="site-footer__copyright">© {new Date().getFullYear()} phi9.space</p>
       </div>
-      <div class="site-footer__col">
-        <span class="site-footer__col-title">Research</span>
-        <a href="/research">All posts</a>
-      </div>
-      <div class="site-footer__col">
-        <span class="site-footer__col-title">Company</span>
-        <a href="/lab/about">About</a>
-        <a href="/terms">Terms of service</a>
-        <a href="/privacy">Privacy policy</a>
-      </div>
-      <div class="site-footer__col">
-        <span class="site-footer__col-title">Socials</span>
-        <a href="https://huggingface.co/phi9-space" rel="noreferrer" target="_blank">Hugging Face</a>
-        <a href="https://discord.gg/4TaC3amBmx" rel="noreferrer" target="_blank">Discord</a>
-        <a href="https://linkedin.com/company/phi9space" rel="noreferrer" target="_blank">LinkedIn</a>
-        <a href="https://github.com/phi9-space" rel="noreferrer" target="_blank">GitHub</a>
-        <a href="https://x.com/phi9space" rel="noreferrer" target="_blank">X</a>
-      </div>
+
+      {footerLinkGroups.map((group) => (
+        <div class="site-footer__col">
+          <span class="site-footer__col-title">{group.title}</span>
+          {group.links.map((link) => (
+            <a href={link.href} rel={link.external ? "noreferrer" : undefined} target={link.external ? "_blank" : undefined}>
+              {link.label}
+            </a>
+          ))}
+        </div>
+      ))}
     </div>
 
-    <!-- Full-width banner logo -->
     <div class="site-footer__banner">
       <a href="/" aria-label="phi9.space home" class="site-footer__banner-link">
-        <img src="/PHI9 BL.svg" alt="" class="site-footer__banner-icon" loading="lazy" />
-        <img src="/PHI9.SPACE.svg" alt="phi9.space" class="site-footer__banner-wordmark" loading="lazy" />
+        <img src="/assets/brand/phi9-wordmark.svg" alt="phi9.space" class="site-footer__banner-logo" loading="lazy" />
       </a>
     </div>
   </div>
@@ -40,40 +33,49 @@
 <style>
   .site-footer {
     margin-top: auto;
-    padding: clamp(3rem, 6vw, 4rem) 0 2rem;
+    padding: clamp(2.75rem, 5vw, 4rem) 0 2rem;
+    border-top: 1px solid var(--color-border);
   }
 
   .site-footer__inner {
     display: flex;
     flex-direction: column;
     gap: 2.5rem;
+    padding-top: 0.25rem;
   }
 
-  /* Banner logo — full width */
+  .site-footer__columns {
+    display: grid;
+    grid-template-columns: minmax(220px, 1.3fr) repeat(4, minmax(120px, 1fr));
+    gap: 2rem;
+    align-items: start;
+  }
+
   .site-footer__banner-link {
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    gap: clamp(1rem, 2.5vw, 2rem);
+    justify-content: flex-start;
     width: 100%;
   }
 
-  .site-footer__banner-icon {
-    width: 12%;
+  .site-footer__banner-logo {
+    width: 100%;
     height: auto;
-    flex-shrink: 0;
+    display: block;
   }
 
-  .site-footer__banner-wordmark {
-    width: 88%;
-    height: auto;
-    flex-shrink: 0;
-  }
-
-  /* Columns */
-  .site-footer__columns {
+  .site-footer__brand {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 2rem;
+    gap: 0.35rem;
+    align-content: start;
+  }
+
+  .site-footer__brand-copy,
+  .site-footer__copyright {
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    max-width: 28ch;
   }
 
   .site-footer__col {
@@ -101,10 +103,16 @@
     text-decoration: none;
   }
 
+  @media (max-width: 960px) {
+    .site-footer__columns {
+      grid-template-columns: repeat(2, minmax(160px, 1fr));
+      gap: 2rem;
+    }
+  }
+
   @media (max-width: 640px) {
     .site-footer__columns {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 2rem;
+      grid-template-columns: 1fr;
     }
   }
 </style>

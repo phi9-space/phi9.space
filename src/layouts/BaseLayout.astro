@@ -15,9 +15,9 @@ interface Props {
 
 const {
 	title = "phi9.space",
-	description = "Physical AI research lab and dataset company.",
+	description = "Physical AI research, data systems, and deployable intelligence.",
 	structuredData = null,
-	ogImage = "/PHI9.SPACE.svg",
+	ogImage = "/assets/brand/phi9-lockup-black.svg",
 	pageType = "website",
 	fullWidth = false,
 } = Astro.props as Props;
@@ -67,17 +67,14 @@ const {
         }
       }, { passive: true });
 
-      // Scroll reveal
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            observer.unobserve(entry.target);
-          }
+      // Page-load reveal keeps the motion restrained without hiding long pages in screenshots.
+      document.querySelectorAll('.reveal').forEach((el, index) => {
+        const delay = Math.min(index * 40, 320);
+        el.style.transitionDelay = `${delay}ms`;
+        requestAnimationFrame(() => {
+          el.classList.add('visible');
         });
-      }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-
-      document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+      });
     </script>
   </body>
 </html>
@@ -119,7 +116,7 @@ const {
   }
 
   .site-header.scrolled {
-    background: rgba(255, 255, 255, 0.7);
+    background: color-mix(in srgb, var(--color-bg) 78%, transparent);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
   }

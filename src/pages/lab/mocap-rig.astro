@@ -1,38 +1,9 @@
 ---
 import { getEntry } from "astro:content";
-import MarkdownRenderer from "@components/MarkdownRenderer.astro";
-import BaseLayout from "@layouts/BaseLayout.astro";
+import DocumentLayout from "@layouts/DocumentLayout.astro";
 
 const page = await getEntry("pages", "mocap-rig");
 const { Content } = await page.render();
 ---
 
-<BaseLayout
-	title={`${page.data.title} — phi9.space`}
-	description={page.data.description}
-	pageType="article"
->
-  <article>
-    <p class="eyebrow">Lab / Product</p>
-    <h1>{page.data.title}</h1>
-    {page.data.heroSubtitle && <p class="subtitle">{page.data.heroSubtitle}</p>}
-    <MarkdownRenderer Content={Content} raw={page.body} />
-  </article>
-</BaseLayout>
-
-<style>
-  .eyebrow {
-    margin: 0;
-    font-size: 0.75rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--color-accent);
-    font-weight: 700;
-  }
-
-  .subtitle {
-    margin-top: -0.3rem;
-    color: var(--color-muted);
-    max-width: 70ch;
-  }
-</style>
+<DocumentLayout entry={page} Content={Content} eyebrow="Lab / Product" />

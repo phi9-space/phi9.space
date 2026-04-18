@@ -200,7 +200,7 @@ textarea {
 
 .btn-primary:hover {
 	background: var(--color-accent);
-	color: #fff;
+	color: var(--color-text-inverse);
 	text-decoration: none;
 }
 
@@ -286,7 +286,7 @@ textarea {
 	position: relative;
 	border-radius: var(--radius-md);
 	overflow: hidden;
-	background: #000;
+	background: var(--color-text);
 	border: 1px solid var(--color-border);
 	padding-top: 56.25%;
 }

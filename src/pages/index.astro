@@ -1,679 +1,832 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
+import { contactMailto, formatLongDate, getReadingTime } from "@lib/site";
 
 const allPosts = await getCollection("blog", ({ data }) => !data.draft);
 const latestPosts = allPosts
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-  .slice(0, 3);
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+	.slice(0, 3);
+
+const featuredPost = latestPosts[0] ?? null;
+const secondaryPosts = featuredPost ? latestPosts.slice(1, 3) : latestPosts.slice(0, 2);
 
 const structuredData = {
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  name: "phi9.space",
-  url: "https://phi9.space",
-  description: "Physical AI research lab building data systems for embodied intelligence.",
+	"@context": "https://schema.org",
+	"@type": "Organization",
+	name: "phi9.space",
+	url: "https://phi9.space",
+	description: "Physical AI research, data systems, and deployable intelligence.",
 };
 
-const features = [
-  {
-    id: "capture",
-    num: "001",
-    title: "Capture",
-    desc: "Record real-world demonstrations through full-body motion capture, multimodal sensor streams, synchronized video, and structured action data.",
-    visual: "Rig, recording session, sensor layout",
-  },
-  {
-    id: "multiply",
-    num: "002",
-    title: "Multiply",
-    desc: "Extend scarce demonstrations through simulation, retargeting, augmentation, and synthetic generation.",
-    visual: "Pipeline diagram, simulated variants",
-  },
-  {
-    id: "train",
-    num: "003",
-    title: "Train",
-    desc: "Use structured physical data to post-train policies for manipulation, navigation, and multi-step behavior.",
-    visual: "Policy rollouts, optimization loop",
-  },
-  {
-    id: "evaluate",
-    num: "004",
-    title: "Evaluate",
-    desc: "Measure performance through benchmarks, transfer tests, and failure analysis to understand what generalizes.",
-    visual: "Charts, task success, comparison grids",
-  },
+const capabilityLoop = [
+	{
+		id: "capture",
+		num: "001",
+		title: "Capture",
+		desc: "Capture real-world demonstrations with synchronized motion, video, and structured task data.",
+	},
+	{
+		id: "multiply",
+		num: "002",
+		title: "Multiply",
+		desc: "Multiply scarce data through retargeting, simulation, augmentation, and better structure.",
+	},
+	{
+		id: "train",
+		num: "003",
+		title: "Train",
+		desc: "Train policies and research systems on data that preserves intent, motion, and context.",
+	},
+	{
+		id: "evaluate",
+		num: "004",
+		title: "Evaluate",
+		desc: "Evaluate what generalizes through benchmarks, failure analysis, and transfer tests.",
+	},
+];
+
+const openProblems = [
+	{
+		title: "Data that carries intent, context, and action.",
+		desc: "The next data surface needs to hold body movement, task conditions, and demonstration purpose together.",
+	},
+	{
+		title: "Generalization from scarce real-world behavior.",
+		desc: "Scarce real-world behavior has to be extended through better structure, retargeting, simulation, and augmentation.",
+	},
+	{
+		title: "Evaluation that predicts transfer.",
+		desc: "Evaluation has to show what survives outside the benchmark and into deployment.",
+	},
+	{
+		title: "Research systems that close the loop.",
+		desc: "Capture, structure, training, and evaluation need to operate as one continuous research system.",
+	},
+];
+
+const methods = [
+	{
+		title: "Capture in the world.",
+		desc: "Start from real signal: motion, video, task context, and synchronized traces.",
+	},
+	{
+		title: "Structure for reuse.",
+		desc: "Package demonstrations so they remain legible for training, research, and downstream operations.",
+	},
+	{
+		title: "Multiply with fidelity.",
+		desc: "Use simulation, retargeting, and augmentation to extend scarce real behavior while preserving intent.",
+	},
+	{
+		title: "Evaluate for transfer.",
+		desc: "Treat benchmarks, failure analysis, and deployment feedback as part of one loop.",
+	},
+];
+
+const principles = [
+	{
+		title: "Presence over pitch.",
+		desc: "The public surface should feel authored, precise, and calm.",
+	},
+	{
+		title: "Soul on the surface, rigor underneath.",
+		desc: "Language carries worldview; proof follows quickly.",
+	},
+	{
+		title: "Artifacts before abstractions.",
+		desc: "Show what the work is before talking about what it could become.",
+	},
+	{
+		title: "Research infrastructure is part of the product.",
+		desc: "Systems and workflows belong on the surface because they are part of the value.",
+	},
+	{
+		title: "Progress should remain legible.",
+		desc: "Open work, partial systems, and active questions keep progress visible.",
+	},
 ];
 ---
 
-<BaseLayout fullWidth={true} structuredData={structuredData}>
+<BaseLayout
+	fullWidth={true}
+	structuredData={structuredData}
+	title="phi9.space"
+	description="Physical AI research, data systems, and deployable intelligence."
+>
+	<section class="home-hero">
+		<div class="container">
+			<div class="home-hero__grid">
+				<div class="home-hero__content reveal">
+					<span class="section-kicker">Physical AI research, data systems, and deployable intelligence</span>
+					<h1>Physical AI research, data systems, and deployable intelligence.</h1>
+					<p class="home-hero__copy">
+						Phi9 builds the systems that turn physical behavior into usable intelligence. We
+						capture data in the world, structure it for training, and use it to build research
+						infrastructure, products, and evaluation loops for physical AI.
+					</p>
+					<div class="home-hero__actions">
+						<a href="/lab" class="btn btn-primary">Explore the Lab</a>
+						<a href="/data" class="btn btn-secondary">See the Data</a>
+					</div>
+				</div>
 
-  <!-- ═══ HERO ═══ -->
-  <section class="hero">
-    <div class="container">
-      <div class="hero__grid">
-        <div class="hero__content reveal">
-          <h1>Physical AI research, data systems, and deployable intelligence.</h1>
-          <p class="hero__sub">
-            We capture the physical world in forms machines can learn from. From full-body motion capture and multimodal sensor data to structured action datasets and post-training systems, Phi9 builds the loop between human demonstration and autonomous behavior.
-          </p>
-          <div class="hero__actions">
-            <a href="/lab" class="btn btn-primary">Explore the Lab</a>
-            <a href="/research" class="btn btn-secondary">Read our Research</a>
-          </div>
-        </div>
-        <div class="hero__visual reveal">
-          <div class="hero__frame">
-            <div class="hero__cells">
-              <div class="hero__cell hero__cell--a"></div>
-              <div class="hero__cell hero__cell--b"></div>
-              <div class="hero__cell hero__cell--c"></div>
-              <div class="hero__cell hero__cell--d"></div>
-            </div>
-            <span class="hero__frame-label">phi9 data pipeline</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+				<div class="home-hero__artifact reveal" aria-hidden="true">
+					<div class="artifact-plane">
+						<span class="artifact-plane__rule"></span>
+						<p class="artifact-plane__title">Institutional artifact plane</p>
+						<div class="artifact-plane__grid">
+							<div class="artifact-plane__panel artifact-plane__panel--signal"></div>
+							<div class="artifact-plane__panel artifact-plane__panel--surface"></div>
+							<div class="artifact-plane__panel artifact-plane__panel--ink"></div>
+							<div class="artifact-plane__panel artifact-plane__panel--paper"></div>
+						</div>
+						<p class="artifact-plane__caption">
+							Rig photography, motion traces, or a system diagram belong here.
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
 
-  <!-- ═══ FEATURES — INTERACTIVE TABS ═══ -->
-  <section class="section features" data-features>
-    <div class="container">
-      <h2 class="features__heading reveal">From capture to evaluation, the physical AI loop</h2>
-      <div class="features__grid">
-        <div class="features__visual reveal">
-          {features.map((f, i) => (
-            <div
-              class={`features__image ${i === 0 ? "features__image--active" : ""}`}
-              data-feature-image={f.id}
-            >
-              <span class="features__image-num">{f.num}</span>
-              <span class="features__image-title">{f.title}</span>
-              <span class="features__image-sub">{f.visual}</span>
-            </div>
-          ))}
-        </div>
-        <div class="features__tabs reveal">
-          {features.map((f, i) => (
-            <button
-              class={`features__tab ${i === 0 ? "features__tab--active" : ""}`}
-              data-feature-tab={f.id}
-              type="button"
-            >
-              <span class="features__tab-num">{f.num}</span>
-              <span class="features__tab-title">{f.title}</span>
-              <div class="features__tab-desc">
-                <p>{f.desc}</p>
-              </div>
-            </button>
-          ))}
-        </div>
-      </div>
-    </div>
-  </section>
+	<section class="section capability-loop">
+		<div class="container">
+			<div class="section-heading reveal">
+				<span class="section-kicker">The loop</span>
+				<h2>From capture to evaluation, the physical AI loop.</h2>
+				<p>
+					Physical AI advances through systems that capture behavior, multiply usable data,
+					train against reality, and evaluate what actually transfers.
+				</p>
+			</div>
 
-  <!-- ═══ SHOWCASE ═══ -->
-  <section class="section showcase">
-    <div class="container">
-      <div class="showcase__grid">
-        <div class="showcase__image reveal">
-          <div class="showcase__placeholder">
-            <svg class="showcase__circles" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="200" cy="200" r="60" stroke="var(--color-accent)" stroke-width="1.5" opacity="0.6">
-                <animate attributeName="r" values="60;70;60" dur="4s" repeatCount="indefinite" />
-              </circle>
-              <circle cx="200" cy="200" r="100" stroke="var(--color-border)" stroke-width="1" opacity="0.4">
-                <animate attributeName="r" values="100;115;100" dur="5s" repeatCount="indefinite" />
-              </circle>
-              <circle cx="200" cy="200" r="150" stroke="var(--color-border)" stroke-width="0.75" opacity="0.25">
-                <animate attributeName="r" values="150;160;150" dur="6s" repeatCount="indefinite" />
-              </circle>
-            </svg>
-          </div>
-        </div>
-        <div class="showcase__content reveal">
-          <span class="showcase__label">Featured Product</span>
-          <h2>MoCap Rig v1</h2>
-          <p>
-            A full-body motion capture rig designed for collecting high-fidelity human demonstration data. Built for research environments where every joint angle, contact event, and spatial trajectory matters.
-          </p>
-          <a href="/lab/mocap-rig" class="btn btn-primary">View the rig</a>
-        </div>
-      </div>
-    </div>
-  </section>
+			<div class="capability-loop__grid">
+				{
+					capabilityLoop.map((item) => (
+						<article class="loop-step reveal">
+							<span class="loop-step__num">{item.num}</span>
+							<h3>{item.title}</h3>
+							<p>{item.desc}</p>
+						</article>
+					))
+				}
+			</div>
+		</div>
+	</section>
 
-  <!-- ═══ RESEARCH CARDS ═══ -->
-  <section class="section research">
-    <div class="container">
-      <div class="research__header reveal">
-        <h2>From the research log</h2>
-        <a href="/research" class="research__view-all">View all &rarr;</a>
-      </div>
-      <div class="research__grid">
-        {latestPosts.map((post) => (
-          <a href={`/research/${post.slug}`} class="research__card reveal">
-            <div class="research__card-image">
-              {post.data.heroImage ? (
-                <img src={post.data.heroImage} alt="" loading="lazy" />
-              ) : (
-                <div class="research__card-placeholder"></div>
-              )}
-            </div>
-            <div class="research__card-meta">
-              {post.data.tags[0] && <span class="research__card-tag">{post.data.tags[0]}</span>}
-              <time datetime={post.data.pubDate.toISOString()}>
-                {post.data.pubDate.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
-              </time>
-            </div>
-            <h3 class="research__card-title">{post.data.title}</h3>
-            <p class="research__card-desc">{post.data.description}</p>
-          </a>
-        ))}
-      </div>
-    </div>
-  </section>
+	<section class="section featured-system">
+		<div class="container">
+			<div class="featured-system__grid">
+				<div class="featured-system__frame reveal" aria-hidden="true">
+					<span class="featured-system__rule"></span>
+					<p class="featured-system__eyebrow">MoCap Rig v1 / featured system</p>
+					<div class="featured-system__surface">
+						<div class="featured-system__surface-card">
+							<span>capture</span>
+							<p>Motion + video + structured task traces</p>
+						</div>
+						<div class="featured-system__surface-card featured-system__surface-card--small">
+							<span>quality</span>
+							<p>Aligned multimodal data</p>
+						</div>
+						<div class="featured-system__surface-card featured-system__surface-card--small">
+							<span>output</span>
+							<p>Research-ready demonstrations</p>
+						</div>
+					</div>
+					<p class="featured-system__caption">
+						Large product image or technical composite anchored in the working system.
+					</p>
+				</div>
 
-  <!-- ═══ QUOTE ═══ -->
-  <section class="quote-section">
-    <div class="container">
-      <blockquote class="quote reveal">
-        <p>
-          "Just as software moved from precision mechanisms to generalization, physical agents will move from hardcoded control to intelligent emergence."
-        </p>
-        <cite>&mdash; phi9.space founding manifesto</cite>
-      </blockquote>
-    </div>
-  </section>
+				<div class="featured-system__content reveal">
+					<span class="section-kicker">Featured system</span>
+					<h2>Data capture built for physical AI.</h2>
+					<p>
+						Phi9 MoCap Rig is one part of a larger data surface. It captures full-body motion,
+						synchronized egocentric video, and structured task traces that can be used for
+						research, post-training, and deployment workflows.
+					</p>
+					<a href="/data" class="featured-system__link">See the Data</a>
+				</div>
+			</div>
+		</div>
+	</section>
 
-  <!-- ═══ CTA ═══ -->
-  <section class="section cta">
-    <div class="container">
-      <div class="cta__inner reveal">
-        <h2>Collaborate with Phi9</h2>
-        <p>
-          We collaborate with researchers, labs, and companies working on the future of physical intelligence.
-        </p>
-        <div class="cta__actions">
-          <a href="mailto:research@phi9.space" class="btn btn-primary">Get in touch</a>
-          <a href="#" class="btn btn-secondary">Join Discord</a>
-        </div>
-      </div>
-    </div>
-  </section>
+	<section class="section research-proof">
+		<div class="container">
+			<div class="section-heading reveal">
+				<span class="section-kicker">Research</span>
+				<h2>Open work, real artifacts, and technical evidence.</h2>
+				<p>
+					Our research log tracks the systems, experiments, and questions that shape the lab.
+					It keeps progress legible.
+				</p>
+			</div>
 
+			<div class="research-proof__grid">
+				{
+					featuredPost ? (
+						<a href={`/research/${featuredPost.slug}`} class="research-proof__featured reveal">
+							<div class="research-proof__media">
+								{
+									featuredPost.data.heroImage ? (
+										<img
+											src={featuredPost.data.heroImage}
+											alt={featuredPost.data.title}
+											loading="lazy"
+										/>
+									) : (
+										<div class="research-proof__placeholder">
+											<span class="research-proof__placeholder-rule"></span>
+											<p>Featured research item</p>
+										</div>
+									)
+								}
+							</div>
+							<div class="research-proof__meta">
+								{featuredPost.data.tags[0] && <span>{featuredPost.data.tags[0]}</span>}
+								<time datetime={featuredPost.data.pubDate.toISOString()}>
+									{formatLongDate(featuredPost.data.pubDate)}
+								</time>
+								<span>{getReadingTime(featuredPost.body)} min</span>
+							</div>
+							<h3>{featuredPost.data.title}</h3>
+							<p>{featuredPost.data.description}</p>
+						</a>
+					) : (
+						<div class="research-proof__featured reveal">
+							<div class="research-proof__placeholder research-proof__placeholder--featured">
+								<span class="research-proof__placeholder-rule"></span>
+								<p>Featured research item</p>
+							</div>
+							<div class="research-proof__meta">
+								<span>Research</span>
+								<span>Archive feeling</span>
+							</div>
+							<h3>Open work, real artifacts, and technical evidence.</h3>
+							<p>Use dates, tags, and figures to make the archive feel active.</p>
+						</div>
+					)
+				}
+
+				<div class="research-proof__secondary">
+					{
+						secondaryPosts.length > 0 ? (
+							secondaryPosts.map((post) => (
+								<a href={`/research/${post.slug}`} class="research-proof__secondary-item reveal">
+									<div class="research-proof__secondary-copy">
+										<div class="research-proof__meta">
+											{post.data.tags[0] && <span>{post.data.tags[0]}</span>}
+											<time datetime={post.data.pubDate.toISOString()}>
+												{formatLongDate(post.data.pubDate)}
+											</time>
+										</div>
+										<h3>{post.data.title}</h3>
+										<p>{post.data.description}</p>
+									</div>
+									<div class="research-proof__secondary-thumb">
+										{
+											post.data.heroImage ? (
+												<img src={post.data.heroImage} alt={post.data.title} loading="lazy" />
+											) : (
+												<div class="research-proof__placeholder research-proof__placeholder--thumb">
+													<span class="research-proof__placeholder-rule"></span>
+												</div>
+											)
+										}
+									</div>
+								</a>
+							))
+						) : (
+							<>
+								<div class="research-proof__secondary-item reveal">
+									<div class="research-proof__secondary-copy">
+										<div class="research-proof__meta">
+											<span>Research</span>
+											<span>Technical crop</span>
+										</div>
+										<h3>Secondary item 01 / figure crop</h3>
+										<p>Use dates, tags, and reading time in mono. Research should feel active.</p>
+									</div>
+									<div class="research-proof__placeholder research-proof__placeholder--thumb">
+										<span class="research-proof__placeholder-rule"></span>
+									</div>
+								</div>
+								<div class="research-proof__secondary-item reveal">
+									<div class="research-proof__secondary-copy">
+										<div class="research-proof__meta">
+											<span>Research</span>
+											<span>Notebook fragment</span>
+										</div>
+										<h3>Secondary item 02 / notebook fragment</h3>
+										<p>Use a figure, fragment, or technical note to extend the story.</p>
+									</div>
+									<div class="research-proof__placeholder research-proof__placeholder--thumb">
+										<span class="research-proof__placeholder-rule"></span>
+									</div>
+								</div>
+							</>
+						)
+					}
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="section open-problems">
+		<div class="container">
+			<div class="section-heading reveal">
+				<span class="section-kicker">Open problems</span>
+				<h2>
+					The next phase of work is being shaped by a few clear bottlenecks.
+				</h2>
+			</div>
+
+			<div class="open-problems__grid">
+				{
+					openProblems.map((problem) => (
+						<article class="problem-card reveal">
+							<h3>{problem.title}</h3>
+							<p>{problem.desc}</p>
+						</article>
+					))
+				}
+			</div>
+		</div>
+	</section>
+
+	<section class="section methods">
+		<div class="container">
+			<div class="section-heading reveal">
+				<span class="section-kicker">Methods</span>
+				<h2>How Phi9 builds.</h2>
+				<p>
+					Phi9 moves from capture to structure, training, and evaluation as one continuous
+					system for physical AI.
+				</p>
+			</div>
+
+			<div class="methods__rows">
+				{
+					methods.map((item) => (
+						<div class="method-row reveal">
+							<h3>{item.title}</h3>
+							<p>{item.desc}</p>
+						</div>
+					))
+				}
+			</div>
+		</div>
+	</section>
+
+	<section class="section principles">
+		<div class="container">
+			<div class="section-heading reveal">
+				<span class="section-kicker">Principles</span>
+				<h2>The site should state these plainly.</h2>
+			</div>
+
+			<div class="principles__rows">
+				{
+					principles.map((item) => (
+						<div class="principle-row reveal">
+							<h3>{item.title}</h3>
+							<p>{item.desc}</p>
+						</div>
+					))
+				}
+			</div>
+		</div>
+	</section>
+
+	<section class="section contact-band">
+		<div class="container">
+			<div class="contact-band__inner reveal">
+				<span class="section-kicker section-kicker--inverse">Building in physical AI?</span>
+				<h2>
+					If you are working on data, research systems, or deployment infrastructure for
+					physical intelligence, get in touch.
+				</h2>
+				<a href={contactMailto} class="contact-band__link">Get in touch</a>
+			</div>
+		</div>
+	</section>
 </BaseLayout>
 
-<!-- ═══ FEATURES TAB SCRIPT ═══ -->
-<script is:inline>
-  (function () {
-    const section = document.querySelector("[data-features]");
-    if (!section) return;
-
-    const tabs = section.querySelectorAll("[data-feature-tab]");
-    const images = section.querySelectorAll("[data-feature-image]");
-    let autoTimer = null;
-    let currentIndex = 0;
-
-    function activate(id) {
-      tabs.forEach((t) => t.classList.remove("features__tab--active"));
-      images.forEach((img) => img.classList.remove("features__image--active"));
-
-      const activeTab = section.querySelector('[data-feature-tab="' + id + '"]');
-      const activeImage = section.querySelector('[data-feature-image="' + id + '"]');
-      if (activeTab) activeTab.classList.add("features__tab--active");
-      if (activeImage) activeImage.classList.add("features__image--active");
-    }
-
-    function autoRotate() {
-      currentIndex = (currentIndex + 1) % tabs.length;
-      activate(tabs[currentIndex].getAttribute("data-feature-tab"));
-    }
-
-    function startAuto() {
-      stopAuto();
-      autoTimer = setInterval(autoRotate, 5000);
-    }
-
-    function stopAuto() {
-      if (autoTimer) {
-        clearInterval(autoTimer);
-        autoTimer = null;
-      }
-    }
-
-    tabs.forEach(function (tab, i) {
-      tab.addEventListener("click", function () {
-        currentIndex = i;
-        activate(tab.getAttribute("data-feature-tab"));
-        stopAuto();
-      });
-    });
-
-    startAuto();
-  })();
-</script>
-
 <style>
-  /* ── Hero ── */
-  .hero {
-    background: var(--gradient-hero);
-    padding-top: clamp(7rem, 12vw, 10rem);
-    padding-bottom: clamp(3rem, 5vw, 4rem);
-  }
+	.home-hero {
+		background: var(--gradient-hero);
+		padding: clamp(7rem, 12vw, 10rem) 0 clamp(3.5rem, 6vw, 5rem);
+	}
 
-  .hero__grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: clamp(2rem, 4vw, 3rem);
-    align-items: center;
-  }
+	.home-hero__grid,
+	.featured-system__grid,
+	.research-proof__grid {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(320px, 0.92fr);
+		gap: clamp(2rem, 4vw, 3.5rem);
+		align-items: start;
+	}
 
-  .hero__content h1 {
-    margin-bottom: 1rem;
-  }
+	.home-hero__content h1 {
+		max-width: 11ch;
+		margin-bottom: 1rem;
+	}
 
-  .hero__sub {
-    color: var(--color-muted);
-    font-size: 1rem;
-    max-width: 540px;
-    margin-bottom: 1.5rem;
-  }
+	.home-hero__copy,
+	.section-heading p,
+	.featured-system__content p,
+	.problem-card p,
+	.method-row p,
+	.principle-row p,
+	.research-proof__featured p,
+	.research-proof__secondary-item p {
+		color: var(--color-muted);
+		max-width: 62ch;
+	}
 
-  .hero__actions {
-    display: flex;
-    gap: 0.75rem;
-    flex-wrap: wrap;
-  }
+	.home-hero__actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+		margin-top: 1.75rem;
+	}
 
-  .hero__visual {
-    display: flex;
-    justify-content: center;
-  }
+	.section-kicker {
+		display: inline-block;
+		margin-bottom: 0.8rem;
+		font-family: var(--font-mono);
+		font-size: 0.74rem;
+		font-weight: 500;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		color: var(--color-accent);
+	}
 
-  .hero__frame {
-    width: 100%;
-    max-width: 420px;
-    aspect-ratio: 1;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-xl);
-    background: var(--color-bg);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    padding: 1.5rem;
-  }
+	.section-kicker--inverse {
+		color: color-mix(in srgb, var(--color-text-inverse) 82%, var(--color-accent) 18%);
+	}
 
-  .hero__cells {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.75rem;
-    width: 100%;
-    flex: 1;
-  }
+	.section-heading {
+		display: grid;
+		gap: 0.6rem;
+		margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
+		max-width: 50rem;
+	}
 
-  .hero__cell {
-    border-radius: var(--radius-md);
-    opacity: 0.7;
-  }
+	.artifact-plane,
+	.featured-system__frame,
+	.research-proof__featured,
+	.research-proof__secondary-item,
+	.problem-card,
+	.contact-band__inner {
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-xl);
+		background: color-mix(in srgb, var(--color-bg) 80%, var(--color-surface) 20%);
+	}
 
-  .hero__cell--a { background: var(--phi9-coral); opacity: 0.85; }
-  .hero__cell--b { background: #a8d3ff; }
-  .hero__cell--c { background: #c4b5fd; }
-  .hero__cell--d { background: var(--neutral-300); }
+	.artifact-plane {
+		padding: 1.6rem;
+		display: grid;
+		gap: 0.9rem;
+		box-shadow: var(--shadow-sm);
+	}
 
-  .hero__frame-label {
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    color: var(--color-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-  }
+	.artifact-plane__rule,
+	.featured-system__rule,
+	.research-proof__placeholder-rule {
+		display: block;
+		width: 11rem;
+		height: 0.35rem;
+		border-radius: 999px;
+		background: var(--color-accent);
+	}
 
-  /* ── Features ── */
-  .features__heading {
-    margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
-  }
+	.artifact-plane__title,
+	.featured-system__eyebrow {
+		margin: 0;
+		font-family: var(--font-heading);
+		font-size: 1.05rem;
+	}
 
-  .features__grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: clamp(1.5rem, 3vw, 2.5rem);
-    align-items: start;
-  }
+	.artifact-plane__grid {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 0.85rem;
+	}
 
-  .features__visual {
-    position: relative;
-    aspect-ratio: 4 / 3;
-    background: var(--color-bg-elevated);
-    border-radius: var(--radius-lg);
-    border: 1px solid var(--color-border);
-    overflow: hidden;
-  }
+	.artifact-plane__panel {
+		min-height: 7rem;
+		border-radius: var(--radius-lg);
+		border: 1px solid var(--color-border);
+		background: var(--color-bg);
+	}
 
-  .features__image {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    opacity: 0;
-    transform: scale(0.97);
-    transition: opacity 0.4s ease, transform 0.4s ease;
-    pointer-events: none;
-  }
+	.artifact-plane__panel--signal {
+		background: var(--color-accent);
+		border-color: transparent;
+	}
 
-  .features__image--active {
-    opacity: 1;
-    transform: scale(1);
-    pointer-events: auto;
-  }
+	.artifact-plane__panel--surface {
+		background: var(--color-surface);
+	}
 
-  .features__image-num {
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    color: var(--color-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-  }
+	.artifact-plane__panel--ink {
+		background: var(--color-text);
+		border-color: transparent;
+	}
 
-  .features__image-title {
-    font-family: var(--font-heading);
-    font-size: clamp(1.25rem, 2vw, 1.5rem);
-    font-weight: 500;
-    color: var(--color-text);
-  }
+	.artifact-plane__panel--paper {
+		background: color-mix(in srgb, var(--color-bg) 90%, var(--color-surface-alt) 10%);
+	}
 
-  .features__image-sub {
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    color: var(--color-muted);
-  }
+	.artifact-plane__caption,
+	.featured-system__caption {
+		margin: 0;
+		font-family: var(--font-mono);
+		font-size: 0.74rem;
+		letter-spacing: 0.04em;
+		color: var(--color-muted);
+		text-transform: uppercase;
+	}
 
-  .features__tabs {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-  }
+	.capability-loop__grid,
+	.open-problems__grid {
+		display: grid;
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+		gap: 1rem;
+	}
 
-  .features__tab {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-    padding: 1rem 1.25rem;
-    border: none;
-    border-left: 3px solid var(--color-border);
-    background: transparent;
-    text-align: left;
-    cursor: pointer;
-    transition: border-color 0.2s ease;
-  }
+	.loop-step,
+	.problem-card {
+		padding: 1.2rem 1.2rem 1.35rem;
+	}
 
-  .features__tab:hover {
-    border-left-color: var(--color-muted);
-  }
+	.loop-step {
+		border-top: 1px solid var(--color-border);
+		border-bottom: 1px solid var(--color-border);
+	}
 
-  .features__tab--active {
-    border-left-color: var(--color-accent);
-  }
+	.loop-step__num,
+	.research-proof__meta {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.6rem;
+		align-items: center;
+		font-family: var(--font-mono);
+		font-size: 0.74rem;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		color: var(--color-muted);
+	}
 
-  .features__tab-num {
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    color: var(--color-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-  }
+	.loop-step__num {
+		color: var(--color-accent);
+		margin-bottom: 0.7rem;
+	}
 
-  .features__tab-title {
-    font-family: var(--font-heading);
-    font-size: 1.1rem;
-    font-weight: 500;
-    color: var(--color-text);
-  }
+	.loop-step h3,
+	.problem-card h3,
+	.method-row h3,
+	.principle-row h3,
+	.research-proof__featured h3,
+	.research-proof__secondary-item h3 {
+		margin-bottom: 0.6rem;
+	}
 
-  .features__tab-desc {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.35s ease;
-  }
+	.featured-system__frame {
+		padding: 1.6rem;
+		display: grid;
+		gap: 0.9rem;
+	}
 
-  .features__tab-desc p {
-    margin: 0.5rem 0 0;
-    font-size: 0.9rem;
-    color: var(--color-muted);
-    line-height: 1.5;
-  }
+	.featured-system__surface {
+		display: grid;
+		grid-template-columns: 1.2fr 1fr;
+		grid-template-areas:
+			"main detail-a"
+			"main detail-b";
+		gap: 0.85rem;
+		min-height: 18rem;
+	}
 
-  .features__tab--active .features__tab-desc {
-    max-height: 200px;
-  }
+	.featured-system__surface-card {
+		grid-area: main;
+		padding: 1.15rem;
+		border-radius: var(--radius-lg);
+		border: 1px solid var(--color-border);
+		background: var(--color-bg);
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		min-height: 15rem;
+	}
 
-  /* ── Showcase ── */
-  .showcase__grid {
-    display: grid;
-    grid-template-columns: 1.1fr 1fr;
-    gap: clamp(2rem, 4vw, 3rem);
-    align-items: center;
-  }
+	.featured-system__surface-card--small {
+		min-height: 7.15rem;
+	}
 
-  .showcase__image {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+	.featured-system__surface-card--small:first-of-type {
+		grid-area: detail-a;
+	}
 
-  .showcase__placeholder {
-    width: 100%;
-    aspect-ratio: 1;
-    max-width: 400px;
-    position: relative;
-  }
+	.featured-system__surface-card--small:last-of-type {
+		grid-area: detail-b;
+	}
 
-  .showcase__circles {
-    width: 100%;
-    height: 100%;
-  }
+	.featured-system__surface-card span {
+		font-family: var(--font-mono);
+		font-size: 0.72rem;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--color-accent);
+	}
 
-  .showcase__label {
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--color-accent);
-    margin-bottom: 0.5rem;
-    display: block;
-  }
+	.featured-system__surface-card p {
+		margin: 0;
+		font-family: var(--font-heading);
+		font-size: 1.2rem;
+		line-height: 1.2;
+	}
 
-  .showcase__content h2 {
-    margin-bottom: 0.75rem;
-  }
+	.featured-system__content {
+		padding-top: 0.35rem;
+	}
 
-  .showcase__content p {
-    color: var(--color-muted);
-    max-width: 480px;
-    margin-bottom: 1.5rem;
-  }
+	.featured-system__link,
+	.contact-band__link {
+		font-family: var(--font-mono);
+		font-size: 0.9rem;
+		letter-spacing: 0.05em;
+		text-transform: uppercase;
+		color: var(--color-accent);
+	}
 
-  /* ── Research cards ── */
-  .research__header {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    margin-bottom: clamp(1.25rem, 2vw, 2rem);
-  }
+	.research-proof__grid {
+		align-items: stretch;
+	}
 
-  .research__header h2 {
-    margin: 0;
-  }
+	.research-proof__featured,
+	.research-proof__secondary-item {
+		padding: 1rem;
+		text-decoration: none;
+		color: inherit;
+	}
 
-  .research__view-all {
-    font-family: var(--font-mono);
-    font-size: 0.85rem;
-    color: var(--color-muted);
-    text-decoration: none;
-    transition: color 0.15s ease;
-  }
+	.research-proof__featured:hover,
+	.research-proof__secondary-item:hover {
+		text-decoration: none;
+	}
 
-  .research__view-all:hover {
-    color: var(--color-accent);
-    text-decoration: none;
-  }
+	.research-proof__media,
+	.research-proof__secondary-thumb,
+	.research-proof__placeholder {
+		overflow: hidden;
+		border-radius: var(--radius-lg);
+		border: 1px solid var(--color-border);
+		background: var(--color-surface);
+	}
 
-  .research__grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: clamp(1.25rem, 2vw, 2rem);
-  }
+	.research-proof__media {
+		aspect-ratio: 16 / 10;
+		margin-bottom: 1rem;
+	}
 
-  .research__card {
-    text-decoration: none;
-    color: inherit;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
+	.research-proof__secondary {
+		display: grid;
+		gap: 1rem;
+	}
 
-  .research__card:hover {
-    text-decoration: none;
-  }
+	.research-proof__secondary-item {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) 11rem;
+		gap: 1rem;
+		align-items: stretch;
+	}
 
-  .research__card-image {
-    aspect-ratio: 16 / 10;
-    border-radius: var(--radius-md);
-    overflow: hidden;
-    margin-bottom: 0.25rem;
-  }
+	.research-proof__secondary-thumb {
+		height: 100%;
+		min-height: 8.5rem;
+	}
 
-  .research__card-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
+	.research-proof__placeholder,
+	.research-proof__placeholder--thumb,
+	.research-proof__placeholder--featured {
+		padding: 1rem;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-end;
+		gap: 0.7rem;
+		height: 100%;
+		background: var(--color-surface);
+	}
 
-  .research__card-placeholder {
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, var(--color-bg-elevated) 0%, var(--color-surface) 100%);
-  }
+	.research-proof__placeholder--thumb {
+		min-height: 8.5rem;
+	}
 
-  .research__card-meta {
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    color: var(--color-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-  }
+	.research-proof__placeholder--featured {
+		min-height: 16rem;
+		margin-bottom: 1rem;
+	}
 
-  .research__card-tag {
-    color: var(--color-accent);
-  }
+	.research-proof__placeholder p {
+		margin: 0;
+		font-family: var(--font-heading);
+	}
 
-  .research__card-title {
-    font-size: 1.05rem;
-    margin: 0;
-    transition: color 0.15s ease;
-  }
+	.research-proof__media img,
+	.research-proof__secondary-thumb img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
 
-  .research__card:hover .research__card-title {
-    color: var(--color-accent);
-  }
+	.problem-card {
+		min-height: 100%;
+	}
 
-  .research__card-desc {
-    margin: 0;
-    font-size: 0.9rem;
-    color: var(--color-muted);
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
+	.methods__rows,
+	.principles__rows {
+		border-top: 1px solid var(--color-border);
+	}
 
-  /* ── Quote ── */
-  .quote-section {
-    background: #f5f6f8;
-    padding: clamp(3rem, 6vw, 5rem) 0;
-  }
+	.method-row,
+	.principle-row {
+		display: grid;
+		grid-template-columns: minmax(200px, 0.42fr) minmax(0, 1fr);
+		gap: 1.5rem;
+		padding: 1rem 0;
+		border-bottom: 1px solid var(--color-border);
+	}
 
-  .quote {
-    text-align: center;
-    max-width: 700px;
-    margin: 0 auto;
-    border-left: none;
-    padding-left: 0;
-    color: var(--color-text);
-  }
+	.contact-band__inner {
+		padding: clamp(1.6rem, 4vw, 2.1rem);
+		background: var(--color-text);
+		color: var(--color-text-inverse);
+	}
 
-  .quote p {
-    font-size: clamp(1.1rem, 1.8vw, 1.35rem);
-    font-style: italic;
-    line-height: 1.6;
-    margin-bottom: 1rem;
-  }
+	.contact-band__inner h2 {
+		max-width: 18ch;
+		color: inherit;
+		margin-bottom: 1.1rem;
+	}
 
-  .quote cite {
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    color: var(--color-muted);
-    font-style: normal;
-  }
+	.contact-band__link {
+		color: var(--color-text-inverse);
+	}
 
-  /* ── CTA ── */
-  .cta__inner {
-    text-align: center;
-    max-width: 560px;
-    margin: 0 auto;
-  }
+	@media (max-width: 1100px) {
+		.capability-loop__grid,
+		.open-problems__grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
 
-  .cta__inner h2 {
-    margin-bottom: 0.5rem;
-  }
+		.research-proof__secondary-item {
+			grid-template-columns: 1fr;
+		}
+	}
 
-  .cta__inner > p {
-    color: var(--color-muted);
-    margin-bottom: 1.5rem;
-  }
+	@media (max-width: 900px) {
+		.home-hero__grid,
+		.featured-system__grid,
+		.research-proof__grid {
+			grid-template-columns: 1fr;
+		}
 
-  .cta__actions {
-    display: flex;
-    gap: 0.75rem;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
+		.home-hero__content h1 {
+			max-width: 12ch;
+		}
+	}
 
-  /* ── Responsive ── */
-  @media (max-width: 800px) {
-    .hero__grid {
-      grid-template-columns: 1fr;
-    }
+	@media (max-width: 720px) {
+		.capability-loop__grid,
+		.open-problems__grid,
+		.featured-system__surface {
+			grid-template-columns: 1fr;
+		}
 
-    .hero__visual {
-      order: -1;
-    }
+		.featured-system__surface {
+			grid-template-areas:
+				"main"
+				"detail-a"
+				"detail-b";
+		}
 
-    .hero__frame {
-      max-width: 300px;
-    }
+		.method-row,
+		.principle-row {
+			grid-template-columns: 1fr;
+			gap: 0.5rem;
+		}
 
-    .features__grid {
-      grid-template-columns: 1fr;
-    }
+		.artifact-plane__grid {
+			grid-template-columns: 1fr;
+		}
 
-    .showcase__grid {
-      grid-template-columns: 1fr;
-    }
-
-    .research__grid {
-      grid-template-columns: 1fr;
-    }
-  }
+		.home-hero {
+			padding-top: 6.5rem;
+		}
+	}
 </style>

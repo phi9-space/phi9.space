@@ -1,0 +1,43 @@
+---
+import type { CollectionEntry } from "astro:content";
+import LongformArticleShell from "@components/LongformArticleShell.astro";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { formatLongDate, getReadingTime } from "@lib/site";
+
+interface Props {
+	entry: CollectionEntry<"pages">;
+	Content: any;
+	eyebrow?: string;
+}
+
+const { entry, Content, eyebrow = "Document" } = Astro.props as Props;
+const publishedDate = entry.data.published ?? entry.data.updated ?? null;
+const publishedLabel = publishedDate ? formatLongDate(publishedDate) : null;
+const updatedLabel = entry.data.updated && publishedDate && entry.data.updated.valueOf() !== publishedDate.valueOf()
+	? formatLongDate(entry.data.updated)
+	: null;
+const leadTag = entry.data.tags[0] ?? eyebrow;
+const readingTime = getReadingTime(entry.body);
+const authorLabel = entry.data.author ?? "Phi9";
+---
+
+<BaseLayout
+	fullWidth={true}
+	title={`${entry.data.title} — phi9.space`}
+	description={entry.data.description}
+	pageType="article"
+>
+  <link slot="head" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css" />
+
+  <LongformArticleShell
+    title={entry.data.title}
+    dek={entry.data.heroSubtitle ?? entry.data.description}
+    leadTag={leadTag}
+    readingTime={readingTime}
+    publishedLabel={publishedLabel}
+    updatedLabel={updatedLabel}
+    authorLabel={authorLabel}
+  >
+    <Content />
+  </LongformArticleShell>
+</BaseLayout>

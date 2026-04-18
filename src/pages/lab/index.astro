@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
+import { contactMailto } from "@lib/site";
 ---
 
 <BaseLayout
@@ -95,7 +96,7 @@ import BaseLayout from "@layouts/BaseLayout.astro";
         <h2>Interested in our work?</h2>
         <p>We work openly and welcome collaborators across the physical AI ecosystem.</p>
         <div class="lab-cta__actions">
-          <a href="mailto:research@phi9.space" class="btn btn-primary">Get in touch</a>
+          <a href={contactMailto} class="btn btn-primary">Get in touch</a>
           <a href="/research" class="btn btn-secondary">Read our research</a>
         </div>
       </div>
@@ -234,7 +235,7 @@ import BaseLayout from "@layouts/BaseLayout.astro";
 
   /* How we work */
   .how-section {
-    background: #f5f6f8;
+    background: var(--color-surface);
   }
 
   .how-grid {

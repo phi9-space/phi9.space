@@ -720,8 +720,15 @@ Recommended columns:
 - brand mark and copyright
 - `Lab`, `Research`, `Data`, `Manifesto`
 - `About`, `Get in touch`
-- selected research or utility links when needed
+- community and external links
 - `Privacy`, `Terms`
+
+Current external links to include:
+
+- `Discord`: `https://discord.gg/2ErmfxmmvB`
+- `GitHub`: `https://github.com/phi9-space`
+- `Hugging Face`: `https://huggingface.co/phi-9`
+- `LinkedIn`: `https://www.linkedin.com/company/phi9`
 
 ### Rules
 

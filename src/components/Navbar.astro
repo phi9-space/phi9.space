@@ -1,17 +1,12 @@
 ---
-const links = [
-	{ href: "/lab", label: "Lab" },
-	{ href: "/research", label: "Research" },
-	{ href: "/lab/about", label: "About" },
-];
+import { contactMailto, primaryNavLinks } from "@lib/site";
 
 const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
 ---
 
 <div class="site-nav">
   <a class="site-nav__brand" href="/" aria-label="phi9.space home">
-    <img src="/PHI9 BL.svg" alt="" class="site-nav__icon" loading="lazy" />
-    <img src="/PHI9.SPACE.svg" alt="phi9.space" class="site-nav__wordmark" loading="lazy" />
+    <img src="/assets/brand/phi9-wordmark.svg" alt="phi9.space" class="site-nav__logo" loading="lazy" />
   </a>
 
   <button
@@ -29,12 +24,12 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
 
   <nav aria-label="Primary" id="site-nav-menu" class="site-nav__menu" data-nav-menu>
     <ul>
-      {links.map((item) => {
+      {primaryNavLinks.map((item) => {
         const normalizedHref = item.href.replace(/\/$/, "") || "/";
         const prefixMatch =
           currentPath === normalizedHref ||
           (normalizedHref !== "/" && currentPath.startsWith(`${normalizedHref}/`));
-        const shadowed = prefixMatch && links.some((other) => {
+        const shadowed = prefixMatch && primaryNavLinks.some((other) => {
           const otherHref = other.href.replace(/\/$/, "") || "/";
           return otherHref !== normalizedHref
             && otherHref.startsWith(`${normalizedHref}/`)
@@ -51,7 +46,7 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
         );
       })}
     </ul>
-    <a href="mailto:research@phi9.space" class="site-nav__cta">Get in touch →</a>
+    <a href={contactMailto} class="site-nav__cta">Get in touch</a>
   </nav>
 </div>
 
@@ -102,18 +97,13 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
   .site-nav__brand {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
     flex-shrink: 0;
   }
 
-  .site-nav__icon {
-    width: 24px;
-    height: 24px;
-  }
-
-  .site-nav__wordmark {
-    width: clamp(90px, 11vw, 120px);
+  .site-nav__logo {
+    width: clamp(138px, 16vw, 192px);
     height: auto;
+    display: block;
   }
 
   .site-nav__toggle {
