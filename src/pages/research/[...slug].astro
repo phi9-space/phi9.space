@@ -15,7 +15,7 @@ export async function getStaticPaths() {
 }
 
 const post = Astro.props;
-const { Content, headings } = await post.render();
+const { Content } = await post.render();
 
 const allPosts = (await getCollection("blog"))
 	.filter((p) => !p.data.draft && p.slug !== post.slug)
@@ -42,7 +42,6 @@ const shareUrl = new URL(`/research/${post.slug}/`, Astro.site).toString();
     updatedLabel={updatedLabel}
     authorLabel={post.data.author ?? "Phi9"}
     shareUrl={shareUrl}
-    headings={headings}
   >
     {post.data.heroImage && <img slot="hero" src={post.data.heroImage} alt="" loading="lazy" />}
     <Content />

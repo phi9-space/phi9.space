@@ -1,0 +1,105 @@
+---
+interface Props {
+	url: string;
+	class?: string;
+	label?: string;
+}
+
+const { url, class: className = "", label = "Copy link" } = Astro.props;
+---
+
+<button
+	type="button"
+	class:list={["copy-link-btn", className]}
+	data-copy-link
+	data-url={url}
+	aria-label={label}
+>
+	<svg viewBox="0 0 24 24" aria-hidden="true">
+		<path
+			d="M10 14a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07L11 6M14 10a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07L13 18"
+			fill="none"
+			stroke="currentColor"
+			stroke-width="1.7"
+			stroke-linecap="round"
+			stroke-linejoin="round"
+		/>
+	</svg>
+	<span class="copy-link-btn__text">{label}</span>
+</button>
+
+<script is:inline>
+	for (const btn of document.querySelectorAll("[data-copy-link]")) {
+		btn.addEventListener("click", async () => {
+			const link = btn.getAttribute("data-url");
+			if (!link) return;
+			try {
+				await navigator.clipboard.writeText(link);
+			} catch (err) {
+				const textarea = document.createElement("textarea");
+				textarea.value = link;
+				textarea.style.position = "fixed";
+				textarea.style.opacity = "0";
+				document.body.appendChild(textarea);
+				textarea.select();
+				try {
+					document.execCommand("copy");
+				} catch {
+					// ignore
+				}
+				document.body.removeChild(textarea);
+			}
+			const text = btn.querySelector(".copy-link-btn__text");
+			if (text) {
+				const original = text.textContent;
+				text.textContent = "Copied";
+				btn.setAttribute("data-copied", "true");
+				setTimeout(() => {
+					text.textContent = original;
+					btn.removeAttribute("data-copied");
+				}, 1800);
+			}
+		});
+	}
+</script>
+
+<style>
+	.copy-link-btn {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.45rem;
+		padding: 0.35rem 0.7rem;
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-sm);
+		background: transparent;
+		color: var(--color-text);
+		font-family: var(--font-mono);
+		font-size: 0.78rem;
+		letter-spacing: 0.02em;
+		cursor: pointer;
+		transition:
+			color 0.15s ease,
+			border-color 0.15s ease,
+			background 0.15s ease;
+	}
+
+	.copy-link-btn svg {
+		width: 0.95rem;
+		height: 0.95rem;
+		flex-shrink: 0;
+	}
+
+	.copy-link-btn:hover {
+		color: var(--color-accent);
+		border-color: color-mix(in srgb, var(--color-accent) 55%, var(--color-border) 45%);
+	}
+
+	.copy-link-btn[data-copied="true"] {
+		color: var(--color-accent);
+		border-color: var(--color-accent);
+	}
+
+	.copy-link-btn__text {
+		font-weight: 500;
+	}
+</style>

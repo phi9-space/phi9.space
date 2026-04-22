@@ -1,12 +1,5 @@
 ---
-import ShareBar from "./ShareBar.astro";
-import TableOfContents from "./TableOfContents.astro";
-
-export interface Heading {
-	depth: number;
-	slug: string;
-	text: string;
-}
+import CopyLinkButton from "./CopyLinkButton.astro";
 
 interface Props {
 	title: string;
@@ -17,7 +10,6 @@ interface Props {
 	updatedLabel?: string | null;
 	authorLabel?: string | null;
 	shareUrl?: string | null;
-	headings?: Heading[];
 }
 
 const {
@@ -29,12 +21,9 @@ const {
 	updatedLabel = null,
 	authorLabel = null,
 	shareUrl = null,
-	headings = [],
 } = Astro.props as Props;
 
-const tocHeadings = headings.filter((h) => h.depth <= 3);
 const hasHero = Astro.slots.has("hero");
-const hasSidebar = Boolean(shareUrl || tocHeadings.length > 0);
 const metaItems = [
 	publishedLabel,
 	readingTime ? `${readingTime} min read` : null,
@@ -48,8 +37,8 @@ const metaItems = [
 		<h1 class="article__title">{title}</h1>
 		<span class="rule article__rule" aria-hidden="true"></span>
 		{dek && <p class="article__dek">{dek}</p>}
-		{metaItems.length > 0 && (
-			<div class="article__meta-row">
+		<div class="article__meta-row">
+			<div class="article__meta-text">
 				{metaItems.map((item, idx) => (
 					<>
 						{idx > 0 && <span aria-hidden="true">·</span>}
@@ -63,7 +52,8 @@ const metaItems = [
 					</>
 				)}
 			</div>
-		)}
+			{shareUrl && <CopyLinkButton url={shareUrl} />}
+		</div>
 	</header>
 
 	{hasHero && (
@@ -72,22 +62,10 @@ const metaItems = [
 		</figure>
 	)}
 
-	<div class:list={["article__body-wrap", "container", hasSidebar ? "" : "article__body-wrap--single"]}>
+	<div class="article__body-wrap container">
 		<div class="article__body">
 			<slot />
 		</div>
-
-		{hasSidebar && (
-			<aside class="article__side">
-				{shareUrl && <ShareBar url={shareUrl} title={title} />}
-				{tocHeadings.length > 0 && (
-					<div class="article__toc">
-						<span class="article__side-label">On this page</span>
-						<TableOfContents headings={tocHeadings} />
-					</div>
-				)}
-			</aside>
-		)}
 	</div>
 </article>
 
@@ -144,6 +122,16 @@ const metaItems = [
 		display: flex;
 		flex-wrap: wrap;
 		align-items: center;
+		justify-content: space-between;
+		gap: 0.75rem 1.25rem;
+		width: 100%;
+		max-width: 55ch;
+	}
+
+	.article__meta-text {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
 		gap: 0.5rem;
 		font-family: var(--font-mono);
 		font-size: 0.82rem;
@@ -167,49 +155,12 @@ const metaItems = [
 	}
 
 	.article__body-wrap {
-		display: grid;
-		grid-template-columns: minmax(0, 1fr) 220px;
-		gap: clamp(2rem, 5vw, 4rem);
-		align-items: start;
 		padding-bottom: clamp(3rem, 6vw, 5rem);
 	}
 
-	.article__body-wrap--single {
-		grid-template-columns: minmax(0, 1fr);
-	}
-
-	.article__side {
-		position: sticky;
-		top: 5.5rem;
-		display: flex;
-		flex-direction: column;
-		gap: 2rem;
-	}
-
-	.article__side-label {
-		font-family: var(--font-mono);
-		font-size: 0.72rem;
-		letter-spacing: 0.1em;
-		text-transform: uppercase;
-		color: var(--color-muted);
-		display: block;
-		margin-bottom: 0.75rem;
-	}
-
-	.article__toc :global(.toc-container) {
-		position: static;
-		max-width: none;
-		min-width: 0;
-		max-height: none;
-		padding: 0;
-	}
-
-	.article__toc :global(.toc-container) {
-		display: block !important;
-	}
-
 	.article__body {
-		max-width: var(--measure-reading);
+		max-width: 720px;
+		margin: 0 auto;
 	}
 
 	.article__body :global(p),
@@ -310,23 +261,14 @@ const metaItems = [
 		text-underline-offset: 0.16em;
 	}
 
-	@media (max-width: 900px) {
-		.article__body-wrap {
-			grid-template-columns: 1fr;
-			gap: 2.5rem;
-		}
-
-		.article__side {
-			position: static;
-			flex-direction: column;
-			gap: 2rem;
-			padding-bottom: 1rem;
-			border-bottom: 1px solid var(--color-border);
-			margin-bottom: 1.5rem;
-		}
-
+	@media (max-width: 800px) {
 		.article__title {
 			max-width: none;
+		}
+
+		.article__meta-row {
+			flex-direction: column;
+			align-items: flex-start;
 		}
 	}
 </style>
