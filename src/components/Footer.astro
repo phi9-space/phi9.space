@@ -24,7 +24,8 @@ import { footerLinkGroups, siteBrandCopy } from "@lib/site";
 
     <div class="site-footer__banner">
       <a href="/" aria-label="phi9.space home" class="site-footer__banner-link">
-        <img src="/assets/brand/phi9-lockup-black.svg" alt="phi9.space" class="site-footer__banner-logo" loading="lazy" />
+        <img src="/assets/brand/phi9-lockup-black.svg" alt="phi9.space" class="site-footer__banner-logo site-footer__banner-logo--light" loading="lazy" />
+        <img src="/assets/brand/phi9-lockup-white.svg" alt="" aria-hidden="true" class="site-footer__banner-logo site-footer__banner-logo--dark" loading="lazy" />
       </a>
     </div>
   </div>
@@ -61,6 +62,18 @@ import { footerLinkGroups, siteBrandCopy } from "@lib/site";
   .site-footer__banner-logo {
     width: 100%;
     height: auto;
+    display: block;
+  }
+
+  .site-footer__banner-logo--dark {
+    display: none;
+  }
+
+  [data-theme="dark"] .site-footer__banner-logo--light {
+    display: none;
+  }
+
+  [data-theme="dark"] .site-footer__banner-logo--dark {
     display: block;
   }
 

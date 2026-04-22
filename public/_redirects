@@ -1,1 +1,5 @@
+/newsroom         /research  301
+/newsroom/*       /research  301
+/collaborations   /          301
+/collaborations/* /          301
 /* /404.html 404
