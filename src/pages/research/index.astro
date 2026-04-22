@@ -14,13 +14,13 @@ const posts = (await getCollection("blog"))
 >
   <!-- Hero -->
   <section class="research-hero">
-    <div class="research-hero__bg"></div>
     <div class="research-hero__content container">
       <span class="eyebrow">Research</span>
-      <h1>From the research log</h1>
+      <h1 class="research-hero__title">Research notes, experiments, and technical evidence from the lab.</h1>
+      <span class="rule" aria-hidden="true"></span>
       <p class="research-hero__sub">
-        Technical writeups, experiments, and findings from our work
-        in physical AI, reinforcement learning, and robotics data.
+        Active work, open questions, and figures from phi9. The log tracks the
+        systems, experiments, and results that shape what we build next.
       </p>
     </div>
   </section>
@@ -86,42 +86,45 @@ const posts = (await getCollection("blog"))
   /* Hero */
   .research-hero {
     position: relative;
-    padding: clamp(7rem, 12vw, 10rem) 0 clamp(3rem, 6vw, 4rem);
-    overflow: hidden;
-  }
-
-  .research-hero__bg {
-    position: absolute;
-    inset: 0;
-    background: var(--gradient-hero);
+    padding: clamp(7rem, 13vw, 11rem) 0 clamp(3rem, 6vw, 4.5rem);
   }
 
   .research-hero__content {
     position: relative;
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    align-items: flex-start;
   }
 
   .eyebrow {
     font-family: var(--font-mono);
-    font-size: 0.75rem;
-    letter-spacing: 0.08em;
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--color-accent);
     font-weight: 500;
+    margin: 0 0 1.25rem;
   }
 
-  .research-hero__content h1 {
-    max-width: 20ch;
-    margin: 0;
+  .research-hero__title {
+    font-size: var(--type-display-lg);
+    line-height: 0.98;
+    letter-spacing: -0.04em;
+    max-width: 22ch;
+    margin: 0 0 1.25rem;
+  }
+
+  .research-hero .rule {
+    width: 12ch;
+    margin: 0 0 1.5rem;
   }
 
   .research-hero__sub {
-    max-width: 55ch;
+    max-width: 58ch;
     color: var(--color-muted);
     margin: 0;
-    line-height: 1.6;
+    line-height: 1.55;
+    font-size: clamp(1rem, 1.3vw, 1.15rem);
   }
 
   /* Posts grid */

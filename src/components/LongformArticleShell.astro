@@ -1,4 +1,13 @@
 ---
+import ShareBar from "./ShareBar.astro";
+import TableOfContents from "./TableOfContents.astro";
+
+export interface Heading {
+	depth: number;
+	slug: string;
+	text: string;
+}
+
 interface Props {
 	title: string;
 	dek?: string | null;
@@ -7,6 +16,8 @@ interface Props {
 	publishedLabel?: string | null;
 	updatedLabel?: string | null;
 	authorLabel?: string | null;
+	shareUrl?: string | null;
+	headings?: Heading[];
 }
 
 const {
@@ -17,257 +28,305 @@ const {
 	publishedLabel = null,
 	updatedLabel = null,
 	authorLabel = null,
+	shareUrl = null,
+	headings = [],
 } = Astro.props as Props;
 
-const metaItems = [leadTag, readingTime ? `${readingTime} min` : null].filter(Boolean) as string[];
-const hasSidebar = Boolean(publishedLabel || updatedLabel || authorLabel);
+const tocHeadings = headings.filter((h) => h.depth <= 3);
 const hasHero = Astro.slots.has("hero");
+const hasSidebar = Boolean(shareUrl || tocHeadings.length > 0);
+const metaItems = [
+	publishedLabel,
+	readingTime ? `${readingTime} min read` : null,
+	authorLabel,
+].filter(Boolean) as string[];
 ---
 
 <article class="article">
-  {metaItems.length > 0 && (
-    <div class="article__meta">
-      {metaItems.map((item, index) => (
-        <>
-          {index > 0 && <span>·</span>}
-          <span>{item}</span>
-        </>
-      ))}
-    </div>
-  )}
+	<header class="article__header container">
+		{leadTag && <p class="article__eyebrow">{leadTag}</p>}
+		<h1 class="article__title">{title}</h1>
+		<span class="rule article__rule" aria-hidden="true"></span>
+		{dek && <p class="article__dek">{dek}</p>}
+		{metaItems.length > 0 && (
+			<div class="article__meta-row">
+				{metaItems.map((item, idx) => (
+					<>
+						{idx > 0 && <span aria-hidden="true">·</span>}
+						<span>{item}</span>
+					</>
+				))}
+				{updatedLabel && (
+					<>
+						<span aria-hidden="true">·</span>
+						<span>Updated {updatedLabel}</span>
+					</>
+				)}
+			</div>
+		)}
+	</header>
 
-  <h1 class="article__title">{title}</h1>
-  {dek && <p class="article__dek">{dek}</p>}
+	{hasHero && (
+		<figure class="article__hero container">
+			<slot name="hero" />
+		</figure>
+	)}
 
-  {hasHero && (
-    <div class="article__hero">
-      <slot name="hero" />
-    </div>
-  )}
+	<div class:list={["article__body-wrap", "container", hasSidebar ? "" : "article__body-wrap--single"]}>
+		<div class="article__body">
+			<slot />
+		</div>
 
-  <div class:list={{ "article__grid": true, "article__grid--single": !hasSidebar, container: true }}>
-    {hasSidebar && (
-      <aside class="article__sidebar">
-        {publishedLabel && (
-          <div class="article__sidebar-group">
-            <span class="article__sidebar-label">Published</span>
-            <span class="article__sidebar-value">{publishedLabel}</span>
-          </div>
-        )}
-
-        {updatedLabel && (
-          <div class="article__sidebar-group">
-            <span class="article__sidebar-label">Updated</span>
-            <span class="article__sidebar-value">{updatedLabel}</span>
-          </div>
-        )}
-
-        {authorLabel && (
-          <div class="article__sidebar-group">
-            <span class="article__sidebar-label">Author</span>
-            <span class="article__sidebar-value">{authorLabel}</span>
-          </div>
-        )}
-      </aside>
-    )}
-
-    <div class="article__body">
-      <slot />
-    </div>
-  </div>
+		{hasSidebar && (
+			<aside class="article__side">
+				{shareUrl && <ShareBar url={shareUrl} title={title} />}
+				{tocHeadings.length > 0 && (
+					<div class="article__toc">
+						<span class="article__side-label">On this page</span>
+						<TableOfContents headings={tocHeadings} />
+					</div>
+				)}
+			</aside>
+		)}
+	</div>
 </article>
 
 <style>
-  .article {
-    padding-top: clamp(6rem, 10vw, 8rem);
-  }
+	.article {
+		padding-top: clamp(6rem, 10vw, 9rem);
+	}
 
-  .article__meta {
-    display: flex;
-    justify-content: center;
-    gap: 0.5rem;
-    font-family: var(--font-mono);
-    font-size: 0.8125rem;
-    color: var(--color-muted);
-    letter-spacing: 0.02em;
-    padding: 0 clamp(1rem, 3vw, 2rem);
-    margin-bottom: 1.25rem;
-  }
+	.article__header {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 0;
+		max-width: var(--max-width);
+		margin: 0 auto;
+		padding-bottom: clamp(2rem, 5vw, 3.5rem);
+	}
 
-  .article__title {
-    font-size: clamp(2rem, 4vw, 3rem);
-    text-align: center;
-    max-width: 20ch;
-    margin: 0 auto 1rem;
-    padding: 0 clamp(1rem, 3vw, 2rem);
-  }
+	.article__eyebrow {
+		margin: 0 0 1.25rem;
+		font-family: var(--font-mono);
+		font-size: 0.78rem;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		color: var(--color-accent);
+	}
 
-  .article__dek {
-    margin: 0 auto 3rem;
-    text-align: center;
-    max-width: 42rem;
-    padding: 0 clamp(1rem, 3vw, 2rem);
-    color: var(--color-muted);
-    line-height: 1.7;
-  }
+	.article__title {
+		font-family: var(--font-heading);
+		font-size: var(--type-display-lg);
+		line-height: 0.98;
+		letter-spacing: -0.04em;
+		font-weight: 600;
+		color: var(--color-text);
+		margin: 0 0 1.25rem;
+		max-width: 20ch;
+		text-align: left;
+	}
 
-  .article__hero {
-    width: 100%;
-    max-width: var(--max-width);
-    margin: 0 auto 3rem;
-    padding: 0 clamp(1rem, 3vw, 2rem);
-  }
+	.article__rule {
+		width: 12ch;
+		margin: 0 0 1.5rem;
+	}
 
-  .article__hero :global(img),
-  .article__hero :global(video) {
-    width: 100%;
-    height: auto;
-    display: block;
-    border-radius: var(--radius-lg);
-  }
+	.article__dek {
+		margin: 0 0 1.5rem;
+		max-width: 55ch;
+		color: var(--color-muted);
+		line-height: 1.55;
+		font-size: clamp(1.0625rem, 1.6vw, 1.25rem);
+	}
 
-  .article__grid {
-    display: grid;
-    grid-template-columns: 220px 1fr;
-    gap: 4rem;
-    align-items: start;
-    padding-bottom: 4rem;
-  }
+	.article__meta-row {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.5rem;
+		font-family: var(--font-mono);
+		font-size: 0.82rem;
+		letter-spacing: 0.02em;
+		color: var(--color-muted);
+	}
 
-  .article__grid--single {
-    grid-template-columns: 1fr;
-  }
+	.article__hero {
+		width: 100%;
+		max-width: var(--max-width);
+		margin: 0 auto clamp(2rem, 5vw, 3.5rem);
+		padding: 0 clamp(1rem, 3vw, 2rem);
+	}
 
-  .article__sidebar {
-    position: sticky;
-    top: 5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1.75rem;
-    padding-top: 0.25rem;
-  }
+	.article__hero :global(img),
+	.article__hero :global(video) {
+		width: 100%;
+		height: auto;
+		display: block;
+		border-radius: var(--radius-lg);
+	}
 
-  .article__sidebar-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.2rem;
-  }
+	.article__body-wrap {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) 220px;
+		gap: clamp(2rem, 5vw, 4rem);
+		align-items: start;
+		padding-bottom: clamp(3rem, 6vw, 5rem);
+	}
 
-  .article__sidebar-label {
-    font-family: var(--font-body);
-    font-size: 0.875rem;
-    color: var(--color-muted);
-  }
+	.article__body-wrap--single {
+		grid-template-columns: minmax(0, 1fr);
+	}
 
-  .article__sidebar-value {
-    font-family: var(--font-heading);
-    font-size: 1rem;
-    font-weight: 500;
-    color: var(--color-text);
-  }
+	.article__side {
+		position: sticky;
+		top: 5.5rem;
+		display: flex;
+		flex-direction: column;
+		gap: 2rem;
+	}
 
-  .article__body {
-    max-width: 680px;
-  }
+	.article__side-label {
+		font-family: var(--font-mono);
+		font-size: 0.72rem;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		color: var(--color-muted);
+		display: block;
+		margin-bottom: 0.75rem;
+	}
 
-  .article__body :global(p),
-  .article__body :global(ul),
-  .article__body :global(ol) {
-    font-size: 1.0625rem;
-    line-height: 1.7;
-    margin-bottom: 1.25rem;
-  }
+	.article__toc :global(.toc-container) {
+		position: static;
+		max-width: none;
+		min-width: 0;
+		max-height: none;
+		padding: 0;
+	}
 
-  .article__body :global(p),
-  .article__body :global(ul),
-  .article__body :global(ol),
-  .article__body :global(blockquote),
-  .article__body :global(dl),
-  .article__body :global(hr) {
-    max-width: var(--measure-reading);
-  }
+	.article__toc :global(.toc-container) {
+		display: block !important;
+	}
 
-  .article__body :global(h1),
-  .article__body :global(h2),
-  .article__body :global(h3),
-  .article__body :global(h4),
-  .article__body :global(h5),
-  .article__body :global(h6) {
-    max-width: 34ch;
-  }
+	.article__body {
+		max-width: var(--measure-reading);
+	}
 
-  .article__body :global(h2) {
-    margin-top: 2.5rem;
-    margin-bottom: 0.75rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--color-border);
-  }
+	.article__body :global(p),
+	.article__body :global(ul),
+	.article__body :global(ol) {
+		font-size: 1.0625rem;
+		line-height: 1.7;
+		margin-bottom: 1.25rem;
+	}
 
-  .article__body :global(h3) {
-    margin-top: 1.75rem;
-    margin-bottom: 0.5rem;
-  }
+	.article__body :global(p),
+	.article__body :global(ul),
+	.article__body :global(ol),
+	.article__body :global(blockquote),
+	.article__body :global(dl),
+	.article__body :global(hr) {
+		max-width: var(--measure-reading);
+	}
 
-  .article__body :global(blockquote) {
-    line-height: 1.6;
-  }
+	.article__body :global(h1),
+	.article__body :global(h2),
+	.article__body :global(h3),
+	.article__body :global(h4),
+	.article__body :global(h5),
+	.article__body :global(h6) {
+		max-width: 34ch;
+	}
 
-  .article__body :global(img),
-  .article__body :global(video) {
-    max-width: 100%;
-    height: auto;
-    border-radius: var(--radius-lg);
-    margin: 1.5rem 0;
-  }
+	.article__body :global(h2) {
+		margin-top: 3rem;
+		margin-bottom: 0.75rem;
+		padding-top: 1.5rem;
+		font-size: clamp(1.625rem, 3vw, 2.25rem);
+		line-height: 1.1;
+		position: relative;
+	}
 
-  .article__body :global(pre),
-  .article__body :global(table),
-  .article__body :global(figure) {
-    max-width: min(100%, 960px);
-  }
+	.article__body :global(h2)::before {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: var(--rule-length-sm);
+		height: var(--rule-weight);
+		background: var(--color-rule);
+	}
 
-  .article__body :global(ul[data-task-list]) {
-    list-style: none;
-    padding-left: 0.2rem;
-  }
+	.article__body :global(h3) {
+		margin-top: 2rem;
+		margin-bottom: 0.5rem;
+		font-size: clamp(1.2rem, 2vw, 1.4rem);
+	}
 
-  .article__body :global(ul[data-task-list] li) {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.55rem;
-  }
+	.article__body :global(blockquote) {
+		line-height: 1.6;
+	}
 
-  .article__body :global(ul[data-task-list] input[type="checkbox"]) {
-    margin-top: 0.28rem;
-  }
+	.article__body :global(img),
+	.article__body :global(video) {
+		max-width: 100%;
+		height: auto;
+		border-radius: var(--radius-lg);
+		margin: 1.75rem 0;
+	}
 
-  .article__body :global(table) {
-    font-size: 0.9rem;
-  }
+	.article__body :global(pre),
+	.article__body :global(table),
+	.article__body :global(figure) {
+		max-width: min(100%, 960px);
+	}
 
-  .article__body :global(th) {
-    background: var(--color-surface);
-    font-weight: 600;
-  }
+	.article__body :global(ul[data-task-list]) {
+		list-style: none;
+		padding-left: 0.2rem;
+	}
 
-  .article__body :global(a) {
-    color: var(--color-accent);
-    text-underline-offset: 0.16em;
-  }
+	.article__body :global(ul[data-task-list] li) {
+		display: flex;
+		align-items: flex-start;
+		gap: 0.55rem;
+	}
 
-  @media (max-width: 800px) {
-    .article__grid {
-      grid-template-columns: 1fr;
-      gap: 2rem;
-    }
+	.article__body :global(ul[data-task-list] input[type="checkbox"]) {
+		margin-top: 0.28rem;
+	}
 
-    .article__sidebar {
-      position: static;
-      flex-direction: row;
-      flex-wrap: wrap;
-      gap: 1.5rem;
-      padding-bottom: 1.5rem;
-      border-bottom: 1px solid var(--color-border);
-    }
-  }
+	.article__body :global(table) {
+		font-size: 0.9rem;
+	}
+
+	.article__body :global(th) {
+		background: var(--color-surface);
+		font-weight: 600;
+	}
+
+	.article__body :global(a) {
+		color: var(--color-accent);
+		text-underline-offset: 0.16em;
+	}
+
+	@media (max-width: 900px) {
+		.article__body-wrap {
+			grid-template-columns: 1fr;
+			gap: 2.5rem;
+		}
+
+		.article__side {
+			position: static;
+			flex-direction: column;
+			gap: 2rem;
+			padding-bottom: 1rem;
+			border-bottom: 1px solid var(--color-border);
+			margin-bottom: 1.5rem;
+		}
+
+		.article__title {
+			max-width: none;
+		}
+	}
 </style>

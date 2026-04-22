@@ -10,10 +10,10 @@ import { contactMailto } from "@lib/site";
 >
   <!-- Hero -->
   <section class="lab-hero">
-    <div class="lab-hero__bg"></div>
     <div class="lab-hero__content container">
       <span class="eyebrow">Lab</span>
-      <h1>The lab is where data becomes systems.</h1>
+      <h1 class="lab-hero__title">The lab is where data becomes systems.</h1>
+      <span class="rule" aria-hidden="true"></span>
       <p class="lab-hero__sub">
         Phi9 builds products, workflows, and infrastructure for physical AI. The lab is where
         capture systems, training pipelines, evaluation loops, and deployable tools get stitched
@@ -160,42 +160,45 @@ import { contactMailto } from "@lib/site";
   /* Hero */
   .lab-hero {
     position: relative;
-    padding: clamp(7rem, 12vw, 10rem) 0 clamp(3rem, 6vw, 4rem);
-    overflow: hidden;
-  }
-
-  .lab-hero__bg {
-    position: absolute;
-    inset: 0;
-    background: var(--gradient-hero);
+    padding: clamp(7rem, 13vw, 11rem) 0 clamp(3rem, 6vw, 4.5rem);
   }
 
   .lab-hero__content {
     position: relative;
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    align-items: flex-start;
   }
 
   .eyebrow {
     font-family: var(--font-mono);
-    font-size: 0.75rem;
-    letter-spacing: 0.08em;
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--color-accent);
     font-weight: 500;
+    margin: 0 0 1.25rem;
   }
 
-  .lab-hero__content h1 {
-    max-width: 20ch;
-    margin: 0;
+  .lab-hero__title {
+    font-size: var(--type-display-lg);
+    line-height: 0.98;
+    letter-spacing: -0.04em;
+    max-width: 18ch;
+    margin: 0 0 1.25rem;
+  }
+
+  .lab-hero .rule {
+    width: 12ch;
+    margin: 0 0 1.5rem;
   }
 
   .lab-hero__sub {
-    max-width: 50ch;
+    max-width: 58ch;
     color: var(--color-muted);
     margin: 0;
-    line-height: 1.6;
+    line-height: 1.55;
+    font-size: clamp(1rem, 1.3vw, 1.15rem);
   }
 
   /* Section heading */

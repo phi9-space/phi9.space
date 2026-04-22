@@ -15,13 +15,14 @@ export async function getStaticPaths() {
 }
 
 const post = Astro.props;
-const { Content } = await post.render();
+const { Content, headings } = await post.render();
 
 const allPosts = (await getCollection("blog"))
 	.filter((p) => !p.data.draft && p.slug !== post.slug)
 	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
 	.slice(0, 3);
 const updatedLabel = post.data.updatedDate ? formatLongDate(post.data.updatedDate) : null;
+const shareUrl = new URL(`/research/${post.slug}/`, Astro.site).toString();
 ---
 
 <BaseLayout
@@ -40,6 +41,8 @@ const updatedLabel = post.data.updatedDate ? formatLongDate(post.data.updatedDat
     publishedLabel={formatLongDate(post.data.pubDate)}
     updatedLabel={updatedLabel}
     authorLabel={post.data.author ?? "Phi9"}
+    shareUrl={shareUrl}
+    headings={headings}
   >
     {post.data.heroImage && <img slot="hero" src={post.data.heroImage} alt="" loading="lazy" />}
     <Content />
