@@ -1,0 +1,41 @@
+---
+interface Props {
+	size?: string;
+	color?: string;
+	orientation?: "top" | "bottom" | "left" | "right";
+	class?: string;
+}
+
+const {
+	size = "14rem",
+	color = "var(--color-text)",
+	orientation = "right",
+	class: className = "",
+} = Astro.props;
+
+const clipMap = {
+	top: "polygon(0 0, 100% 0, 100% 50%, 0 50%)",
+	bottom: "polygon(0 50%, 100% 50%, 100% 100%, 0 100%)",
+	left: "polygon(0 0, 50% 0, 50% 100%, 0 100%)",
+	right: "polygon(50% 0, 100% 0, 100% 100%, 50% 100%)",
+} as const;
+
+const clip = clipMap[orientation];
+---
+
+<div
+	class:list={["shape shape--half", className]}
+	style={`--shape-size: ${size}; --shape-color: ${color}; --shape-clip: ${clip};`}
+	aria-hidden="true"
+></div>
+
+<style>
+	.shape--half {
+		width: var(--shape-size);
+		height: var(--shape-size);
+		background: var(--shape-color);
+		border-radius: 50%;
+		-webkit-clip-path: var(--shape-clip);
+		clip-path: var(--shape-clip);
+	}
+</style>

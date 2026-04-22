@@ -76,23 +76,28 @@ and are never referenced.
 
 ## 2. Color system
 
+phi9.space is paper-first. The site has one theme: cream Canvas ground,
+Graphite ink text, Signal Orange as the sole accent. There is no dark
+mode. This is a deliberate brand decision — the paper aesthetic is the
+brand, and committing to it makes the poster language work.
+
 ### Primitive tokens (`src/styles/tokens.css`)
 
 ```
 --brand-signal:      #ff5c00   Signal Orange — the only accent
---brand-ink:         #16161d   Graphite — the only dark ground
---brand-paper:       #fcf7e9   Canvas — the only light ground
+--brand-ink:         #16161d   Graphite — the only dark value
+--brand-paper:       #fcf7e9   Canvas — the only ground
 --brand-paper-warm:  derived from paper
 --brand-paper-stone: derived from paper
 ```
 
-These four are the only brand primitives. Introducing a fifth primitive
-should require a dedicated decision with documented reason.
+These five are the only brand primitives. Introducing a sixth should
+require a dedicated decision with documented reason.
 
-### Semantic tokens (light)
+### Semantic tokens
 
 Semantic tokens are what components should reference. They resolve to
-primitives per theme.
+primitives.
 
 ```
 --color-bg:            brand-paper
@@ -107,29 +112,12 @@ primitives per theme.
 --color-accent-hover:  mix(signal 86%, ink 14%)
 --color-accent-soft:   mix(signal 10%, paper 90%)
 --color-link:          brand-signal
+--color-rule:          brand-ink (editorial divider color)
 --gradient-hero:       paper → paper (intentionally flat)
 ```
 
-### Semantic tokens (dark)
-
-```
---color-bg:            brand-ink
---color-bg-elevated:   mix(ink 92%, paper 8%)
---color-surface:       mix(ink 88%, paper 12%)
---color-surface-alt:   mix(ink 80%, paper 20%)
---color-border:        mix(ink 72%, paper 28%)
---color-text:          brand-paper
---color-text-inverse:  brand-ink
---color-muted:         mix(paper 62%, ink 38%)
---color-accent:        brand-signal
---color-accent-hover:  mix(signal 86%, paper 14%)
---color-accent-soft:   mix(signal 20%, ink 80%)
---color-link:          brand-signal
---gradient-hero:       ink → ink (intentionally flat)
-```
-
-The signal color stays constant across themes. Signal is identity, not
-atmosphere; it should never dim or shift.
+The signal color is brand identity, not atmosphere. It should not shift.
+Do not introduce hover-state color variants that desaturate it.
 
 ### Usage rules
 
@@ -171,23 +159,31 @@ Three font families, three roles, strict separation.
 The brand wordmark itself is set in Source Serif Pro (see section 1). That
 is an identity constant, not a role.
 
-### Scale
+### Scale — poster-class
 
 ```
 Base body size: 17px
 Line height (body):    1.5
-Line height (heading): 1.15
-Letter spacing (heading): -0.03em
+Line height (heading): 0.98
+Letter spacing (heading): -0.04em
 Letter spacing (body):    -0.01em
 Reading measure: 70ch default, 62ch on dense surfaces
+Heading weight: 600
 
-h1: clamp(1.875rem, 3vw, 2.5rem)
-h2: clamp(1.375rem, 2.2vw, 1.75rem)
-h3: clamp(1.125rem, 1.6vw, 1.375rem)
+Display tokens:
+--type-display-xl: clamp(3.5rem, 10vw, 9rem)   homepage hero only
+--type-display-lg: clamp(2.5rem, 6vw, 5.25rem) page heroes (h1)
+--type-display-md: clamp(1.875rem, 4vw, 3.5rem) section h2
+--type-display-sm: clamp(1.25rem, 2vw, 1.625rem) h3
 ```
 
-Homepage hero display may go larger with `max-width: 12ch` and a heavier
-clamp; this is an intentional poster behavior, not a general rule.
+Typography is intentionally poster-scale. Headlines are meant to feel
+like physical print, not like web page text. Let them wrap to multiple
+lines when content requires it; wrapping is part of the rhythm.
+
+Every `.section-heading` h2 automatically receives a thick editorial rule
+(`::after`) directly under the headline. This is part of the section
+grammar — do not suppress it unless using `.section-heading--no-rule`.
 
 ### Rules
 
@@ -383,53 +379,19 @@ tune it without a reason.
 
 ---
 
-## 8. Dark mode
+## 8. One theme, no dark mode
 
-Dark mode is a first-class part of the system. Everything should invert
-coherently.
+phi9.space does not implement a dark mode. The paper aesthetic is the
+brand, and inverting it would dilute the poster language.
 
-### Activation
+A white lockup asset (`public/assets/brand/phi9-lockup-white.svg`) is
+retained for use against dark image grounds in OG cards, social posters,
+and future surfaces where paper-on-ink is called for — but the site
+itself stays paper.
 
-- The theme is selected by a toggle in the navbar.
-- The theme persists in `localStorage` under the key `phi9-theme`.
-- First visit respects `prefers-color-scheme: dark`.
-- The theme applies as `[data-theme="dark"]` on the root element.
-- No flash-of-incorrect-theme: the theme is set inline in a blocking
-  script before the body renders.
-
-### Token parity
-
-All components must reference semantic tokens. Any hardcoded `rgba(...)`
-or hex literal that does not resolve per theme is a bug.
-
-Known hardcoded values to replace:
-
-- `rgba(22, 22, 29, ...)` in `src/pages/index.astro::.artifact-plane__media::after`
-  and elsewhere — replace with `color-mix(in srgb, var(--color-text) 72%, transparent)`.
-- `rgba(252, 247, 233, ...)` for grid lines — replace with
-  `color-mix(in srgb, var(--color-text-inverse) 8%, transparent)` or a new
-  `--color-grid-line` token.
-- `box-shadow: rgba(22, 22, 29, 0.08)` in `Navbar.astro` — replace with
-  `color-mix(in srgb, var(--color-text) 8%, transparent)`.
-- Reveal and hero gradients must resolve against theme-aware backgrounds.
-
-### Logo swap
-
-- The nav and footer logos must swap between `phi9-lockup-black.svg` and
-  a new `phi9-lockup-white.svg` asset based on theme. Produce the white
-  lockup from Figma as a first step.
-- Use CSS `[data-theme="dark"]` to swap the `src`, or ship both SVGs and
-  use a `<picture>` element. A `<picture>` element is preferred because
-  it avoids a layout flash.
-
-### Dark-mode constraints
-
-- The signal color does not change.
-- Ink shadows lose visibility on dark grounds; replace with elevation via
-  `--color-surface` lift rather than shadow.
-- Do not invert images or figures. If a figure only reads on one ground,
-  either render it inside a light surface panel in dark mode or produce
-  a dark variant.
+If a future decision revives dark mode, it should be a deliberately
+different surface (gallery at night) rather than a color invert of the
+existing rules. It is out of scope for v1 and beyond.
 
 ---
 
@@ -526,16 +488,36 @@ Used inline with the problem title.
 masked to sit behind a hero or as a section divider. Replaces the
 current `AsciiShader.astro` placeholder.
 
-### Implementation guidance
+### Implemented primitives
 
-- Define each element as a standalone Astro component under
-  `src/components/visuals/`.
-- All color values in these components must come from semantic tokens.
-- Parameterize density, opacity, and optional cursor interaction.
-- Animations must be driven by CSS where possible; canvas only when the
-  effect cannot be expressed in CSS or SVG.
-- Each visual should have a static fallback state for print or reduced
-  motion.
+The following primitives live in `src/components/visuals/`. They accept
+size, color, and density props and default to semantic tokens so they
+work without overrides.
+
+- `SignalCircle.astro` — filled circle, defaults to `--color-accent`.
+  Used as the dominant poster mark. One per composition.
+- `InkRect.astro` — filled rectangle, defaults to `--color-text`. Used
+  as ground or constraint in poster compositions.
+- `DotGrid.astro` — rows × cols grid of small dots. Evokes marker arrays
+  and measurement lattices.
+- `HalfCircle.astro` — half-disc in four orientations (top/bottom/left/
+  right). Used for contrast and directional weight.
+- `VerticalBar.astro` — tall accent bar, defaults to accent color. Used
+  as punctuation inside posters.
+
+The site-wide `.rule` class and its `--short` / `--wide` variants are
+the canonical horizontal rule divider — no component needed.
+
+### Implementation guidance for new primitives
+
+- Live under `src/components/visuals/`.
+- Accept size + color props with semantic-token defaults.
+- Never hardcode colors inside the component — receive via prop with a
+  token default.
+- Animations must be CSS where possible. Canvas only when the effect
+  cannot be expressed otherwise.
+- Honor `prefers-reduced-motion` on any animated primitive.
+- Each visual should have a static fallback state.
 
 ---
 

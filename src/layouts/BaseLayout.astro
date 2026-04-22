@@ -25,21 +25,6 @@ const {
 
 <html lang="en">
   <head>
-    <script is:inline>
-      // Theme init — runs before body renders to avoid flash
-      (function () {
-        try {
-          const stored = localStorage.getItem("phi9-theme");
-          const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-          const theme = stored === "dark" || stored === "light"
-            ? stored
-            : prefersDark ? "dark" : "light";
-          document.documentElement.setAttribute("data-theme", theme);
-        } catch (e) {
-          document.documentElement.setAttribute("data-theme", "light");
-        }
-      })();
-    </script>
     <SeoHead
       title={title}
       description={description}

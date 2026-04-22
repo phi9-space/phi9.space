@@ -1,0 +1,29 @@
+---
+interface Props {
+	size?: string;
+	color?: string;
+	class?: string;
+}
+
+const {
+	size = "14rem",
+	color = "var(--color-accent)",
+	class: className = "",
+} = Astro.props;
+---
+
+<div
+	class:list={["shape shape--circle", className]}
+	style={`--shape-size: ${size}; --shape-color: ${color};`}
+	aria-hidden="true"
+>
+</div>
+
+<style>
+	.shape--circle {
+		width: var(--shape-size);
+		height: var(--shape-size);
+		background: var(--shape-color);
+		border-radius: 50%;
+	}
+</style>

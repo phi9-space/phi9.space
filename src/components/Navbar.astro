@@ -9,27 +9,13 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
     <img
       src="/assets/brand/phi9-lockup-black.svg"
       alt="phi9.space"
-      class="site-nav__logo site-nav__logo--desktop site-nav__logo--light"
-      loading="lazy"
-    />
-    <img
-      src="/assets/brand/phi9-lockup-white.svg"
-      alt=""
-      aria-hidden="true"
-      class="site-nav__logo site-nav__logo--desktop site-nav__logo--dark"
+      class="site-nav__logo site-nav__logo--desktop"
       loading="lazy"
     />
     <img
       src="/assets/brand/phi9-mark-black.svg"
       alt="phi9.space"
-      class="site-nav__logo site-nav__logo--mobile site-nav__logo--light"
-      loading="lazy"
-    />
-    <img
-      src="/assets/brand/phi9-mark-white.svg"
-      alt=""
-      aria-hidden="true"
-      class="site-nav__logo site-nav__logo--mobile site-nav__logo--dark"
+      class="site-nav__logo site-nav__logo--mobile"
       loading="lazy"
     />
   </a>
@@ -73,24 +59,7 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
         );
       })}
     </ul>
-    <div class="site-nav__actions">
-      <button
-        type="button"
-        class="site-nav__theme"
-        data-theme-toggle
-        aria-label="Toggle theme"
-        title="Toggle theme"
-      >
-        <svg class="site-nav__theme-icon site-nav__theme-icon--light" viewBox="0 0 24 24" aria-hidden="true">
-          <circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.7" />
-          <path d="M12 2.5v2.5M12 19v2.5M4.4 4.4l1.8 1.8M17.8 17.8l1.8 1.8M2.5 12H5M19 12h2.5M4.4 19.6l1.8-1.8M17.8 6.2l1.8-1.8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" />
-        </svg>
-        <svg class="site-nav__theme-icon site-nav__theme-icon--dark" viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M20.5 14.5A8 8 0 0 1 9.5 3.5a0.5 0.5 0 0 0-0.6-0.6A9.5 9.5 0 1 0 21.1 15.1a0.5 0.5 0 0 0-0.6-0.6Z" fill="currentColor" />
-        </svg>
-      </button>
-      <a href={contactMailto} class="site-nav__cta">Get in touch</a>
-    </div>
+    <a href={contactMailto} class="site-nav__cta">Get in touch</a>
   </nav>
 </div>
 
@@ -98,7 +67,6 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
   const navRoot = document.querySelector(".site-nav");
   const navToggle = navRoot?.querySelector("[data-nav-toggle]");
   const navMenu = navRoot?.querySelector("[data-nav-menu]");
-  const themeToggle = navRoot?.querySelector("[data-theme-toggle]");
   const navLinks = navMenu ? Array.from(navMenu.querySelectorAll("a")) : [];
 
   const closeMenu = () => {
@@ -125,17 +93,6 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
 
   window.addEventListener("resize", () => {
     if (window.innerWidth > 800) closeMenu();
-  });
-
-  themeToggle?.addEventListener("click", () => {
-    const current = document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
-    const next = current === "dark" ? "light" : "dark";
-    document.documentElement.setAttribute("data-theme", next);
-    try {
-      localStorage.setItem("phi9-theme", next);
-    } catch (e) {
-      // storage unavailable — theme still applied this session
-    }
   });
 </script>
 
@@ -168,22 +125,6 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
   .site-nav__logo--mobile {
     display: none;
     width: 1.75rem;
-  }
-
-  .site-nav__logo--dark {
-    display: none;
-  }
-
-  [data-theme="dark"] .site-nav__logo--light {
-    display: none;
-  }
-
-  [data-theme="dark"] .site-nav__logo--dark.site-nav__logo--desktop {
-    display: block;
-  }
-
-  [data-theme="dark"] .site-nav__logo--dark.site-nav__logo--mobile {
-    display: none;
   }
 
   .site-nav__toggle {
@@ -249,52 +190,6 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
     display: flex;
     align-items: center;
     gap: 2rem;
-  }
-
-  .site-nav__actions {
-    display: flex;
-    align-items: center;
-    gap: clamp(0.75rem, 1.5vw, 1.25rem);
-  }
-
-  .site-nav__theme {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 2.25rem;
-    height: 2.25rem;
-    padding: 0;
-    border: 1px solid var(--color-border);
-    border-radius: 999px;
-    background: transparent;
-    color: var(--color-muted);
-    cursor: pointer;
-    transition:
-      color 0.2s ease,
-      border-color 0.2s ease,
-      background 0.2s ease;
-  }
-
-  .site-nav__theme:hover {
-    color: var(--color-accent);
-    border-color: color-mix(in srgb, var(--color-accent) 45%, var(--color-border) 55%);
-  }
-
-  .site-nav__theme-icon {
-    width: 1.05rem;
-    height: 1.05rem;
-  }
-
-  .site-nav__theme-icon--dark {
-    display: none;
-  }
-
-  [data-theme="dark"] .site-nav__theme-icon--light {
-    display: none;
-  }
-
-  [data-theme="dark"] .site-nav__theme-icon--dark {
-    display: block;
   }
 
   .site-nav__menu ul {

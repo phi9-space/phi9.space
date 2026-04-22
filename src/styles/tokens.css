@@ -1,14 +1,15 @@
 /* ── phi9.space design tokens ── */
+/* Paper-first, poster-scale. Single theme. See DESIGN.md. */
 
 :root {
-	/* Brand */
+	/* Brand primitives */
 	--brand-signal: #ff5c00;
 	--brand-ink: #16161d;
 	--brand-paper: #fcf7e9;
 	--brand-paper-warm: #f4eee0;
 	--brand-paper-stone: #ede7db;
 
-	/* Typography */
+	/* Typography families */
 	--font-heading:
 		"Radio Canada Big", "Avenir Next", "Avenir", "Segoe UI", "Helvetica Neue",
 		sans-serif;
@@ -18,12 +19,24 @@
 		"JetBrains Mono", "Geist Mono", ui-monospace, SFMono-Regular, Menlo,
 		Monaco, Consolas, monospace;
 
+	/* Body rhythm */
 	--type-size-base: 17px;
 	--leading-body: 1.5;
-	--leading-heading: 1.15;
+	--leading-heading: 0.98;
 	--measure-reading: 70ch;
-	--tracking-heading: -0.03em;
+	--tracking-heading: -0.04em;
 	--tracking-body: -0.01em;
+
+	/* Display scale — poster-class. Assigned via utility classes or h1/h2/h3. */
+	--type-display-xl: clamp(3.5rem, 10vw, 9rem);
+	--type-display-lg: clamp(2.5rem, 6vw, 5.25rem);
+	--type-display-md: clamp(1.875rem, 4vw, 3.5rem);
+	--type-display-sm: clamp(1.25rem, 2vw, 1.625rem);
+
+	/* Rule weights (editorial dividers under headlines) */
+	--rule-weight: 4px;
+	--rule-length-sm: 6ch;
+	--rule-length-md: 10ch;
 
 	/* Radii */
 	--radius-sm: 0.375rem;
@@ -31,7 +44,7 @@
 	--radius-lg: 0.75rem;
 	--radius-xl: 1rem;
 
-	/* Shadows */
+	/* Shadows — used sparingly */
 	--shadow-sm: 0 1px 2px rgba(22, 22, 29, 0.05);
 	--shadow-md: 0 4px 12px rgba(22, 22, 29, 0.08);
 	--shadow-lg: 0 20px 35px rgba(22, 22, 29, 0.1);
@@ -39,11 +52,8 @@
 	/* Layout */
 	--max-width: 1200px;
 	--nav-height: 60px;
-}
 
-/* ── Light theme (default) ── */
-:root,
-:root.theme-light {
+	/* Semantic tokens */
 	color-scheme: light;
 	--color-bg: var(--brand-paper);
 	--color-bg-elevated: color-mix(in srgb, var(--brand-paper) 92%, var(--brand-ink) 8%);
@@ -57,28 +67,7 @@
 	--color-accent-hover: color-mix(in srgb, var(--brand-signal) 86%, var(--brand-ink) 14%);
 	--color-accent-soft: color-mix(in srgb, var(--brand-signal) 10%, var(--brand-paper) 90%);
 	--color-link: var(--brand-signal);
-
+	--color-rule: var(--brand-ink);
 	--gradient-hero:
 		linear-gradient(180deg, var(--brand-paper) 0%, var(--brand-paper) 100%);
-}
-
-/* ── Dark theme ── */
-:root.theme-dark,
-[data-theme="dark"] {
-	color-scheme: dark;
-	--color-bg: var(--brand-ink);
-	--color-bg-elevated: color-mix(in srgb, var(--brand-ink) 92%, var(--brand-paper) 8%);
-	--color-surface: color-mix(in srgb, var(--brand-ink) 88%, var(--brand-paper) 12%);
-	--color-surface-alt: color-mix(in srgb, var(--brand-ink) 80%, var(--brand-paper) 20%);
-	--color-border: color-mix(in srgb, var(--brand-ink) 72%, var(--brand-paper) 28%);
-	--color-text: var(--brand-paper);
-	--color-text-inverse: var(--brand-ink);
-	--color-muted: color-mix(in srgb, var(--brand-paper) 62%, var(--brand-ink) 38%);
-	--color-accent: var(--brand-signal);
-	--color-accent-hover: color-mix(in srgb, var(--brand-signal) 86%, var(--brand-paper) 14%);
-	--color-accent-soft: color-mix(in srgb, var(--brand-signal) 20%, var(--brand-ink) 80%);
-	--color-link: var(--brand-signal);
-
-	--gradient-hero:
-		linear-gradient(180deg, var(--brand-ink) 0%, var(--brand-ink) 100%);
 }

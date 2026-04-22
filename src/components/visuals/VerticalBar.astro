@@ -1,0 +1,29 @@
+---
+interface Props {
+	width?: string;
+	height?: string;
+	color?: string;
+	class?: string;
+}
+
+const {
+	width = "3rem",
+	height = "16rem",
+	color = "var(--color-accent)",
+	class: className = "",
+} = Astro.props;
+---
+
+<div
+	class:list={["shape shape--vbar", className]}
+	style={`--shape-w: ${width}; --shape-h: ${height}; --shape-color: ${color};`}
+	aria-hidden="true"
+></div>
+
+<style>
+	.shape--vbar {
+		width: var(--shape-w);
+		height: var(--shape-h);
+		background: var(--shape-color);
+	}
+</style>

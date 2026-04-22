@@ -1,0 +1,46 @@
+---
+interface Props {
+	rows?: number;
+	cols?: number;
+	spacing?: string;
+	dotSize?: string;
+	color?: string;
+	class?: string;
+}
+
+const {
+	rows = 8,
+	cols = 10,
+	spacing = "0.75rem",
+	dotSize = "0.375rem",
+	color = "var(--color-text)",
+	class: className = "",
+} = Astro.props;
+
+const total = rows * cols;
+---
+
+<div
+	class:list={["shape shape--dots", className]}
+	style={`--dot-rows: ${rows}; --dot-cols: ${cols}; --dot-spacing: ${spacing}; --dot-size: ${dotSize}; --dot-color: ${color};`}
+	aria-hidden="true"
+>
+	{Array.from({ length: total }).map(() => <span></span>)}
+</div>
+
+<style>
+	.shape--dots {
+		display: grid;
+		grid-template-columns: repeat(var(--dot-cols), var(--dot-size));
+		grid-template-rows: repeat(var(--dot-rows), var(--dot-size));
+		gap: var(--dot-spacing);
+		width: fit-content;
+	}
+
+	.shape--dots span {
+		width: var(--dot-size);
+		height: var(--dot-size);
+		border-radius: 50%;
+		background: var(--dot-color);
+	}
+</style>
