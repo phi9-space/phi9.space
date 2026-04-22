@@ -4,7 +4,7 @@ export interface SiteLink {
 	external?: boolean;
 }
 
-export const siteBrandCopy = "Humane research institution";
+export const siteBrandCopy = "Physical AI lab building data systems and deployable intelligence.";
 
 export const contactEmail = "research@phi9.space";
 export const contactMailto = `mailto:${contactEmail}`;

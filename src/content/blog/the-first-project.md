@@ -7,6 +7,7 @@ tags:
   - robotics
   - isaac-sim
   - ppo
+heroImage: /research/the-first-project/pour-policy.png
 author: Rudraksh Arora
 draft: false
 ---

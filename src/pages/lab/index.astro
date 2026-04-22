@@ -5,7 +5,7 @@ import { contactMailto } from "@lib/site";
 
 <BaseLayout
 	title="Lab — phi9.space"
-	description="Lab overview, products, and research direction for phi9.space."
+	description="Lab overview, systems, and research infrastructure for phi9.space."
 	fullWidth={true}
 >
   <!-- Hero -->
@@ -13,10 +13,11 @@ import { contactMailto } from "@lib/site";
     <div class="lab-hero__bg"></div>
     <div class="lab-hero__content container">
       <span class="eyebrow">Lab</span>
-      <h1>Research-first, deployment-aware physical AI lab.</h1>
+      <h1>The lab is where data becomes systems.</h1>
       <p class="lab-hero__sub">
-        We focus on action data capture, synthetic multiplication,
-        post-training loops, and deployment feedback.
+        Phi9 builds products, workflows, and infrastructure for physical AI. The lab is where
+        capture systems, training pipelines, evaluation loops, and deployable tools get stitched
+        together.
       </p>
     </div>
   </section>
@@ -24,36 +25,75 @@ import { contactMailto } from "@lib/site";
   <!-- Products -->
   <section class="section">
     <div class="container">
-      <h2 class="section-heading reveal">Products & Experiments</h2>
+      <h2 class="section-heading reveal">Featured systems</h2>
+      <p class="section-copy reveal">
+        The lab works across data systems, research workflows, and deployable tools. The systems
+        are part of the research surface, not background machinery.
+      </p>
       <div class="products-grid">
         <a href="/lab/mocap-rig" class="product-card reveal">
           <div class="product-card__image">
-            <div class="product-card__placeholder">
-              <svg viewBox="0 0 100 100" fill="none" class="product-card__icon">
-                <circle cx="50" cy="50" r="40" stroke="var(--color-accent)" stroke-width="1.5" opacity="0.25" />
-                <circle cx="50" cy="50" r="22" stroke="var(--color-accent)" stroke-width="1.5" opacity="0.4" />
-                <circle cx="50" cy="50" r="8" fill="var(--color-accent)" opacity="0.6" />
-              </svg>
+            <div class="product-card__placeholder product-card__placeholder--capture" aria-hidden="true">
+              <div class="product-card__trace">
+                <span>motion</span>
+                <div class="product-card__track">
+                  <i class="product-card__pulse product-card__pulse--short"></i>
+                  <i class="product-card__pulse product-card__pulse--medium"></i>
+                  <i class="product-card__pulse product-card__pulse--long"></i>
+                </div>
+              </div>
+              <div class="product-card__trace">
+                <span>video</span>
+                <div class="product-card__track product-card__track--frames">
+                  <i class="product-card__frame"></i>
+                  <i class="product-card__frame"></i>
+                  <i class="product-card__frame"></i>
+                </div>
+              </div>
+              <div class="product-card__trace">
+                <span>tasks</span>
+                <div class="product-card__track">
+                  <i class="product-card__pulse product-card__pulse--medium"></i>
+                  <i class="product-card__pulse product-card__pulse--short"></i>
+                </div>
+              </div>
             </div>
           </div>
           <div class="product-card__body">
-            <span class="product-card__label">Product</span>
+            <span class="product-card__label">Capture system</span>
             <h3>MoCap Rig v1</h3>
-            <p>Full-body motion capture synchronized with egocentric video. The data infrastructure for humanoid robotics.</p>
+            <p>
+              Full-body motion, egocentric video, and structured task traces built for research
+              reuse rather than one-off collection.
+            </p>
             <span class="product-card__link">Learn more →</span>
           </div>
         </a>
 
         <div class="product-card product-card--coming reveal" style="transition-delay: 0.1s">
           <div class="product-card__image">
-            <div class="product-card__placeholder product-card__placeholder--muted">
-              <span>Coming soon</span>
+            <div class="product-card__placeholder product-card__placeholder--catalog" aria-hidden="true">
+              <div class="product-card__catalog-row">
+                <span>source</span>
+                <strong>field capture</strong>
+              </div>
+              <div class="product-card__catalog-row">
+                <span>structure</span>
+                <strong>task + metadata</strong>
+              </div>
+              <div class="product-card__catalog-row">
+                <span>reuse</span>
+                <strong>training + eval</strong>
+              </div>
             </div>
           </div>
           <div class="product-card__body">
-            <span class="product-card__label">Dataset</span>
+            <span class="product-card__label">Data product</span>
             <h3>Data Catalog</h3>
-            <p>Domain-specific robotics datasets — tabletop manipulation, navigation, and multi-task benchmarks.</p>
+            <p>
+              Structured outputs, metadata layers, and evaluation traces that keep demonstrations
+              reusable across experiments.
+            </p>
           </div>
         </div>
       </div>
@@ -63,27 +103,36 @@ import { contactMailto } from "@lib/site";
   <!-- How we work -->
   <section class="section how-section">
     <div class="container">
-      <h2 class="section-heading reveal">How we work</h2>
+      <h2 class="section-heading reveal">Infrastructure stack</h2>
+      <p class="section-copy reveal">
+        Our stack spans capture, processing, annotation, post-training, and evaluation. Each layer
+        exists to make the others more useful.
+      </p>
       <div class="how-grid reveal">
         <div class="how-step">
           <span class="how-step__num">01</span>
-          <h3>Capture real data</h3>
-          <p>SOTA motion capture pipelines — multi-view video, body tracking, and structured action labels.</p>
+          <h3>Capture systems</h3>
+          <p>Multimodal collection surfaces for physical behavior, not just narrow demonstrations.</p>
         </div>
         <div class="how-step">
           <span class="how-step__num">02</span>
-          <h3>Multiply through simulation</h3>
-          <p>Physics-based synthetic generation. A few real demos become thousands of training variants.</p>
+          <h3>Processing</h3>
+          <p>Segmentation, formatting, and synchronization that keep episodes usable after capture.</p>
         </div>
         <div class="how-step">
           <span class="how-step__num">03</span>
-          <h3>Train & evaluate</h3>
-          <p>Post-training loops with domain-specific benchmarks. We measure what matters.</p>
+          <h3>Annotation & retargeting</h3>
+          <p>Metadata, retargeting, and multiplication layers that extend scarce real-world behavior.</p>
         </div>
         <div class="how-step">
           <span class="how-step__num">04</span>
-          <h3>Deploy & learn</h3>
-          <p>Every deployment generates feedback data. The loop closes and policies get better.</p>
+          <h3>Training loops</h3>
+          <p>Post-training and policy workflows that stay close to the structure of the captured data.</p>
+        </div>
+        <div class="how-step">
+          <span class="how-step__num">05</span>
+          <h3>Evaluation & transfer</h3>
+          <p>Benchmarks, failure analysis, and deployment feedback that make transfer visible.</p>
         </div>
       </div>
     </div>
@@ -93,11 +142,14 @@ import { contactMailto } from "@lib/site";
   <section class="section">
     <div class="container">
       <div class="lab-cta reveal">
-        <h2>Interested in our work?</h2>
-        <p>We work openly and welcome collaborators across the physical AI ecosystem.</p>
+        <h2>See the research. Follow the data.</h2>
+        <p>
+          The lab is one surface in a larger loop. Go deeper into the capture and data layer
+          underneath it, or get in touch if you are building in physical AI.
+        </p>
         <div class="lab-cta__actions">
           <a href={contactMailto} class="btn btn-primary">Get in touch</a>
-          <a href="/research" class="btn btn-secondary">Read our research</a>
+          <a href="/data" class="btn btn-secondary">See the Data</a>
         </div>
       </div>
     </div>
@@ -149,6 +201,13 @@ import { contactMailto } from "@lib/site";
   /* Section heading */
   .section-heading { margin-bottom: 2rem; }
 
+  .section-copy {
+    max-width: 46rem;
+    margin: -0.75rem 0 2rem;
+    color: var(--color-muted);
+    line-height: 1.6;
+  }
+
   /* Products */
   .products-grid {
     display: grid;
@@ -177,20 +236,103 @@ import { contactMailto } from "@lib/site";
     aspect-ratio: 16/9;
     background: var(--color-bg-elevated);
     display: flex;
-    align-items: center;
+    flex-direction: column;
     justify-content: center;
+    gap: 0.7rem;
+    padding: 1rem;
   }
 
-  .product-card__placeholder--muted {
+  .product-card__placeholder--capture,
+  .product-card__placeholder--catalog {
+    background:
+      linear-gradient(180deg, color-mix(in srgb, var(--color-accent) 6%, var(--color-bg) 94%), var(--color-bg)),
+      var(--color-bg-elevated);
+  }
+
+  .product-card__trace {
+    display: grid;
+    grid-template-columns: 4.5rem minmax(0, 1fr);
+    gap: 0.8rem;
+    align-items: center;
+  }
+
+  .product-card__trace span,
+  .product-card__catalog-row span {
     font-family: var(--font-mono);
-    font-size: 0.8125rem;
-    color: var(--color-muted);
-    letter-spacing: 0.04em;
+    font-size: 0.6875rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-accent);
   }
 
-  .product-card__icon {
-    width: 80px;
-    height: 80px;
+  .product-card__track {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    min-height: 2.5rem;
+    padding: 0.6rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    background:
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 1rem,
+        color-mix(in srgb, var(--color-border) 75%, transparent 25%) 1rem,
+        color-mix(in srgb, var(--color-border) 75%, transparent 25%) 1.06rem
+      ),
+      var(--color-bg);
+  }
+
+  .product-card__track--frames {
+    justify-content: space-between;
+  }
+
+  .product-card__pulse,
+  .product-card__frame {
+    display: block;
+    border-radius: 999px;
+    background: var(--color-accent);
+  }
+
+  .product-card__pulse {
+    height: 0.42rem;
+    opacity: 0.88;
+  }
+
+  .product-card__pulse--short { width: 18%; }
+  .product-card__pulse--medium { width: 30%; }
+  .product-card__pulse--long { width: 44%; }
+
+  .product-card__frame {
+    width: 28%;
+    min-height: 1.2rem;
+    height: 100%;
+    border-radius: 0.55rem;
+    background: color-mix(in srgb, var(--color-accent) 18%, var(--color-bg) 82%);
+    border: 1px solid color-mix(in srgb, var(--color-accent) 32%, var(--color-border) 68%);
+  }
+
+  .product-card__catalog-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.75rem;
+    align-items: baseline;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid var(--color-border);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    color: var(--color-muted);
+  }
+
+  .product-card__catalog-row:last-child {
+    border-bottom: none;
+  }
+
+  .product-card__catalog-row strong {
+    color: var(--color-text);
+    font-weight: 500;
   }
 
   .product-card__body {
@@ -230,7 +372,7 @@ import { contactMailto } from "@lib/site";
   }
 
   .product-card--coming {
-    opacity: 0.7;
+    opacity: 0.82;
   }
 
   /* How we work */
@@ -285,6 +427,7 @@ import { contactMailto } from "@lib/site";
     color: var(--color-muted);
     max-width: 45ch;
     margin: 0;
+    line-height: 1.6;
   }
 
   .lab-cta__actions {

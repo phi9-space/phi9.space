@@ -1,7 +1,6 @@
 ---
 import { getCollection } from "astro:content";
 import BaseLayout from "@layouts/BaseLayout.astro";
-import { communityLinks } from "@lib/site";
 
 const posts = (await getCollection("blog"))
 	.filter((post) => !post.data.draft)
@@ -66,16 +65,18 @@ const posts = (await getCollection("blog"))
     </div>
   </section>
 
-  <!-- Newsletter / CTA -->
-  <section class="section subscribe-section">
+  <!-- Newsletter -->
+  <section class="section newsletter-section">
     <div class="container">
-      <div class="subscribe reveal">
-        <h2>Stay in the loop</h2>
-        <p>Follow our research through RSS or join the Discord for discussion.</p>
-        <div class="subscribe__actions">
-          <a href="/rss.xml" class="btn btn-primary">Subscribe via RSS</a>
-          <a href={communityLinks.discord.href} class="btn btn-secondary" target="_blank" rel="noreferrer">Join Discord</a>
-        </div>
+      <div class="newsletter reveal">
+        <h2>Research Dispatch</h2>
+        <p class="newsletter__description">
+          Technical writing on physical AI, datasets, and deployment. Published when there is something worth sharing.
+        </p>
+        <a href="https://substack.com/@phi9" target="_blank" rel="noopener noreferrer" class="btn btn-primary newsletter__button">
+          Subscribe on Substack
+        </a>
+        <p class="newsletter__privacy">No spam. One-click unsubscribe anytime.</p>
       </div>
     </div>
   </section>
@@ -235,31 +236,39 @@ const posts = (await getCollection("blog"))
 
   .empty-state p { margin: 0; }
 
-  /* Subscribe */
-  .subscribe-section {
-    background: var(--color-surface);
+  /* Newsletter */
+  .newsletter-section {
+    padding: clamp(4rem, 8vw, 6rem) 0;
+    border-top: 1px solid var(--color-border);
   }
 
-  .subscribe {
+  .newsletter {
+    max-width: 480px;
+    margin: 0 auto;
     text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
   }
 
-  .subscribe h2 { margin: 0; }
+  .newsletter h2 {
+    margin: 0 0 0.75rem;
+    font-size: 1.5rem;
+  }
 
-  .subscribe p {
+  .newsletter__description {
+    margin: 0 0 1.25rem;
     color: var(--color-muted);
-    max-width: 40ch;
-    margin: 0;
+    font-size: 1rem;
+    line-height: 1.6;
   }
 
-  .subscribe__actions {
-    display: flex;
-    gap: 0.75rem;
-    flex-wrap: wrap;
-    margin-top: 0.5rem;
+  .newsletter__button {
+    display: inline-block;
+    margin-bottom: 0.75rem;
+  }
+
+  .newsletter__privacy {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-muted);
   }
 </style>

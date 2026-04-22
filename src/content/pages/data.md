@@ -10,57 +10,53 @@ tags:
 navTitle: Data
 ---
 
-Phi9 treats data as infrastructure.
+Phi9 builds the data layer that physical AI depends on.
 
-We do not treat data as a static asset library or a one-time collection exercise. We treat it as an operational layer that makes physical AI research legible, trainable, and transferable.
+Before autonomy scales, data has to. Phi9 builds capture systems, sourcing networks, and structured data products that turn real-world behavior into trainable, evaluable assets.
 
-The job of the data surface is simple: capture the world in forms machines can learn from, preserve intent and structure, and keep that data usable across research, post-training, evaluation, and deployment.
+## Why data matters
 
-## What the data layer does
+Physical AI is bottlenecked by data quality, not just model quality.
 
-The data layer connects collection, structure, and reuse.
+What matters is not only how much data exists. It is whether that data preserves motion, intent, timing, task structure, and failure well enough to survive training and evaluation.
 
-It includes capture systems, sourcing networks, dataset formatting, metadata design, and evaluation traces. Each part exists so the next stage of the loop has something usable to work with.
+## Data types
 
-## Capture
+Phi9 is interested in data that survives contact with training and evaluation.
 
-We capture physical behavior with synchronized full-body motion, egocentric video, and structured task traces.
+- Full-body motion and kinematic traces
+- Egocentric and synchronized visual observation
+- Task structure, action sequences, and episode boundaries
+- Metadata, object state, and quality signals
+- Synthetic, retargeted, and multiplied variants
+- Evaluation traces, failure cases, and transfer results
 
-The point is not just to observe what happened. The point is to preserve what the operator was doing, what the task required, and what a model needs in order to learn something transferable from it.
+## Capture systems
+
+We build capture systems that move beyond narrow lab demonstrations.
+
+The goal is to collect multimodal physical behavior in forms that can be reused across research, post-training, and deployment, not trapped inside one collection surface.
 
 ## Sourcing networks
 
-Some data is collected directly. Some data is sourced through networks, partnerships, and task-specific pipelines.
+The bottleneck is not one rig. It is a network that can source, collect, and maintain data across people, places, and tasks without collapsing quality.
 
-This matters because physical AI does not move forward on a single modality or a single rig. It moves through access to the right demonstrations, environments, tasks, and operational contexts.
+Some data is captured directly. Some data is sourced through partners, contributors, and task-specific pipelines. The point is durable access to the right demonstrations and contexts.
 
-## Structure
+## Quality and synchronization
 
-Raw capture is not enough.
+Good data is synchronized, structured, and inspectable.
 
-Data becomes useful when it is aligned, segmented, described, and packaged in ways that support training and evaluation. That includes synchronized modalities, task boundaries, metadata, prompts, and clear conventions for downstream use.
+Timing drift, missing context, and weak metadata do not just reduce polish. They change what the model can learn and what a benchmark can actually say.
 
-## Types of data
+## Outputs and integration
 
-The surface will expand, but the structure is already clear.
+Captured data should flow directly into training and evaluation.
 
-- Motion and pose data
-- Egocentric and scene video
-- Task demonstrations
-- Structured action traces
-- Annotation and metadata layers
-- Evaluation logs and failure cases
-
-## Why it matters
-
-Physical AI bottlenecks are often data bottlenecks in disguise.
-
-When intent is lost, tasks flatten into pixels. When structure is weak, training becomes expensive guesswork. When evaluation traces are missing, progress becomes difficult to trust.
-
-The data layer exists to reduce that ambiguity.
+Phi9 is interested in outputs that are format-native, simulation-ready, and useful across research workflows rather than trapped inside one collection surface.
 
 ## What comes next
 
-This page will become the public index of Phi9's data work.
+This page will expand into specific modalities, sourcing pathways, capture systems, and dataset views as those surfaces are published.
 
-It will expand into specific modalities, sourcing pathways, capture systems, and dataset views as those surfaces are published. For now, it should read as the operating model behind the data itself.
+For now, it should read as the operating model underneath the data itself.

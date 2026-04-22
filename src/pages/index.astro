@@ -1,6 +1,6 @@
 ---
-import BaseLayout from "@layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
+import BaseLayout from "@layouts/BaseLayout.astro";
 import { contactMailto, formatLongDate, getReadingTime } from "@lib/site";
 
 const allPosts = await getCollection("blog", ({ data }) => !data.draft);
@@ -48,20 +48,20 @@ const capabilityLoop = [
 
 const openProblems = [
 	{
-		title: "Data that carries intent, context, and action.",
-		desc: "The next data surface needs to hold body movement, task conditions, and demonstration purpose together.",
+		title: "Data that carries intent, not just observation.",
+		desc: "Most pipelines still capture what happened on screen, not what the body did, what the task required, or what the demonstration was trying to achieve.",
 	},
 	{
 		title: "Generalization from scarce real-world behavior.",
-		desc: "Scarce real-world behavior has to be extended through better structure, retargeting, simulation, and augmentation.",
+		desc: "Physical data is expensive, messy, and uneven. Scaling it requires better multiplication, not just more collection.",
 	},
 	{
 		title: "Evaluation that predicts transfer.",
-		desc: "Evaluation has to show what survives outside the benchmark and into deployment.",
+		desc: "Benchmarks are useful only if they tell us what survives outside the benchmark.",
 	},
 	{
 		title: "Research systems that close the loop.",
-		desc: "Capture, structure, training, and evaluation need to operate as one continuous research system.",
+		desc: "Capture, structure, training, and evaluation are still too often treated as separate problems.",
 	},
 ];
 
@@ -75,7 +75,7 @@ const methods = [
 		desc: "Package demonstrations so they remain legible for training, research, and downstream operations.",
 	},
 	{
-		title: "Multiply with fidelity.",
+		title: "Multiply without drift.",
 		desc: "Use simulation, retargeting, and augmentation to extend scarce real behavior while preserving intent.",
 	},
 	{
@@ -118,7 +118,7 @@ const principles = [
 		<div class="container">
 			<div class="home-hero__grid">
 				<div class="home-hero__content reveal">
-					<span class="section-kicker">Physical AI research, data systems, and deployable intelligence</span>
+					<p class="home-hero__small-line">Phi9 is a physical AI lab.</p>
 					<h1>Physical AI research, data systems, and deployable intelligence.</h1>
 					<p class="home-hero__copy">
 						Phi9 builds the systems that turn physical behavior into usable intelligence. We
@@ -133,16 +133,26 @@ const principles = [
 
 				<div class="home-hero__artifact reveal" aria-hidden="true">
 					<div class="artifact-plane">
-						<span class="artifact-plane__rule"></span>
-						<p class="artifact-plane__title">Institutional artifact plane</p>
-						<div class="artifact-plane__grid">
-							<div class="artifact-plane__panel artifact-plane__panel--signal"></div>
-							<div class="artifact-plane__panel artifact-plane__panel--surface"></div>
-							<div class="artifact-plane__panel artifact-plane__panel--ink"></div>
-							<div class="artifact-plane__panel artifact-plane__panel--paper"></div>
+						<div class="artifact-plane__media">
+							<img
+								src="/research/the-first-project/pour-policy.png"
+								alt=""
+								loading="eager"
+							/>
+							<span class="artifact-plane__trace artifact-plane__trace--a"></span>
+							<span class="artifact-plane__trace artifact-plane__trace--b"></span>
+							<span class="artifact-plane__trace artifact-plane__trace--c"></span>
+						</div>
+						<div class="artifact-plane__details">
+							<p class="artifact-plane__title">Robotic manipulation / policy artifact</p>
+							<div class="artifact-plane__metrics">
+								<span>7-DOF arm</span>
+								<span>dense rewards</span>
+								<span>Isaac Sim</span>
+							</div>
 						</div>
 						<p class="artifact-plane__caption">
-							Rig photography, motion traces, or a system diagram belong here.
+							Real artifact from the research archive, treated as a system surface.
 						</p>
 					</div>
 				</div>
@@ -156,8 +166,9 @@ const principles = [
 				<span class="section-kicker">The loop</span>
 				<h2>From capture to evaluation, the physical AI loop.</h2>
 				<p>
-					Physical AI advances through systems that capture behavior, multiply usable data,
-					train against reality, and evaluate what actually transfers.
+					Physical AI does not move forward through models alone. It moves through systems
+					that can capture behavior, multiply usable data, train against reality, and evaluate
+					what actually transfers.
 				</p>
 			</div>
 
@@ -221,7 +232,7 @@ const principles = [
 				<h2>Open work, real artifacts, and technical evidence.</h2>
 				<p>
 					Our research log tracks the systems, experiments, and questions that shape the lab.
-					It keeps progress legible.
+					The goal is not volume. The goal is legible progress.
 				</p>
 			</div>
 
@@ -340,8 +351,11 @@ const principles = [
 			<div class="section-heading reveal">
 				<span class="section-kicker">Open problems</span>
 				<h2>
-					The next phase of work is being shaped by a few clear bottlenecks.
+					Some bottlenecks are still obvious.
 				</h2>
+				<p>
+					The work is deciding which ones are structural and which ones are only temporary.
+				</p>
 			</div>
 
 			<div class="open-problems__grid">
@@ -361,10 +375,11 @@ const principles = [
 		<div class="container">
 			<div class="section-heading reveal">
 				<span class="section-kicker">Methods</span>
-				<h2>How Phi9 builds.</h2>
+				<h2>We build loops, not isolated models.</h2>
 				<p>
-					Phi9 moves from capture to structure, training, and evaluation as one continuous
-					system for physical AI.
+					Phi9 works across capture systems, data infrastructure, training workflows, and
+					evaluation. The point is to reduce distance between demonstration, learning, and real
+					deployment.
 				</p>
 			</div>
 
@@ -401,15 +416,46 @@ const principles = [
 		</div>
 	</section>
 
-	<section class="section contact-band">
+	<section class="section newsletter-section">
 		<div class="container">
-			<div class="contact-band__inner reveal">
-				<span class="section-kicker section-kicker--inverse">Building in physical AI?</span>
-				<h2>
-					If you are working on data, research systems, or deployment infrastructure for
-					physical intelligence, get in touch.
-				</h2>
-				<a href={contactMailto} class="contact-band__link">Get in touch</a>
+			<div class="newsletter reveal">
+				<h2>Research Dispatch</h2>
+				<p class="newsletter__description">
+					Technical writing on physical AI, datasets, and deployment.
+					Published when there is something worth sharing.
+				</p>
+				<a
+					href="https://substack.com/@phi9"
+					target="_blank"
+					rel="noopener noreferrer"
+					class="btn btn-primary newsletter__button"
+				>
+					Subscribe on Substack
+				</a>
+				<p class="newsletter__privacy">No spam. One-click unsubscribe anytime.</p>
+			</div>
+		</div>
+	</section>
+
+	<section class="section contact-section">
+		<div class="container">
+			<div class="contact-cta reveal">
+				<span class="section-kicker">Get in touch</span>
+				<div class="contact-cta__content">
+					<h2>Building in physical AI?</h2>
+					<p>
+						If you are working on data, research systems, or deployment infrastructure for
+						physical intelligence, get in touch.
+					</p>
+				</div>
+				<div class="contact-cta__actions">
+					<a href={contactMailto} class="btn btn-primary contact-cta__button">
+						Get in touch
+					</a>
+					<a href="/manifesto" class="btn btn-secondary contact-cta__button">
+						Read manifesto
+					</a>
+				</div>
 			</div>
 		</div>
 	</section>
@@ -430,8 +476,21 @@ const principles = [
 		align-items: start;
 	}
 
+	.home-hero__content {
+		padding-top: clamp(0.5rem, 3vw, 1.25rem);
+	}
+
+	.home-hero__small-line {
+		margin: 0 0 0.75rem;
+		font-family: var(--font-mono);
+		font-size: clamp(0.78rem, 1.1vw, 0.9rem);
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--color-accent);
+	}
+
 	.home-hero__content h1 {
-		max-width: 11ch;
+		max-width: 12ch;
 		margin-bottom: 1rem;
 	}
 
@@ -480,21 +539,21 @@ const principles = [
 	.featured-system__frame,
 	.research-proof__featured,
 	.research-proof__secondary-item,
-	.problem-card,
-	.contact-band__inner {
+	.problem-card {
 		border: 1px solid var(--color-border);
 		border-radius: var(--radius-xl);
 		background: color-mix(in srgb, var(--color-bg) 80%, var(--color-surface) 20%);
 	}
 
 	.artifact-plane {
-		padding: 1.6rem;
+		position: relative;
+		padding: clamp(0.85rem, 2vw, 1.1rem);
 		display: grid;
-		gap: 0.9rem;
+		gap: 0.95rem;
 		box-shadow: var(--shadow-sm);
+		overflow: hidden;
 	}
 
-	.artifact-plane__rule,
 	.featured-system__rule,
 	.research-proof__placeholder-rule {
 		display: block;
@@ -504,6 +563,75 @@ const principles = [
 		background: var(--color-accent);
 	}
 
+	.artifact-plane__media {
+		position: relative;
+		aspect-ratio: 1.05 / 1;
+		overflow: hidden;
+		border-radius: var(--radius-lg);
+		border: 1px solid var(--color-border);
+		background: var(--color-text);
+	}
+
+	.artifact-plane__media img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		filter: saturate(0.9) contrast(1.02);
+	}
+
+	.artifact-plane__media::after {
+		content: "";
+		position: absolute;
+		inset: 0;
+		background:
+			linear-gradient(180deg, transparent 54%, rgba(22, 22, 29, 0.72) 100%),
+			repeating-linear-gradient(
+				90deg,
+				rgba(252, 247, 233, 0.08) 0,
+				rgba(252, 247, 233, 0.08) 1px,
+				transparent 1px,
+				transparent 44px
+			);
+		pointer-events: none;
+	}
+
+	.artifact-plane__trace {
+		position: absolute;
+		z-index: 1;
+		display: block;
+		height: 2px;
+		border-radius: 999px;
+		background: var(--color-accent);
+		box-shadow: 0 0 18px color-mix(in srgb, var(--color-accent) 65%, transparent);
+		transform-origin: left center;
+	}
+
+	.artifact-plane__trace--a {
+		left: 10%;
+		bottom: 31%;
+		width: 42%;
+		transform: rotate(-7deg);
+	}
+
+	.artifact-plane__trace--b {
+		left: 39%;
+		bottom: 46%;
+		width: 34%;
+		transform: rotate(11deg);
+	}
+
+	.artifact-plane__trace--c {
+		right: 9%;
+		top: 18%;
+		width: 22%;
+		transform: rotate(90deg);
+	}
+
+	.artifact-plane__details {
+		display: grid;
+		gap: 0.65rem;
+	}
+
 	.artifact-plane__title,
 	.featured-system__eyebrow {
 		margin: 0;
@@ -511,35 +639,21 @@ const principles = [
 		font-size: 1.05rem;
 	}
 
-	.artifact-plane__grid {
-		display: grid;
-		grid-template-columns: 1fr 1fr;
-		gap: 0.85rem;
+	.artifact-plane__metrics {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.45rem;
 	}
 
-	.artifact-plane__panel {
-		min-height: 7rem;
-		border-radius: var(--radius-lg);
+	.artifact-plane__metrics span {
 		border: 1px solid var(--color-border);
-		background: var(--color-bg);
-	}
-
-	.artifact-plane__panel--signal {
-		background: var(--color-accent);
-		border-color: transparent;
-	}
-
-	.artifact-plane__panel--surface {
-		background: var(--color-surface);
-	}
-
-	.artifact-plane__panel--ink {
-		background: var(--color-text);
-		border-color: transparent;
-	}
-
-	.artifact-plane__panel--paper {
-		background: color-mix(in srgb, var(--color-bg) 90%, var(--color-surface-alt) 10%);
+		border-radius: 999px;
+		padding: 0.28rem 0.55rem;
+		font-family: var(--font-mono);
+		font-size: 0.68rem;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		color: var(--color-muted);
 	}
 
 	.artifact-plane__caption,
@@ -655,8 +769,7 @@ const principles = [
 		padding-top: 0.35rem;
 	}
 
-	.featured-system__link,
-	.contact-band__link {
+	.featured-system__link {
 		font-family: var(--font-mono);
 		font-size: 0.9rem;
 		letter-spacing: 0.05em;
@@ -762,21 +875,7 @@ const principles = [
 		border-bottom: 1px solid var(--color-border);
 	}
 
-	.contact-band__inner {
-		padding: clamp(1.6rem, 4vw, 2.1rem);
-		background: var(--color-text);
-		color: var(--color-text-inverse);
-	}
 
-	.contact-band__inner h2 {
-		max-width: 18ch;
-		color: inherit;
-		margin-bottom: 1.1rem;
-	}
-
-	.contact-band__link {
-		color: var(--color-text-inverse);
-	}
 
 	@media (max-width: 1100px) {
 		.capability-loop__grid,
@@ -821,12 +920,98 @@ const principles = [
 			gap: 0.5rem;
 		}
 
-		.artifact-plane__grid {
-			grid-template-columns: 1fr;
-		}
-
 		.home-hero {
 			padding-top: 6.5rem;
+		}
+	}
+
+	/* Newsletter Section */
+	.newsletter-section {
+		padding: clamp(4rem, 8vw, 6rem) 0;
+	}
+
+	.newsletter {
+		max-width: 600px;
+		margin: 0 auto;
+		text-align: center;
+	}
+
+	.newsletter h2 {
+		margin: 0 0 0.75rem;
+		font-size: clamp(1.5rem, 3vw, 2rem);
+	}
+
+	.newsletter__description {
+		margin: 0 0 1.25rem;
+		color: var(--color-muted);
+		font-size: 1.05rem;
+		line-height: 1.6;
+	}
+
+	.newsletter__button {
+		display: inline-block;
+		margin-bottom: 0.75rem;
+	}
+
+	.newsletter__privacy {
+		margin: 0;
+		font-family: var(--font-mono);
+		font-size: 0.75rem;
+		color: var(--color-muted);
+		letter-spacing: 0.02em;
+	}
+
+	/* Contact CTA Section */
+	.contact-section {
+		padding: clamp(3.5rem, 7vw, 5.5rem) 0 clamp(5rem, 10vw, 7rem);
+	}
+
+	.contact-cta {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) auto;
+		align-items: end;
+		gap: clamp(1.4rem, 4vw, 3rem);
+		padding-top: clamp(1.25rem, 3vw, 2rem);
+		border-top: 1px solid var(--color-border);
+	}
+
+	.contact-cta__content h2 {
+		max-width: 12ch;
+		margin: 0 0 0.75rem;
+		font-size: clamp(2rem, 6vw, 4.35rem);
+		line-height: 0.98;
+	}
+
+	.contact-cta__content p {
+		margin: 0;
+		color: var(--color-muted);
+		max-width: 52ch;
+		font-size: clamp(1rem, 1.6vw, 1.18rem);
+	}
+
+	.contact-cta__actions {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: flex-end;
+		gap: 0.7rem;
+	}
+
+	.contact-cta__button {
+		white-space: nowrap;
+	}
+
+	@media (max-width: 760px) {
+		.contact-cta {
+			grid-template-columns: 1fr;
+			align-items: start;
+		}
+
+		.contact-cta__content h2 {
+			max-width: 10ch;
+		}
+
+		.contact-cta__actions {
+			justify-content: flex-start;
 		}
 	}
 </style>

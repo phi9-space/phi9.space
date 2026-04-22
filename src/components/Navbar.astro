@@ -6,7 +6,18 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
 
 <div class="site-nav">
   <a class="site-nav__brand" href="/" aria-label="phi9.space home">
-    <img src="/assets/brand/phi9-wordmark.svg" alt="phi9.space" class="site-nav__logo" loading="lazy" />
+    <img
+      src="/assets/brand/phi9-lockup-black.svg"
+      alt="phi9.space"
+      class="site-nav__logo site-nav__logo--desktop"
+      loading="lazy"
+    />
+    <img
+      src="/assets/brand/phi9-mark-black.svg"
+      alt="phi9.space"
+      class="site-nav__logo site-nav__logo--mobile"
+      loading="lazy"
+    />
   </a>
 
   <button
@@ -17,9 +28,11 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
     aria-expanded="false"
     aria-controls="site-nav-menu"
   >
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
-    </svg>
+    <span class="site-nav__toggle-lines" aria-hidden="true">
+      <span></span>
+      <span></span>
+      <span></span>
+    </span>
   </button>
 
   <nav aria-label="Primary" id="site-nav-menu" class="site-nav__menu" data-nav-menu>
@@ -101,28 +114,76 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
   }
 
   .site-nav__logo {
-    width: clamp(138px, 16vw, 192px);
     height: auto;
     display: block;
+  }
+
+  .site-nav__logo--desktop {
+    width: clamp(138px, 16vw, 192px);
+  }
+
+  .site-nav__logo--mobile {
+    display: none;
+    width: 1.75rem;
   }
 
   .site-nav__toggle {
     display: none;
     border: 1px solid var(--color-border);
-    background: var(--color-bg);
+    background: color-mix(in srgb, var(--color-bg) 82%, transparent);
     color: var(--color-text);
-    border-radius: var(--radius-sm);
-    width: 2.25rem;
-    height: 2.25rem;
+    border-radius: 999px;
+    width: 2.75rem;
+    height: 2.75rem;
     padding: 0;
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 10px 24px rgba(22, 22, 29, 0.08);
+    transition:
+      background 0.2s ease,
+      border-color 0.2s ease,
+      color 0.2s ease,
+      transform 0.2s ease;
   }
 
-  .site-nav__toggle svg {
-    width: 1.1rem;
-    height: 1.1rem;
+  .site-nav__toggle:hover {
+    border-color: color-mix(in srgb, var(--color-accent) 50%, var(--color-border) 50%);
+    color: var(--color-accent);
+  }
+
+  .site-nav__toggle-lines {
+    position: relative;
+    display: block;
+    width: 1rem;
+    height: 0.8rem;
+  }
+
+  .site-nav__toggle-lines span {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 1.5px;
+    border-radius: 999px;
+    background: currentColor;
+    transition:
+      transform 0.2s ease,
+      opacity 0.2s ease,
+      top 0.2s ease;
+  }
+
+  .site-nav__toggle-lines span:nth-child(1) {
+    top: 0;
+  }
+
+  .site-nav__toggle-lines span:nth-child(2) {
+    top: calc(50% - 0.75px);
+  }
+
+  .site-nav__toggle-lines span:nth-child(3) {
+    top: calc(100% - 1.5px);
   }
 
   .site-nav__menu {
@@ -162,13 +223,13 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
     font-family: var(--font-heading);
     font-size: 0.9375rem;
     font-weight: 500;
-    color: var(--color-text) !important;
+    color: var(--color-accent) !important;
     white-space: nowrap;
     transition: color 0.15s ease;
   }
 
   .site-nav__cta:hover {
-    color: var(--color-accent) !important;
+    color: var(--color-accent-hover) !important;
     text-decoration: none !important;
   }
 
@@ -180,14 +241,28 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
         "brand toggle"
         "menu menu";
       align-items: center;
-      gap: 0;
+      gap: 0.25rem 0.85rem;
       height: auto;
-      padding-top: 0.85rem;
-      padding-bottom: 0.85rem;
+      margin: 0.6rem 0.8rem 0;
+      padding: 0.75rem 0.85rem;
+      background: color-mix(in srgb, var(--color-bg) 76%, transparent);
+      border: 1px solid color-mix(in srgb, var(--color-border) 82%, transparent);
+      border-radius: 1.25rem;
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      box-shadow: 0 18px 40px rgba(22, 22, 29, 0.09);
     }
 
     .site-nav__brand {
       grid-area: brand;
+    }
+
+    .site-nav__logo--desktop {
+      display: none;
+    }
+
+    .site-nav__logo--mobile {
+      display: block;
     }
 
     .site-nav__toggle {
@@ -201,23 +276,63 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
       display: none;
       flex-direction: column;
       align-items: flex-start;
-      gap: 0.75rem;
-      padding-top: 0.75rem;
+      gap: 1rem;
+      margin-top: 0.65rem;
+      padding-top: 0.9rem;
+      border-top: 1px solid color-mix(in srgb, var(--color-border) 88%, transparent);
+      width: 100%;
     }
 
     .site-nav[data-menu-open="true"] .site-nav__menu {
       display: flex;
     }
 
+    .site-nav[data-menu-open="true"] {
+      background: color-mix(in srgb, var(--color-bg) 88%, transparent);
+      border-color: color-mix(in srgb, var(--color-accent) 22%, var(--color-border) 78%);
+    }
+
+    .site-nav[data-menu-open="true"] .site-nav__toggle {
+      background: color-mix(in srgb, var(--color-accent-soft) 72%, var(--color-bg) 28%);
+      border-color: color-mix(in srgb, var(--color-accent) 36%, var(--color-border) 64%);
+      color: var(--color-accent);
+      transform: rotate(90deg);
+    }
+
+    .site-nav[data-menu-open="true"] .site-nav__toggle-lines span:nth-child(1) {
+      top: calc(50% - 0.75px);
+      transform: rotate(45deg);
+    }
+
+    .site-nav[data-menu-open="true"] .site-nav__toggle-lines span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .site-nav[data-menu-open="true"] .site-nav__toggle-lines span:nth-child(3) {
+      top: calc(50% - 0.75px);
+      transform: rotate(-45deg);
+    }
+
     .site-nav__menu ul {
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
+      gap: 0.7rem;
       align-items: flex-start;
+      width: 100%;
+    }
+
+    .site-nav__menu li,
+    .site-nav__menu a {
+      width: 100%;
+    }
+
+    .site-nav__menu a {
+      font-size: 1rem;
     }
 
     .site-nav__cta {
-      margin-top: 0.25rem;
+      margin-top: 0.15rem;
+      padding-top: 0.45rem;
     }
   }
 </style>

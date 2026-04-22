@@ -7,6 +7,7 @@ tags:
   - deep-rl
   - policy-gradient
   - lunar-lander
+heroImage: /research/lunar-landing/image.png
 author: Rudra Arora
 draft: false
 ---

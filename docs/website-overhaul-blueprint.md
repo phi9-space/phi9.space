@@ -713,15 +713,24 @@ It should not behave like a secondary homepage. It should behave like a clean in
 
 ### Structure
 
-Use a simple multi-column footer with one restrained divider above it.
+The implemented footer has two layers:
 
-Recommended columns:
+1. one multi-column row for institutional navigation
+2. one full-width wordmark banner below it
 
-- brand mark and copyright
-- `Lab`, `Research`, `Data`, `Manifesto`
-- `About`, `Get in touch`
-- community and external links
-- `Privacy`, `Terms`
+The current column structure is:
+
+- brand copy and copyright
+- `Explore`: `Lab`, `Research`, `Data`, `Manifesto`
+- `Utility`: `About`, `Get in touch`
+- `Community`: external links
+- `Legal`: `Privacy`, `Terms`
+
+The brand copy currently shown in the footer is:
+
+- `Humane research institution`
+
+The lower banner uses the `phi9` lockup with the icon included, linking back to `/`.
 
 Current external links to include:
 
@@ -736,6 +745,8 @@ Current external links to include:
 - avoid heavy cards, background blocks, or decorative gradients
 - use compact text and clean spacing
 - let the footer feel archival and composed, not promotional
+- keep the community links grouped in their own column rather than mixing them into utility
+- preserve the separate wordmark banner below the link grid
 - if categories grow, prefer editing link selection rather than adding more columns
 
 ## Copy Modules To Write Next
