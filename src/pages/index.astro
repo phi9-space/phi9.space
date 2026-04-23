@@ -24,33 +24,6 @@ const structuredData = {
 	description: "Physical AI research, data systems, and deployable intelligence.",
 };
 
-const capabilityLoop = [
-	{
-		id: "capture",
-		num: "001",
-		title: "Capture",
-		desc: "Capture real-world demonstrations with synchronized motion, video, and structured task data.",
-	},
-	{
-		id: "multiply",
-		num: "002",
-		title: "Multiply",
-		desc: "Multiply scarce data through retargeting, simulation, augmentation, and better structure.",
-	},
-	{
-		id: "train",
-		num: "003",
-		title: "Train",
-		desc: "Train policies and research systems on data that preserves intent, motion, and context.",
-	},
-	{
-		id: "evaluate",
-		num: "004",
-		title: "Evaluate",
-		desc: "Evaluate what generalizes through benchmarks, failure analysis, and transfer tests.",
-	},
-];
-
 const openProblems = [
 	{
 		title: "Data that carries intent, not just observation.",
@@ -176,15 +149,57 @@ const principles = [
 			</div>
 
 			<div class="capability-loop__grid">
-				{
-					capabilityLoop.map((item) => (
-						<article class="loop-step reveal">
-							<span class="loop-step__num">{item.num}</span>
-							<h3>{item.title}</h3>
-							<p>{item.desc}</p>
-						</article>
-					))
-				}
+				<article class="loop-step reveal">
+					<div class="loop-step__glyph">
+						<SignalCircle size="2rem" />
+					</div>
+					<span class="loop-step__num">001</span>
+					<h3>Capture</h3>
+					<p>
+						Capture real-world demonstrations with synchronized motion, video, and
+						structured task data.
+					</p>
+				</article>
+
+				<article class="loop-step reveal">
+					<div class="loop-step__glyph loop-step__glyph--multiply">
+						<SignalCircle size="1.1rem" />
+						<SignalCircle size="1.1rem" />
+						<SignalCircle size="1.1rem" />
+					</div>
+					<span class="loop-step__num">002</span>
+					<h3>Multiply</h3>
+					<p>
+						Multiply scarce data through retargeting, simulation, augmentation, and
+						better structure.
+					</p>
+				</article>
+
+				<article class="loop-step reveal">
+					<div class="loop-step__glyph loop-step__glyph--train">
+						<VerticalBar width="0.45rem" height="1.1rem" color="var(--color-text)" />
+						<VerticalBar width="0.45rem" height="1.7rem" color="var(--color-text)" />
+						<VerticalBar width="0.45rem" height="2rem" color="var(--color-text)" />
+					</div>
+					<span class="loop-step__num">003</span>
+					<h3>Train</h3>
+					<p>
+						Train policies and research systems on data that preserves intent, motion,
+						and context.
+					</p>
+				</article>
+
+				<article class="loop-step reveal">
+					<div class="loop-step__glyph">
+						<DotGrid rows={3} cols={4} spacing="0.28rem" dotSize="0.22rem" color="var(--color-text)" />
+					</div>
+					<span class="loop-step__num">004</span>
+					<h3>Evaluate</h3>
+					<p>
+						Evaluate what generalizes through benchmarks, failure analysis, and transfer
+						tests.
+					</p>
+				</article>
 			</div>
 		</div>
 	</section>
@@ -192,26 +207,39 @@ const principles = [
 	<section class="section featured-system">
 		<div class="container">
 			<div class="featured-system__grid">
-				<div class="featured-system__frame reveal" aria-hidden="true">
-					<span class="featured-system__rule"></span>
-					<p class="featured-system__eyebrow">MoCap Rig v1 / featured system</p>
-					<div class="featured-system__surface">
-						<div class="featured-system__surface-card">
-							<span>capture</span>
-							<p>Motion + video + structured task traces</p>
-						</div>
-						<div class="featured-system__surface-card featured-system__surface-card--small">
-							<span>quality</span>
-							<p>Aligned multimodal data</p>
-						</div>
-						<div class="featured-system__surface-card featured-system__surface-card--small">
-							<span>output</span>
-							<p>Research-ready demonstrations</p>
-						</div>
-					</div>
-					<p class="featured-system__caption">
-						Large product image or technical composite anchored in the working system.
-					</p>
+				<div class="featured-system__panel reveal" aria-hidden="true">
+					<span class="rule rule--accent featured-system__rule"></span>
+					<p class="featured-system__eyebrow">MoCap Rig v1</p>
+
+					<ul class="featured-system__rails">
+						<li class="featured-system__rail">
+							<div class="featured-system__rail-shape">
+								<SignalCircle size="3.25rem" />
+							</div>
+							<div class="featured-system__rail-copy">
+								<span>capture</span>
+								<p>Full-body motion, synchronized egocentric video, structured task traces.</p>
+							</div>
+						</li>
+						<li class="featured-system__rail">
+							<div class="featured-system__rail-shape">
+								<InkRect width="3.25rem" height="2.25rem" />
+							</div>
+							<div class="featured-system__rail-copy">
+								<span>quality</span>
+								<p>Aligned multimodal streams, validated against benchmarks.</p>
+							</div>
+						</li>
+						<li class="featured-system__rail">
+							<div class="featured-system__rail-shape">
+								<DotGrid rows={4} cols={6} spacing="0.3rem" dotSize="0.22rem" />
+							</div>
+							<div class="featured-system__rail-copy">
+								<span>output</span>
+								<p>Research-ready demonstrations for training and evaluation loops.</p>
+							</div>
+						</li>
+					</ul>
 				</div>
 
 				<div class="featured-system__content reveal">
@@ -361,16 +389,19 @@ const principles = [
 				</p>
 			</div>
 
-			<div class="open-problems__grid">
+			<ol class="open-problems__list">
 				{
-					openProblems.map((problem) => (
-						<article class="problem-card reveal">
-							<h3>{problem.title}</h3>
-							<p>{problem.desc}</p>
-						</article>
+					openProblems.map((problem, idx) => (
+						<li class="problem-row reveal">
+							<span class="problem-row__num">{String(idx + 1).padStart(2, "0")}</span>
+							<div class="problem-row__copy">
+								<h3>{problem.title}</h3>
+								<p>{problem.desc}</p>
+							</div>
+						</li>
 					))
 				}
-			</div>
+			</ol>
 		</div>
 	</section>
 
@@ -511,7 +542,7 @@ const principles = [
 	.home-hero__copy,
 	.section-heading p,
 	.featured-system__content p,
-	.problem-card p,
+	.problem-row__copy p,
 	.method-row p,
 	.principle-row p,
 	.research-proof__featured p,
@@ -549,16 +580,13 @@ const principles = [
 		max-width: 50rem;
 	}
 
-	.featured-system__frame,
 	.research-proof__featured,
-	.research-proof__secondary-item,
-	.problem-card {
+	.research-proof__secondary-item {
 		border: 1px solid var(--color-border);
 		border-radius: var(--radius-xl);
 		background: color-mix(in srgb, var(--color-bg) 80%, var(--color-surface) 20%);
 	}
 
-	.featured-system__rule,
 	.research-proof__placeholder-rule {
 		display: block;
 		width: 11rem;
@@ -567,19 +595,77 @@ const principles = [
 		background: var(--color-accent);
 	}
 
-	.featured-system__eyebrow {
-		margin: 0;
-		font-family: var(--font-heading);
-		font-size: 1.05rem;
+	.featured-system__panel {
+		display: grid;
+		gap: 1.1rem;
+		padding: clamp(1.25rem, 3vw, 2rem);
+		border-top: 1px solid var(--color-border);
+		border-bottom: 1px solid var(--color-border);
 	}
 
-	.featured-system__caption {
+	.featured-system__rule {
+		width: 10ch;
+		margin: 0;
+	}
+
+	.featured-system__eyebrow {
 		margin: 0;
 		font-family: var(--font-mono);
-		font-size: 0.74rem;
-		letter-spacing: 0.04em;
-		color: var(--color-muted);
+		font-size: 0.8rem;
+		letter-spacing: 0.14em;
 		text-transform: uppercase;
+		color: var(--color-muted);
+	}
+
+	.featured-system__rails {
+		list-style: none;
+		display: flex;
+		flex-direction: column;
+		gap: 1.1rem;
+		margin: 0.4rem 0 0;
+		padding: 0;
+	}
+
+	.featured-system__rail {
+		display: grid;
+		grid-template-columns: 4.5rem 1fr;
+		gap: 1.25rem;
+		align-items: center;
+		padding: 0.8rem 0;
+		border-bottom: 1px solid var(--color-border);
+	}
+
+	.featured-system__rail:last-child {
+		border-bottom: none;
+	}
+
+	.featured-system__rail-shape {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		min-height: 3.25rem;
+	}
+
+	.featured-system__rail-copy {
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+	}
+
+	.featured-system__rail-copy span {
+		font-family: var(--font-mono);
+		font-size: 0.72rem;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		color: var(--color-accent);
+	}
+
+	.featured-system__rail-copy p {
+		margin: 0;
+		font-size: 0.96rem;
+		line-height: 1.5;
+		color: var(--color-text);
+		max-width: 44ch;
 	}
 
 	.home-hero__poster {
@@ -611,21 +697,33 @@ const principles = [
 		right: clamp(1rem, 2vw, 2rem);
 	}
 
-	.capability-loop__grid,
-	.open-problems__grid {
+	.capability-loop__grid {
 		display: grid;
 		grid-template-columns: repeat(4, minmax(0, 1fr));
-		gap: 1rem;
-	}
-
-	.loop-step,
-	.problem-card {
-		padding: 1.2rem 1.2rem 1.35rem;
+		gap: 0;
+		border-top: 1px solid var(--color-border);
 	}
 
 	.loop-step {
-		border-top: 1px solid var(--color-border);
+		padding: 1.4rem clamp(1rem, 1.5vw, 1.4rem) 1.5rem;
+		border-right: 1px solid var(--color-border);
 		border-bottom: 1px solid var(--color-border);
+	}
+
+	.loop-step:nth-child(4n) {
+		border-right: none;
+	}
+
+	.loop-step__glyph {
+		display: flex;
+		align-items: flex-end;
+		gap: 0.4rem;
+		margin-bottom: 1rem;
+		min-height: 2.2rem;
+	}
+
+	.loop-step__glyph--multiply {
+		gap: 0.35rem;
 	}
 
 	.loop-step__num,
@@ -643,11 +741,10 @@ const principles = [
 
 	.loop-step__num {
 		color: var(--color-accent);
-		margin-bottom: 0.7rem;
+		margin-bottom: 0.5rem;
 	}
 
 	.loop-step h3,
-	.problem-card h3,
 	.method-row h3,
 	.principle-row h3,
 	.research-proof__featured h3,
@@ -655,59 +752,46 @@ const principles = [
 		margin-bottom: 0.6rem;
 	}
 
-	.featured-system__frame {
-		padding: 1.6rem;
+	.open-problems__list {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		border-top: 1px solid var(--color-border);
+	}
+
+	.problem-row {
 		display: grid;
-		gap: 0.9rem;
+		grid-template-columns: 5rem minmax(0, 1fr);
+		gap: clamp(1rem, 2vw, 2rem);
+		padding: clamp(1.1rem, 2vw, 1.6rem) 0;
+		border-bottom: 1px solid var(--color-border);
 	}
 
-	.featured-system__surface {
-		display: grid;
-		grid-template-columns: 1.2fr 1fr;
-		grid-template-areas:
-			"main detail-a"
-			"main detail-b";
-		gap: 0.85rem;
-		min-height: 18rem;
-	}
-
-	.featured-system__surface-card {
-		grid-area: main;
-		padding: 1.15rem;
-		border-radius: var(--radius-lg);
-		border: 1px solid var(--color-border);
-		background: var(--color-bg);
-		display: flex;
-		flex-direction: column;
-		justify-content: space-between;
-		min-height: 15rem;
-	}
-
-	.featured-system__surface-card--small {
-		min-height: 7.15rem;
-	}
-
-	.featured-system__surface-card--small:first-of-type {
-		grid-area: detail-a;
-	}
-
-	.featured-system__surface-card--small:last-of-type {
-		grid-area: detail-b;
-	}
-
-	.featured-system__surface-card span {
+	.problem-row__num {
 		font-family: var(--font-mono);
-		font-size: 0.72rem;
-		letter-spacing: 0.08em;
+		font-size: 0.78rem;
+		letter-spacing: 0.12em;
 		text-transform: uppercase;
 		color: var(--color-accent);
+		padding-top: 0.35rem;
 	}
 
-	.featured-system__surface-card p {
+	.problem-row__copy {
+		display: flex;
+		flex-direction: column;
+		gap: 0.4rem;
+		max-width: 70ch;
+	}
+
+	.problem-row__copy h3 {
 		margin: 0;
-		font-family: var(--font-heading);
-		font-size: 1.2rem;
-		line-height: 1.2;
+		font-size: clamp(1.15rem, 1.8vw, 1.35rem);
+		line-height: 1.25;
+	}
+
+	.problem-row__copy p {
+		margin: 0;
+		color: var(--color-muted);
 	}
 
 	.featured-system__content {
@@ -802,10 +886,6 @@ const principles = [
 		object-fit: cover;
 	}
 
-	.problem-card {
-		min-height: 100%;
-	}
-
 	.methods__rows,
 	.principles__rows {
 		border-top: 1px solid var(--color-border);
@@ -820,12 +900,17 @@ const principles = [
 		border-bottom: 1px solid var(--color-border);
 	}
 
-
-
 	@media (max-width: 1100px) {
-		.capability-loop__grid,
-		.open-problems__grid {
+		.capability-loop__grid {
 			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+
+		.loop-step:nth-child(4n) {
+			border-right: 1px solid var(--color-border);
+		}
+
+		.loop-step:nth-child(2n) {
+			border-right: none;
 		}
 
 		.research-proof__secondary-item {
@@ -861,17 +946,21 @@ const principles = [
 	}
 
 	@media (max-width: 720px) {
-		.capability-loop__grid,
-		.open-problems__grid,
-		.featured-system__surface {
+		.capability-loop__grid {
 			grid-template-columns: 1fr;
 		}
 
-		.featured-system__surface {
-			grid-template-areas:
-				"main"
-				"detail-a"
-				"detail-b";
+		.loop-step {
+			border-right: none !important;
+		}
+
+		.problem-row {
+			grid-template-columns: 1fr;
+			gap: 0.35rem;
+		}
+
+		.problem-row__num {
+			padding-top: 0;
 		}
 
 		.method-row,

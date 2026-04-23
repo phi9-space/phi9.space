@@ -28,6 +28,27 @@ body {
 body {
 	text-rendering: optimizeLegibility;
 	-webkit-font-smoothing: antialiased;
+	position: relative;
+}
+
+body::before {
+	content: "";
+	position: fixed;
+	inset: 0;
+	pointer-events: none;
+	z-index: 0;
+	background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.92' numOctaves='2' seed='5'/><feColorMatrix values='0 0 0 0 0.09 0 0 0 0 0.09 0 0 0 0 0.11 0 0 0 0.38 0'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>");
+	mix-blend-mode: multiply;
+	opacity: 0.35;
+}
+
+body > * {
+	position: relative;
+	z-index: 1;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	/* grain is static — no motion concern */
 }
 
 main,
