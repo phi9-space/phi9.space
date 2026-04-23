@@ -19,4 +19,4 @@ We capture training data using SOTA full-body motion capture pipelines — multi
 
 We work openly, in partnerships, and with stakeholders across the physical AI ecosystem.
 
-The goal is surplus through autonomy — systems that operate reliably for real business workflows. We are working toward full autonomous operation across data collection, policy training, evaluation, and deployment.
+The goal is transfer — systems that operate reliably in real workflows, with better data, better evaluation, and better transfer from research to deployment.

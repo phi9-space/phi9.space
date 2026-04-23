@@ -437,18 +437,28 @@ const principles = [
 			<div class="section-heading reveal">
 				<span class="section-kicker">Principles</span>
 				<h2>The beliefs that hold the work together.</h2>
+				<p>
+					Five operating beliefs that shape how the lab builds, ships, and stays
+					honest about what it is doing.
+				</p>
 			</div>
 
-			<div class="principles__rows">
+			<ol class="principles__rows">
 				{
-					principles.map((item) => (
-						<div class="principle-row reveal">
-							<h3>{item.title}</h3>
-							<p>{item.desc}</p>
-						</div>
-					))
+					principles.map((item, idx) => {
+						const roman = ["i", "ii", "iii", "iv", "v", "vi"][idx] ?? String(idx + 1);
+						return (
+							<li class="principle-row reveal">
+								<span class="principle-row__num">{roman}</span>
+								<div class="principle-row__copy">
+									<h3>{item.title}</h3>
+									<p>{item.desc}</p>
+								</div>
+							</li>
+						);
+					})
 				}
-			</div>
+			</ol>
 		</div>
 	</section>
 
@@ -865,18 +875,59 @@ const principles = [
 		object-fit: cover;
 	}
 
-	.methods__rows,
-	.principles__rows {
+	.methods__rows {
 		border-top: 1px solid var(--color-border);
 	}
 
-	.method-row,
-	.principle-row {
+	.method-row {
 		display: grid;
 		grid-template-columns: minmax(200px, 0.42fr) minmax(0, 1fr);
 		gap: 1.5rem;
 		padding: 1rem 0;
 		border-bottom: 1px solid var(--color-border);
+	}
+
+	.principles__rows {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		border-top: 1px solid var(--color-border);
+	}
+
+	.principle-row {
+		display: grid;
+		grid-template-columns: 5rem minmax(0, 1fr);
+		gap: clamp(1rem, 2vw, 2rem);
+		padding: clamp(1.25rem, 2.5vw, 2rem) 0;
+		border-bottom: 1px solid var(--color-border);
+		align-items: start;
+	}
+
+	.principle-row__num {
+		font-family: var(--font-mono);
+		font-size: 0.82rem;
+		letter-spacing: 0.12em;
+		color: var(--color-accent);
+		padding-top: 0.45rem;
+	}
+
+	.principle-row__copy {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+		max-width: 70ch;
+	}
+
+	.principle-row__copy h3 {
+		margin: 0;
+		font-size: clamp(1.25rem, 2.3vw, 1.65rem);
+		line-height: 1.2;
+		font-weight: 500;
+		letter-spacing: -0.015em;
+	}
+
+	.principle-row__copy p {
+		margin: 0;
 	}
 
 	@media (max-width: 1100px) {

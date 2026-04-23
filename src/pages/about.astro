@@ -6,4 +6,13 @@ const page = await getEntry("pages", "about");
 const { Content } = await page.render();
 ---
 
-<DocumentLayout entry={page} Content={Content} eyebrow="About" />
+<DocumentLayout
+	entry={page}
+	Content={Content}
+	eyebrow="About"
+	showContactCTA
+	contactHeadline="Want to work with phi9?"
+	contactBody="We are a small team building physical AI systems end-to-end. If there is overlap with what you are building, write to us."
+	contactSecondaryHref="/manifesto"
+	contactSecondaryLabel="Read the manifesto"
+/>
