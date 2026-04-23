@@ -1,21 +1,501 @@
 ---
 import { getEntry } from "astro:content";
-import DocumentLayout from "@layouts/DocumentLayout.astro";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import ContactCTA from "@components/ContactCTA.astro";
+import BraillePulse from "@components/visuals/BraillePulse.astro";
+import DataStreamRail from "@components/visuals/DataStreamRail.astro";
+import DotGrid from "@components/visuals/DotGrid.astro";
+import HalfCircle from "@components/visuals/HalfCircle.astro";
+import InkRect from "@components/visuals/InkRect.astro";
+import SignalCircle from "@components/visuals/SignalCircle.astro";
+import VerticalBar from "@components/visuals/VerticalBar.astro";
 
 const page = await getEntry("pages", "data");
 if (!page) {
 	throw new Error("Pages collection: entry 'data' not found. Run `astro sync` and restart dev server.");
 }
 const { Content } = await page.render();
+
+const capabilities = [
+	{
+		label: "Motion capture",
+		desc: "Full-body pose at 120+ Hz. Joint angles, limb trajectories, skeletal.",
+	},
+	{
+		label: "Ego-centric video",
+		desc: "First-person RGB aligned to the motion within one millisecond.",
+	},
+	{
+		label: "IMU",
+		desc: "Wrist and body inertial data for context and redundancy.",
+	},
+	{
+		label: "Depth",
+		desc: "Stereo and time-of-flight streams where geometry matters.",
+	},
+	{
+		label: "Tactile",
+		desc: "Glove-level force feedback for contact and manipulation.",
+	},
+	{
+		label: "Wrist POV",
+		desc: "Close-object manipulation frames sync’d to body motion.",
+	},
+	{
+		label: "Task labels",
+		desc: "Segmented demonstrations with start, end, success, and intent.",
+	},
+	{
+		label: "Retargeting",
+		desc: "Skeletal maps ready for humanoids and robot arms.",
+	},
+];
+
+const stats = [
+	{ value: "10+", label: "Modalities per capture" },
+	{ value: "8+", label: "Environment types" },
+	{ value: "3", label: "Downstream pipelines" },
+];
+
+const pipelines = [
+	"Pretraining data",
+	"Policy training data",
+	"World-model data",
+];
+
+const environments = [
+	"Homes",
+	"Kitchens",
+	"Workshops",
+	"Warehouses",
+	"Labs",
+	"Outdoors",
+	"Industrial",
+	"Retail",
+	"Hospitality",
+	"Automotive",
+	"Healthcare",
+];
 ---
 
-<DocumentLayout
-	entry={page}
-	Content={Content}
-	eyebrow="Data"
-	showContactCTA
-	contactHeadline="Building data systems for physical AI?"
-	contactBody="If you are working on collection, structured datasets, or research infrastructure for embodied systems, write to us."
-	contactSecondaryHref="/lab"
-	contactSecondaryLabel="See the lab"
-/>
+<BaseLayout
+	fullWidth={true}
+	title="Data — phi9.space"
+	description={page.data.description}
+	pageType="article"
+>
+	<section class="data-hero">
+		<div class="container">
+			<p class="data-hero__eyebrow">
+				<BraillePulse class="data-hero__eyebrow-pulse" />
+				Data
+			</p>
+			<h1 class="data-hero__title">
+				Building the most complete sensorimotor dataset for physical intelligence.
+			</h1>
+			<span class="rule data-hero__rule" aria-hidden="true"></span>
+			<p class="data-hero__dek">
+				Phi9 builds the capture systems, sourcing networks, and structured data products
+				that turn real-world behavior into data models can actually learn from — and that
+				evaluation can actually trust.
+			</p>
+			<ul class="data-hero__modalities">
+				<li>Tactile force feedback</li>
+				<li>Motion</li>
+				<li>Vision</li>
+				<li>Depth</li>
+				<li>Wrist POV</li>
+				<li>IMU</li>
+			</ul>
+		</div>
+	</section>
+
+	<DataStreamRail />
+
+	<section class="section stats-section">
+		<div class="container">
+			<ul class="stats">
+				{stats.map((stat) => (
+					<li class="stat">
+						<p class="stat__value">{stat.value}</p>
+						<p class="stat__label">{stat.label}</p>
+					</li>
+				))}
+			</ul>
+		</div>
+	</section>
+
+	<section class="section capabilities-section">
+		<div class="container">
+			<div class="section-heading reveal">
+				<span class="section-kicker">Capabilities</span>
+				<h2>What every capture carries.</h2>
+				<p>
+					Modalities are recorded together, timed to the millisecond, and structured so any
+					one of them can feed a training or evaluation workflow without rebuilding the rest.
+				</p>
+			</div>
+
+			<div class="capabilities__grid">
+				{capabilities.map((cap, idx) => (
+					<article class="capability reveal">
+						<div class="capability__glyph">
+							{idx % 5 === 0 && <SignalCircle size="2.4rem" />}
+							{idx % 5 === 1 && <InkRect width="2.4rem" height="1.8rem" />}
+							{idx % 5 === 2 && <DotGrid rows={3} cols={4} spacing="0.3rem" dotSize="0.25rem" />}
+							{idx % 5 === 3 && <HalfCircle size="2.4rem" orientation="right" />}
+							{idx % 5 === 4 && <VerticalBar width="0.5rem" height="2rem" color="var(--color-text)" />}
+						</div>
+						<h3>{cap.label}</h3>
+						<p>{cap.desc}</p>
+					</article>
+				))}
+			</div>
+		</div>
+	</section>
+
+	<section class="section pipelines-section">
+		<div class="container">
+			<div class="section-heading reveal">
+				<span class="section-kicker">Outputs</span>
+				<h2>Three downstream pipelines, one capture.</h2>
+				<p>
+					The same demonstration feeds pretraining data for foundation work, policy training
+					data for robot skills, and world-model data for simulation and planning.
+				</p>
+			</div>
+			<ul class="pipelines__list">
+				{pipelines.map((p, idx) => (
+					<li class="pipeline">
+						<span class="pipeline__num">{String(idx + 1).padStart(2, "0")}</span>
+						<span class="pipeline__label">{p}</span>
+					</li>
+				))}
+			</ul>
+		</div>
+	</section>
+
+	<section class="section environments-section">
+		<div class="container">
+			<div class="section-heading reveal">
+				<span class="section-kicker">Environments</span>
+				<h2>Domain-diverse, not narrow.</h2>
+				<p>
+					Real physical AI requires data from real places, not lab benches. We capture
+					across a widening set of environments where human behavior varies.
+				</p>
+			</div>
+			<ul class="environments__chips">
+				{environments.map((env) => (
+					<li class="environment">{env}</li>
+				))}
+			</ul>
+		</div>
+	</section>
+
+	<section class="section data-body-section">
+		<div class="container">
+			<div class="section-heading reveal">
+				<span class="section-kicker">Detail</span>
+				<h2>How the data layer operates.</h2>
+			</div>
+			<div class="data-body">
+				<Content />
+			</div>
+		</div>
+	</section>
+
+	<ContactCTA
+		eyebrow="Contact"
+		headline="Building data systems for physical AI?"
+		body="If you are working on collection, structured datasets, or research infrastructure for embodied systems, write to us."
+		secondaryHref="/lab"
+		secondaryLabel="See the lab"
+	/>
+</BaseLayout>
+
+<style>
+	.data-hero {
+		padding: clamp(7rem, 13vw, 11rem) 0 clamp(2rem, 4vw, 3rem);
+	}
+
+	.data-hero__eyebrow {
+		margin: 0 0 1.25rem;
+		font-family: var(--font-mono);
+		font-size: 0.78rem;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		color: var(--color-accent);
+		display: inline-flex;
+		align-items: center;
+		gap: 0.45rem;
+	}
+
+	.data-hero__eyebrow-pulse {
+		font-size: 0.95rem;
+		line-height: 1;
+	}
+
+	.data-hero__title {
+		font-size: var(--type-display-lg);
+		line-height: 0.98;
+		letter-spacing: -0.04em;
+		max-width: 22ch;
+		margin: 0 0 1.25rem;
+		font-weight: 600;
+	}
+
+	.data-hero__rule {
+		width: 12ch;
+		margin: 0 0 1.5rem;
+	}
+
+	.data-hero__dek {
+		max-width: 62ch;
+		color: var(--color-muted);
+		margin: 0 0 1.75rem;
+		font-size: clamp(1rem, 1.4vw, 1.2rem);
+		line-height: 1.55;
+	}
+
+	.data-hero__modalities {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem 1.1rem;
+		font-family: var(--font-mono);
+		font-size: 0.82rem;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		color: var(--color-text);
+	}
+
+	.data-hero__modalities li {
+		display: inline-flex;
+		align-items: center;
+	}
+
+	.data-hero__modalities li + li::before {
+		content: "|";
+		color: var(--color-muted);
+		margin-right: 1.1rem;
+		opacity: 0.6;
+	}
+
+	.stats-section {
+		padding: clamp(2.5rem, 5vw, 4rem) 0;
+	}
+
+	.stats {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: clamp(1rem, 3vw, 3rem);
+		border-top: 1px solid var(--color-border);
+		border-bottom: 1px solid var(--color-border);
+		padding: clamp(1.5rem, 3vw, 2.25rem) 0;
+	}
+
+	.stat {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+
+	.stat__value {
+		margin: 0;
+		font-family: var(--font-heading);
+		font-size: clamp(2rem, 5vw, 3.75rem);
+		line-height: 1;
+		letter-spacing: -0.03em;
+		font-weight: 600;
+	}
+
+	.stat__label {
+		margin: 0;
+		font-family: var(--font-mono);
+		font-size: 0.78rem;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: var(--color-muted);
+	}
+
+	.capabilities__grid {
+		display: grid;
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+		gap: 0;
+		border-top: 1px solid var(--color-border);
+		border-left: 1px solid var(--color-border);
+	}
+
+	.capability {
+		padding: clamp(1.25rem, 2vw, 1.75rem);
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+		border-right: 1px solid var(--color-border);
+		border-bottom: 1px solid var(--color-border);
+		min-height: 11rem;
+	}
+
+	.capability__glyph {
+		display: flex;
+		align-items: center;
+		min-height: 2.5rem;
+	}
+
+	.capability h3 {
+		margin: 0;
+		font-size: clamp(1.1rem, 1.6vw, 1.3rem);
+		line-height: 1.2;
+		font-weight: 600;
+	}
+
+	.capability p {
+		margin: 0;
+		color: var(--color-muted);
+		font-size: 0.95rem;
+		line-height: 1.5;
+	}
+
+	.pipelines__list {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 0;
+		border-top: 1px solid var(--color-border);
+	}
+
+	.pipeline {
+		padding: clamp(1.25rem, 2vw, 1.75rem);
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+		border-right: 1px solid var(--color-border);
+		border-bottom: 1px solid var(--color-border);
+		min-height: 7.5rem;
+	}
+
+	.pipeline:last-child {
+		border-right: none;
+	}
+
+	.pipeline__num {
+		font-family: var(--font-mono);
+		font-size: 0.78rem;
+		letter-spacing: 0.12em;
+		color: var(--color-accent);
+	}
+
+	.pipeline__label {
+		font-family: var(--font-heading);
+		font-size: clamp(1.2rem, 1.8vw, 1.55rem);
+		line-height: 1.15;
+		font-weight: 600;
+		letter-spacing: -0.02em;
+	}
+
+	.environments__chips {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.55rem 0.7rem;
+	}
+
+	.environment {
+		padding: 0.5rem 0.95rem;
+		border: 1px solid var(--color-border);
+		border-radius: 999px;
+		font-family: var(--font-mono);
+		font-size: 0.78rem;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		color: var(--color-text);
+		transition: border-color 0.2s ease, color 0.2s ease;
+	}
+
+	.environment:hover {
+		border-color: var(--color-accent);
+		color: var(--color-accent);
+	}
+
+	.data-body-section {
+		padding: clamp(3rem, 6vw, 5rem) 0;
+	}
+
+	.data-body {
+		max-width: 720px;
+		margin: 0 auto;
+	}
+
+	.data-body :global(h2) {
+		font-size: clamp(1.5rem, 2.8vw, 2rem);
+		margin-top: 2.5rem;
+		margin-bottom: 0.75rem;
+		padding-top: 1.25rem;
+		position: relative;
+	}
+
+	.data-body :global(h2)::before {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: var(--rule-length-sm);
+		height: var(--rule-weight);
+		background: var(--color-rule);
+	}
+
+	.data-body :global(h2:first-child) {
+		margin-top: 0;
+		padding-top: 0;
+	}
+
+	.data-body :global(p) {
+		margin-bottom: 1.1rem;
+		line-height: 1.7;
+		font-size: 1.05rem;
+	}
+
+	.data-body :global(strong) {
+		color: var(--color-text);
+		font-weight: 600;
+	}
+
+	@media (max-width: 1100px) {
+		.capabilities__grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+
+		.stats {
+			grid-template-columns: 1fr;
+			gap: 1.25rem;
+		}
+	}
+
+	@media (max-width: 720px) {
+		.capabilities__grid {
+			grid-template-columns: 1fr;
+		}
+
+		.pipelines__list {
+			grid-template-columns: 1fr;
+		}
+
+		.pipeline:last-child {
+			border-right: 1px solid var(--color-border);
+		}
+
+		.data-hero__title {
+			font-size: clamp(2rem, 8vw, 3rem);
+		}
+	}
+</style>
