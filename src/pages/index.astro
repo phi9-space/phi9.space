@@ -3,6 +3,8 @@ import { getCollection } from "astro:content";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import ContactCTA from "@components/ContactCTA.astro";
 import NewsletterForm from "@components/NewsletterForm.astro";
+import BraillePulse from "@components/visuals/BraillePulse.astro";
+import DataStreamRail from "@components/visuals/DataStreamRail.astro";
 import DotGrid from "@components/visuals/DotGrid.astro";
 import HalfCircle from "@components/visuals/HalfCircle.astro";
 import InkRect from "@components/visuals/InkRect.astro";
@@ -98,7 +100,10 @@ const principles = [
 		<div class="container">
 			<div class="home-hero__grid">
 				<div class="home-hero__content reveal">
-					<p class="home-hero__eyebrow">Phi9 — physical AI lab</p>
+					<p class="home-hero__eyebrow">
+						<BraillePulse class="home-hero__eyebrow-pulse" />
+						Phi9 — physical AI lab
+					</p>
 					<h1 class="display-xl">
 						Physical AI research, data systems, and deployable intelligence.
 					</h1>
@@ -137,6 +142,8 @@ const principles = [
 			</div>
 		</div>
 	</section>
+
+	<DataStreamRail />
 
 	<section class="section capability-loop">
 		<div class="container">
@@ -517,6 +524,14 @@ const principles = [
 		letter-spacing: 0.12em;
 		text-transform: uppercase;
 		color: var(--color-muted);
+		display: inline-flex;
+		align-items: center;
+		gap: 0.45rem;
+	}
+
+	.home-hero__eyebrow-pulse {
+		font-size: 0.95rem;
+		line-height: 1;
 	}
 
 	.home-hero__content .display-xl {

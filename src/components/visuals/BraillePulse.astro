@@ -1,0 +1,52 @@
+---
+interface Props {
+	color?: string;
+	speed?: number;
+	class?: string;
+}
+
+const {
+	color = "var(--color-accent)",
+	speed = 120,
+	class: className = "",
+} = Astro.props;
+---
+
+<span
+	class:list={["braille-pulse", className]}
+	style={`--pulse-color: ${color};`}
+	data-braille-pulse
+	data-speed={speed}
+	aria-hidden="true">⠋</span>
+
+<script is:inline>
+	(function () {
+		if (window.__phi9BraillePulse) return;
+		window.__phi9BraillePulse = true;
+		const frames = ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"];
+		let idx = 0;
+		const pick = () => frames[idx];
+		const tick = () => {
+			idx = (idx + 1) % frames.length;
+			const next = pick();
+			for (const el of document.querySelectorAll("[data-braille-pulse]")) {
+				el.textContent = next;
+			}
+		};
+		const speed = Math.max(
+			60,
+			Number(document.querySelector("[data-braille-pulse]")?.getAttribute("data-speed")) || 120,
+		);
+		const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+		if (!reduced) setInterval(tick, speed);
+	})();
+</script>
+
+<style>
+	.braille-pulse {
+		font-family: var(--font-mono);
+		color: var(--pulse-color);
+		display: inline-block;
+		line-height: 1;
+	}
+</style>

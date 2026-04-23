@@ -1,0 +1,71 @@
+---
+interface Props {
+	content?: string;
+	speed?: string;
+	class?: string;
+	bordered?: boolean;
+}
+
+const {
+	content = "CAPTURE ⠿⠏⠦⠇ MOTION ⠋⠇⠦⠴ VIDEO ⠼⠧⠇⠏ TASK ⠴⠋⠙⠹ SCENE ⠦⠇⠧⠏ EVALUATION ⠹⠸⠼⠴ ",
+	speed = "90s",
+	class: className = "",
+	bordered = true,
+} = Astro.props;
+
+// Repeat content enough so the track always covers ≥ viewport width
+const track = content.repeat(3);
+---
+
+<div
+	class:list={["data-rail", bordered ? "data-rail--bordered" : "", className]}
+	aria-hidden="true">
+	<div class="data-rail__track" style={`--rail-speed: ${speed};`}>
+		<span class="data-rail__chunk">{track}</span>
+		<span class="data-rail__chunk">{track}</span>
+	</div>
+</div>
+
+<style>
+	.data-rail {
+		overflow: hidden;
+		width: 100%;
+		padding: 0.55rem 0;
+	}
+
+	.data-rail--bordered {
+		border-top: 1px solid var(--color-border);
+		border-bottom: 1px solid var(--color-border);
+	}
+
+	.data-rail__track {
+		display: flex;
+		gap: 2rem;
+		white-space: nowrap;
+		width: max-content;
+		animation: rail-scroll var(--rail-speed) linear infinite;
+		will-change: transform;
+	}
+
+	.data-rail__chunk {
+		font-family: var(--font-mono);
+		font-size: 0.74rem;
+		letter-spacing: 0.18em;
+		color: color-mix(in srgb, var(--color-muted) 75%, transparent);
+	}
+
+	@keyframes rail-scroll {
+		from {
+			transform: translateX(0);
+		}
+		to {
+			transform: translateX(-50%);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.data-rail__track {
+			animation: none;
+		}
+	}
+</style>

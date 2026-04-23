@@ -31,9 +31,13 @@ const publishedLabel = publishedDate ? formatLongDate(publishedDate) : null;
 const updatedLabel = entry.data.updated && publishedDate && entry.data.updated.valueOf() !== publishedDate.valueOf()
 	? formatLongDate(entry.data.updated)
 	: null;
-const leadTag = entry.data.tags[0] ?? eyebrow;
 const readingTime = getReadingTime(entry.body);
 const authorLabel = entry.data.author ?? "Phi9";
+// The richer heroSubtitle is the poster-grade headline when present; the
+// bare title (e.g. "About", "Data") moves into the eyebrow slot.
+const displayHeadline = entry.data.heroSubtitle ?? entry.data.title;
+const eyebrowLabel = entry.data.heroSubtitle ? entry.data.title : eyebrow;
+const dek = entry.data.heroSubtitle ? entry.data.description : null;
 ---
 
 <BaseLayout
@@ -45,9 +49,9 @@ const authorLabel = entry.data.author ?? "Phi9";
   <link slot="head" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css" />
 
   <LongformArticleShell
-    title={entry.data.title}
-    dek={entry.data.heroSubtitle ?? entry.data.description}
-    leadTag={leadTag}
+    title={displayHeadline}
+    dek={dek}
+    leadTag={eyebrowLabel}
     readingTime={readingTime}
     publishedLabel={publishedLabel}
     updatedLabel={updatedLabel}

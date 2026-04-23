@@ -3,6 +3,9 @@ import { getEntry } from "astro:content";
 import DocumentLayout from "@layouts/DocumentLayout.astro";
 
 const page = await getEntry("pages", "manifesto");
+if (!page) {
+	throw new Error("Pages collection: entry 'manifesto' not found. Run `astro sync` and restart dev server.");
+}
 const { Content } = await page.render();
 ---
 
