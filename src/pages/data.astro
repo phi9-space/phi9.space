@@ -70,7 +70,7 @@ const capabilities = [
 const stats = [
 	{ value: "12+", label: "Modalities per capture" },
 	{ value: "25+", label: "Environment types" },
-	{ value: "3", label: "Downstream pipelines" },
+	{ value: "3", label: "Training pipelines" },
 ];
 
 const pipelines = [
@@ -161,6 +161,28 @@ const environmentItems = environments.map((e) => e.toUpperCase());
 					</li>
 				))}
 			</ul>
+		</div>
+	</section>
+
+	<section class="section custom-capture-section">
+		<div class="container">
+			<div class="custom-capture reveal">
+				<span class="section-kicker">Custom capture</span>
+				<h2 class="custom-capture__headline">Data your research actually needs.</h2>
+				<span class="rule" aria-hidden="true"></span>
+				<p class="custom-capture__body">
+					Your research should not stall while you build a data pipeline. Phi9 captures
+					custom, private, proprietary datasets — scoped to your task, your environment,
+					and your evaluation criteria. We run the rig, synchronize the modalities, label
+					the demonstrations, and hand back pipeline-ready data.
+				</p>
+				<div class="custom-capture__actions">
+					<a href="mailto:research@phi9.space?subject=Custom capture inquiry" class="custom-capture__primary">
+						Commission a capture <span aria-hidden="true">→</span>
+					</a>
+					<a href="/lab/mocap-rig" class="custom-capture__secondary">See the rig</a>
+				</div>
+			</div>
 		</div>
 	</section>
 
@@ -360,6 +382,87 @@ const environmentItems = environments.map((e) => e.toUpperCase());
 		letter-spacing: 0.14em;
 		text-transform: uppercase;
 		color: var(--color-muted);
+	}
+
+	.custom-capture-section {
+		padding: clamp(3rem, 6vw, 5rem) 0;
+		border-top: 1px solid var(--color-border);
+	}
+
+	.custom-capture {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		max-width: 720px;
+	}
+
+	.custom-capture .section-kicker {
+		margin-bottom: 0.8rem;
+	}
+
+	.custom-capture__headline {
+		font-family: var(--font-heading);
+		font-size: var(--type-display-md);
+		line-height: 1.02;
+		letter-spacing: -0.035em;
+		font-weight: 600;
+		margin: 0 0 1.25rem;
+		max-width: 16ch;
+	}
+
+	.custom-capture .rule {
+		width: 10ch;
+		margin: 0 0 1.5rem;
+	}
+
+	.custom-capture__body {
+		margin: 0 0 1.75rem;
+		color: var(--color-muted);
+		max-width: 60ch;
+		line-height: 1.6;
+		font-size: clamp(1rem, 1.3vw, 1.12rem);
+	}
+
+	.custom-capture__actions {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.75rem 1.25rem;
+	}
+
+	.custom-capture__primary {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.45rem;
+		padding: 0.55rem 1rem;
+		background: var(--color-text);
+		color: var(--color-bg);
+		font-family: var(--font-mono);
+		font-size: 0.82rem;
+		letter-spacing: 0.05em;
+		text-decoration: none;
+		transition: background 0.2s ease, color 0.2s ease;
+	}
+
+	.custom-capture__primary:hover {
+		background: var(--color-accent);
+		color: var(--color-text-inverse);
+		text-decoration: none;
+	}
+
+	.custom-capture__secondary {
+		font-family: var(--font-mono);
+		font-size: 0.82rem;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		color: var(--color-accent);
+		text-decoration: none;
+		transition: color 0.15s ease;
+	}
+
+	.custom-capture__secondary:hover {
+		color: var(--color-accent-hover);
+		text-decoration: none;
 	}
 
 	.capabilities__grid {
