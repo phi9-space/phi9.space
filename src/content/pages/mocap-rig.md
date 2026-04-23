@@ -121,9 +121,3 @@ Pre-training corpora, domain-specific mid-training, fine-tuning datasets. The da
 3. **Perform tasks** — Natural motion in real environments
 4. **Upload** — Data flows into Phi9 pipeline
 5. **Export** — Ready-to-train formats for your framework
-
-## Get Started
-
-Building physical AI? You need data infrastructure that scales.
-
-**Contact:** [research@phi9.space](mailto:research@phi9.space)
