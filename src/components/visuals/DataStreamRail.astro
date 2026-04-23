@@ -6,6 +6,7 @@ interface Props {
 	speed?: string;
 	class?: string;
 	bordered?: boolean;
+	variant?: "accent" | "muted";
 }
 
 const {
@@ -25,28 +26,35 @@ const {
 	speed = "140s",
 	class: className = "",
 	bordered = true,
+	variant = "accent",
 } = Astro.props;
 
 // Render the same set twice so the animation loops seamlessly.
 const chunks = [items, items];
 ---
 
-<div class:list={["data-rail", bordered ? "data-rail--bordered" : "", className]} aria-hidden="true">
-	<div class="data-rail__track" style={`--rail-speed: ${speed};`}>
-		{chunks.map((chunk) => (
-			<span class="data-rail__chunk">
-				{chunk.map((item) => (
-					<>
-						<span class="data-rail__label">{item}</span>
-						<span class="data-rail__pulse"><BraillePulse /></span>
-					</>
-				))}
-			</span>
-		))}
+<div class:list={["data-rail-wrap container", className]} aria-hidden="true">
+	<div class:list={["data-rail", bordered ? "data-rail--bordered" : "", `data-rail--${variant}`]}>
+		<div class="data-rail__track" style={`--rail-speed: ${speed};`}>
+			{chunks.map((chunk) => (
+				<span class="data-rail__chunk">
+					{chunk.map((item) => (
+						<>
+							<span class="data-rail__label">{item}</span>
+							<span class="data-rail__pulse"><BraillePulse /></span>
+						</>
+					))}
+				</span>
+			))}
+		</div>
 	</div>
 </div>
 
 <style>
+	.data-rail-wrap {
+		width: 100%;
+	}
+
 	.data-rail {
 		overflow: hidden;
 		width: 100%;
@@ -85,7 +93,18 @@ const chunks = [items, items];
 		align-items: center;
 		font-family: var(--font-mono);
 		font-size: 0.9rem;
+	}
+
+	.data-rail--accent .data-rail__pulse {
 		color: var(--color-accent);
+	}
+
+	.data-rail--muted .data-rail__pulse {
+		color: var(--color-muted);
+	}
+
+	.data-rail--muted .data-rail__label {
+		color: color-mix(in srgb, var(--color-text) 72%, transparent);
 	}
 
 	@keyframes rail-scroll {

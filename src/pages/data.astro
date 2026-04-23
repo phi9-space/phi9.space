@@ -42,6 +42,26 @@ const capabilities = [
 		desc: "Close-object manipulation frames sync’d to body motion.",
 	},
 	{
+		label: "Hand tracking",
+		desc: "Finger-level pose and grip state alongside full-body motion.",
+	},
+	{
+		label: "Manipulative capture",
+		desc: "Fine-motor and tool-use behavior — from pouring coffee to rewiring a plug.",
+	},
+	{
+		label: "Locomotive capture",
+		desc: "Whole-body movement, gait, and navigation across real environments.",
+	},
+	{
+		label: "Object state",
+		desc: "Poses, affordances, and transitions of the objects in the scene.",
+	},
+	{
+		label: "Scene metadata",
+		desc: "Lighting, layout, calibration, and environmental context per capture.",
+	},
+	{
 		label: "Task labels",
 		desc: "Segmented demonstrations with start, end, success, and intent.",
 	},
@@ -49,11 +69,15 @@ const capabilities = [
 		label: "Retargeting",
 		desc: "Skeletal maps ready for humanoids and robot arms.",
 	},
+	{
+		label: "Evaluation traces",
+		desc: "Success cases, failure modes, and transfer results across setups.",
+	},
 ];
 
 const stats = [
-	{ value: "10+", label: "Modalities per capture" },
-	{ value: "8+", label: "Environment types" },
+	{ value: "14+", label: "Modalities per capture" },
+	{ value: "25+", label: "Environment types" },
 	{ value: "3", label: "Downstream pipelines" },
 ];
 
@@ -66,16 +90,38 @@ const pipelines = [
 const environments = [
 	"Homes",
 	"Kitchens",
+	"Household tours",
+	"Gardening",
 	"Workshops",
-	"Warehouses",
 	"Labs",
-	"Outdoors",
-	"Industrial",
+	"Assembly lines",
+	"Warehouses",
+	"Packaging",
+	"Delivery",
+	"Logistics",
 	"Retail",
+	"Restaurants",
 	"Hospitality",
-	"Automotive",
+	"Bars",
+	"Automotive service",
+	"Car repair",
+	"Car cleaning",
+	"Mechanic shops",
+	"Industrial",
+	"Construction",
+	"Manufacturing",
+	"Horticulture",
+	"Farms",
+	"Outdoors",
 	"Healthcare",
+	"Plumbing",
+	"Electrical work",
+	"Parking lots",
+	"Transportation",
 ];
+
+// Environments run through the same moving rail visual language.
+const environmentItems = environments.map((e) => e.toUpperCase());
 ---
 
 <BaseLayout
@@ -181,16 +227,13 @@ const environments = [
 				<span class="section-kicker">Environments</span>
 				<h2>Domain-diverse, not narrow.</h2>
 				<p>
-					Real physical AI requires data from real places, not lab benches. We capture
-					across a widening set of environments where human behavior varies.
+					Real physical AI requires data from real places — not lab benches. We capture
+					across a widening set of environments where human behavior varies, from homes
+					and kitchens to workshops, warehouses, and the field.
 				</p>
 			</div>
-			<ul class="environments__chips">
-				{environments.map((env) => (
-					<li class="environment">{env}</li>
-				))}
-			</ul>
 		</div>
+		<DataStreamRail items={environmentItems} speed="180s" variant="muted" class="environments-rail" />
 	</section>
 
 	<section class="section data-body-section">
@@ -401,30 +444,8 @@ const environments = [
 		letter-spacing: -0.02em;
 	}
 
-	.environments__chips {
-		list-style: none;
-		padding: 0;
-		margin: 0;
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.55rem 0.7rem;
-	}
-
-	.environment {
-		padding: 0.5rem 0.95rem;
-		border: 1px solid var(--color-border);
-		border-radius: 999px;
-		font-family: var(--font-mono);
-		font-size: 0.78rem;
-		letter-spacing: 0.06em;
-		text-transform: uppercase;
-		color: var(--color-text);
-		transition: border-color 0.2s ease, color 0.2s ease;
-	}
-
-	.environment:hover {
-		border-color: var(--color-accent);
-		color: var(--color-accent);
+	.environments-rail {
+		margin-top: clamp(1.5rem, 3vw, 2.5rem);
 	}
 
 	.data-body-section {
