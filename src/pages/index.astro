@@ -7,7 +7,11 @@ import DataStreamRail from "@components/visuals/DataStreamRail.astro";
 import DotGrid from "@components/visuals/DotGrid.astro";
 import HalfCircle from "@components/visuals/HalfCircle.astro";
 import InkRect from "@components/visuals/InkRect.astro";
+import MotionTrace from "@components/visuals/MotionTrace.astro";
+import MultiplyFork from "@components/visuals/MultiplyFork.astro";
+import BenchmarkBars from "@components/visuals/BenchmarkBars.astro";
 import SignalCircle from "@components/visuals/SignalCircle.astro";
+import TrainWaveform from "@components/visuals/TrainWaveform.astro";
 import VerticalBar from "@components/visuals/VerticalBar.astro";
 import { formatLongDate, getReadingTime } from "@lib/site";
 
@@ -30,62 +34,45 @@ const structuredData = {
 const openProblems = [
 	{
 		title: "Data that carries intent, not just observation.",
-		desc: "Most pipelines record what happened on screen. We are building capture that also records what the body was trying to do, so models learn tasks instead of patterns.",
+		desc: "Most pipelines record visible motion but lose the task underneath it. We are working on capture that preserves action, context, and what the body was trying to achieve.",
 	},
 	{
 		title: "Physical data is expensive.",
-		desc: "You cannot scrape physical behavior. Every demonstration takes a rig, a subject, a calibration, and a clean task. Stretching each one further is one of the real constraints.",
+		desc: "You cannot scrape physical behavior. Every demonstration needs a rig, a subject, a calibration, and a clean task. The work is making each capture travel further without losing signal.",
 	},
 	{
 		title: "Benchmarks that predict real-world performance.",
-		desc: "A benchmark score means nothing if a policy falls apart on an unscripted task. The evaluation we trust is the one that predicts deployment behavior.",
+		desc: "A benchmark score means little if a policy falls apart on an unscripted task. We care about evaluation that predicts transfer, failure, and what survives outside the benchmark.",
 	},
 	{
 		title: "One loop, not three stages.",
-		desc: "Capture, training, and evaluation still get treated as separate departments. We are wiring them into one research system so progress stays visible end-to-end.",
+		desc: "Capture, training, and evaluation still get treated as separate departments. We are trying to wire them into one visible loop so progress does not disappear between stages.",
 	},
 ];
 
-const methods = [
+const methodSystems = [
 	{
-		title: "Capture in the world.",
-		desc: "Start from real signal: motion, video, task context, and synchronized traces.",
+		title: "Capture surfaces",
+		desc: "Rigs, sync, task framing, and sensor traces that start with the real world instead of a benchmark-only abstraction.",
 	},
 	{
-		title: "Structure for reuse.",
-		desc: "Package demonstrations so they remain legible for training, research, and downstream operations.",
+		title: "Data structure",
+		desc: "Labels, schemas, exports, and task boundaries that keep demonstrations reusable across research, training, and downstream tooling.",
 	},
 	{
-		title: "Multiply without drift.",
-		desc: "Use simulation, retargeting, and augmentation to extend scarce real behavior while preserving intent.",
+		title: "Training systems",
+		desc: "Retargeting, augmentation, and policy pipelines that stretch scarce behavior while preserving intent, motion, and context.",
 	},
 	{
-		title: "Evaluate for transfer.",
-		desc: "Treat benchmarks, failure analysis, and deployment feedback as part of one loop.",
+		title: "Evaluation layer",
+		desc: "Benchmark fragments, transfer tests, and failure traces that keep the loop honest about what actually generalizes.",
 	},
 ];
 
-const principles = [
-	{
-		title: "Presence over pitch.",
-		desc: "The public surface should feel authored, precise, and calm.",
-	},
-	{
-		title: "Soul on the surface, rigor underneath.",
-		desc: "Language carries worldview; proof follows quickly.",
-	},
-	{
-		title: "Artifacts before abstractions.",
-		desc: "Show what the work is before talking about what it could become.",
-	},
-	{
-		title: "Research infrastructure is part of the product.",
-		desc: "Systems and workflows belong on the surface because they are part of the value.",
-	},
-	{
-		title: "Progress should remain legible.",
-		desc: "Open work, partial systems, and active questions keep progress visible.",
-	},
+const stats = [
+	{ value: "4", label: "Loop stages" },
+	{ value: "12+", label: "Modalities per capture" },
+	{ value: "25+", label: "Environment types" },
 ];
 ---
 
@@ -108,9 +95,8 @@ const principles = [
 					</h1>
 					<span class="rule" aria-hidden="true"></span>
 					<p class="home-hero__copy">
-						Phi9 builds the capture-to-deployment stack for physical AI: motion capture
-						rigs, structured data pipelines, training loops, and evaluation systems that
-						turn real-world human behavior into autonomous action.
+						Phi9 captures real-world behavior, structures it for training, and evaluates
+						what actually transfers — so research can become usable capability.
 					</p>
 					<div class="home-hero__actions">
 						<a href="/lab" class="btn btn-primary">Explore the Lab</a>
@@ -150,65 +136,76 @@ const principles = [
 				<span class="section-kicker">The loop</span>
 				<h2>From capture to evaluation, the physical AI loop.</h2>
 				<p>
-					Physical AI does not move forward through models alone. It moves through systems
-					that can capture behavior, multiply usable data, train against reality, and evaluate
-					what actually transfers.
+					One loop. Four stages. The work is turning real-world behavior into signal,
+					training against it, and measuring what survives contact with reality.
 				</p>
 			</div>
 
 			<div class="capability-loop__grid">
 				<article class="loop-step reveal">
 					<div class="loop-step__glyph">
-						<SignalCircle size="2rem" />
+						<MotionTrace width="2.8rem" height="2.1rem" />
 					</div>
 					<span class="loop-step__num">001</span>
 					<h3>Capture</h3>
 					<p>
 						Capture real-world demonstrations with synchronized motion, video, and
-						structured task data.
-					</p>
-				</article>
-
-				<article class="loop-step reveal">
-					<div class="loop-step__glyph loop-step__glyph--multiply">
-						<SignalCircle size="1.1rem" />
-						<SignalCircle size="1.1rem" />
-						<SignalCircle size="1.1rem" />
-					</div>
-					<span class="loop-step__num">002</span>
-					<h3>Multiply</h3>
-					<p>
-						Multiply scarce data through retargeting, simulation, augmentation, and
-						better structure.
-					</p>
-				</article>
-
-				<article class="loop-step reveal">
-					<div class="loop-step__glyph loop-step__glyph--train">
-						<VerticalBar width="0.45rem" height="1.1rem" color="var(--color-text)" />
-						<VerticalBar width="0.45rem" height="1.7rem" color="var(--color-text)" />
-						<VerticalBar width="0.45rem" height="2rem" color="var(--color-text)" />
-					</div>
-					<span class="loop-step__num">003</span>
-					<h3>Train</h3>
-					<p>
-						Train policies and research systems on data that preserves intent, motion,
-						and context.
+						structured task data. Start from real signal: task context, traces, and motion
+						that can be used again.
 					</p>
 				</article>
 
 				<article class="loop-step reveal">
 					<div class="loop-step__glyph">
-						<DotGrid rows={3} cols={4} spacing="0.28rem" dotSize="0.22rem" color="var(--color-text)" />
+						<MultiplyFork width="2.7rem" height="2rem" />
+					</div>
+					<span class="loop-step__num">002</span>
+					<h3>Multiply</h3>
+					<p>
+						Multiply scarce data through retargeting, simulation, augmentation, and
+						better structure. Stretch each capture further without letting intent or task
+						definition drift away.
+					</p>
+				</article>
+
+				<article class="loop-step reveal">
+					<div class="loop-step__glyph">
+						<TrainWaveform width="2.8rem" height="2.1rem" />
+					</div>
+					<span class="loop-step__num">003</span>
+					<h3>Train</h3>
+					<p>
+						Train policies and research systems on data that preserves intent, motion,
+						and context. The point is not isolated models; it is a training layer that stays
+						close to reality.
+					</p>
+				</article>
+
+				<article class="loop-step reveal">
+					<div class="loop-step__glyph">
+						<BenchmarkBars width="2.4rem" height="2rem" />
 					</div>
 					<span class="loop-step__num">004</span>
 					<h3>Evaluate</h3>
 					<p>
 						Evaluate what generalizes through benchmarks, failure analysis, and transfer
-						tests.
+						tests. Treat deployment feedback and failure traces as part of the same loop.
 					</p>
 				</article>
 			</div>
+		</div>
+	</section>
+
+	<section class="section stats-section">
+		<div class="container">
+			<ul class="stats">
+				{stats.map((stat) => (
+					<li class="stat reveal">
+						<p class="stat__value">{stat.value}</p>
+						<p class="stat__label">{stat.label}</p>
+					</li>
+				))}
+			</ul>
 		</div>
 	</section>
 
@@ -252,11 +249,11 @@ const principles = [
 
 				<div class="featured-system__content reveal">
 					<span class="section-kicker">Featured system</span>
-					<h2>Capture built for physical AI.</h2>
+					<h2>The capture system behind the loop.</h2>
 					<p>
 						The Phi9 MoCap Rig records full-body motion and first-person video together,
-						timed and labeled by task. The output is reusable training data — not one-off
-						recordings — so the same demonstration can move through training,
+						timed and labeled by task. The output is reusable training data instead of one-off
+						recordings, so the same demonstration can move through training,
 						fine-tuning, and deployment.
 					</p>
 					<a href="/data" class="featured-system__link">See the Data</a>
@@ -265,14 +262,41 @@ const principles = [
 		</div>
 	</section>
 
+	<section class="section open-problems">
+		<div class="container">
+			<div class="section-heading reveal">
+				<span class="section-kicker">Research questions</span>
+				<h2>The bottlenecks we are actively working through.</h2>
+				<p>
+					These are not abstract themes. They are the constraints shaping the systems,
+					experiments, and artifacts we are building now.
+				</p>
+			</div>
+
+			<ol class="open-problems__list">
+				{
+					openProblems.map((problem, idx) => (
+						<li class="problem-row reveal">
+							<span class="problem-row__num">{String(idx + 1).padStart(2, "0")}</span>
+							<div class="problem-row__copy">
+								<h3>{problem.title}</h3>
+								<p>{problem.desc}</p>
+							</div>
+						</li>
+					))
+				}
+			</ol>
+		</div>
+	</section>
+
 	<section class="section research-proof">
 		<div class="container">
 			<div class="section-heading reveal">
 				<span class="section-kicker">Research</span>
-				<h2>Open work, real artifacts, and technical evidence.</h2>
+				<h2>Projects, notes, and technical progress from the lab.</h2>
 				<p>
-					Our research log tracks the systems, experiments, and questions that shape the lab.
-					The goal is not volume. The goal is legible progress.
+					Open work from the loop: systems, experiments, and technical questions published as
+					they evolve.
 				</p>
 			</div>
 
@@ -316,8 +340,8 @@ const principles = [
 								<span>Research</span>
 								<span>Archive feeling</span>
 							</div>
-							<h3>Open work, real artifacts, and technical evidence.</h3>
-							<p>Use dates, tags, and figures to make the archive feel active.</p>
+							<h3>Projects, notes, and technical progress from the lab.</h3>
+							<p>Use dates, tags, figures, and experiments to keep the archive active.</p>
 						</div>
 					)
 				}
@@ -386,86 +410,35 @@ const principles = [
 		</div>
 	</section>
 
-	<section class="section open-problems">
-		<div class="container">
-			<div class="section-heading reveal">
-				<span class="section-kicker">Open problems</span>
-				<h2>
-					Some bottlenecks are still obvious.
-				</h2>
-				<p>
-					The work is deciding which ones are structural and which ones are only temporary.
-				</p>
-			</div>
-
-			<ol class="open-problems__list">
-				{
-					openProblems.map((problem, idx) => (
-						<li class="problem-row reveal">
-							<span class="problem-row__num">{String(idx + 1).padStart(2, "0")}</span>
-							<div class="problem-row__copy">
-								<h3>{problem.title}</h3>
-								<p>{problem.desc}</p>
-							</div>
-						</li>
-					))
-				}
-			</ol>
-		</div>
-	</section>
-
 	<section class="section methods">
 		<div class="container">
 			<div class="section-heading reveal">
 				<span class="section-kicker">Methods</span>
-				<h2>We build loops, not isolated models.</h2>
+				<h2>The concrete systems we are building around the loop.</h2>
 				<p>
-					Phi9 works across capture systems, data infrastructure, training workflows, and
-					evaluation. The point is to reduce distance between demonstration, learning, and real
-					deployment.
+					Methods should feel like work, not philosophy. These are the concrete layers we are
+					building now so demonstration, training, and deployment stay connected.
 				</p>
 			</div>
 
 			<div class="methods__rows">
 				{
-					methods.map((item) => (
+					methodSystems.map((item, idx) => (
 						<div class="method-row reveal">
-							<h3>{item.title}</h3>
+							<div class="method-row__header">
+								<div class="method-row__glyph" aria-hidden="true">
+									{idx === 0 && <MotionTrace width="2.6rem" height="1.9rem" />}
+									{idx === 1 && <InkRect width="2.1rem" height="1.5rem" color="var(--color-text)" />}
+									{idx === 2 && <TrainWaveform width="2.6rem" height="1.9rem" />}
+									{idx === 3 && <BenchmarkBars width="2.2rem" height="1.9rem" />}
+								</div>
+								<h3>{item.title}</h3>
+							</div>
 							<p>{item.desc}</p>
 						</div>
 					))
 				}
 			</div>
-		</div>
-	</section>
-
-	<section class="section principles">
-		<div class="container">
-			<div class="section-heading reveal">
-				<span class="section-kicker">Principles</span>
-				<h2>The beliefs that hold the work together.</h2>
-				<p>
-					Five operating beliefs that shape how the lab builds, ships, and stays
-					honest about what it is doing.
-				</p>
-			</div>
-
-			<ol class="principles__rows">
-				{
-					principles.map((item, idx) => {
-						const roman = ["i", "ii", "iii", "iv", "v", "vi"][idx] ?? String(idx + 1);
-						return (
-							<li class="principle-row reveal">
-								<span class="principle-row__num">{roman}</span>
-								<div class="principle-row__copy">
-									<h3>{item.title}</h3>
-									<p>{item.desc}</p>
-								</div>
-							</li>
-						);
-					})
-				}
-			</ol>
 		</div>
 	</section>
 
@@ -535,7 +508,6 @@ const principles = [
 	.featured-system__content p,
 	.problem-row__copy p,
 	.method-row p,
-	.principle-row p,
 	.research-proof__featured p,
 	.research-proof__secondary-item p {
 		color: var(--color-muted);
@@ -737,10 +709,48 @@ const principles = [
 
 	.loop-step h3,
 	.method-row h3,
-	.principle-row h3,
 	.research-proof__featured h3,
 	.research-proof__secondary-item h3 {
 		margin-bottom: 0.6rem;
+	}
+
+	.stats-section {
+		padding: clamp(2.5rem, 5vw, 4rem) 0;
+	}
+
+	.stats {
+		list-style: none;
+		padding: clamp(1.5rem, 3vw, 2.25rem) 0;
+		margin: 0;
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: clamp(1rem, 3vw, 3rem);
+		border-top: 1px solid var(--color-border);
+		border-bottom: 1px solid var(--color-border);
+	}
+
+	.stat {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+
+	.stat__value {
+		margin: 0;
+		font-family: var(--font-heading);
+		font-size: clamp(2rem, 5vw, 3.75rem);
+		line-height: 1;
+		letter-spacing: -0.03em;
+		font-weight: 600;
+	}
+
+	.stat__label {
+		margin: 0;
+		font-family: var(--font-mono);
+		font-size: 0.78rem;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: var(--color-muted);
 	}
 
 	.open-problems__list {
@@ -883,58 +893,44 @@ const principles = [
 
 	.method-row {
 		display: grid;
-		grid-template-columns: minmax(200px, 0.42fr) minmax(0, 1fr);
+		grid-template-columns: minmax(220px, 0.44fr) minmax(0, 1fr);
 		gap: 1.5rem;
-		padding: 1rem 0;
+		padding: 1.2rem 0;
 		border-bottom: 1px solid var(--color-border);
 	}
 
-	.principles__rows {
-		list-style: none;
-		padding: 0;
-		margin: 0;
-		border-top: 1px solid var(--color-border);
-	}
-
-	.principle-row {
-		display: grid;
-		grid-template-columns: 5rem minmax(0, 1fr);
-		gap: clamp(1rem, 2vw, 2rem);
-		padding: clamp(1.25rem, 2.5vw, 2rem) 0;
-		border-bottom: 1px solid var(--color-border);
-		align-items: start;
-	}
-
-	.principle-row__num {
-		font-family: var(--font-mono);
-		font-size: 0.82rem;
-		letter-spacing: 0.12em;
-		color: var(--color-accent);
-		padding-top: 0.45rem;
-	}
-
-	.principle-row__copy {
+	.method-row__header {
 		display: flex;
-		flex-direction: column;
-		gap: 0.5rem;
-		max-width: 70ch;
+		align-items: center;
+		gap: 1rem;
 	}
 
-	.principle-row__copy h3 {
-		margin: 0;
-		font-size: clamp(1.25rem, 2.3vw, 1.65rem);
-		line-height: 1.2;
-		font-weight: 500;
-		letter-spacing: -0.015em;
+	.method-row__glyph {
+		min-width: 3rem;
+		display: flex;
+		align-items: center;
+		justify-content: flex-start;
 	}
 
-	.principle-row__copy p {
+	.method-row h3 {
 		margin: 0;
+		font-size: clamp(1.15rem, 1.8vw, 1.35rem);
+		line-height: 1.25;
+	}
+
+	.method-row p {
+		margin: 0;
+		max-width: 64ch;
 	}
 
 	@media (max-width: 1100px) {
 		.capability-loop__grid {
 			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+
+		.stats {
+			grid-template-columns: 1fr;
+			gap: 1.25rem;
 		}
 
 		.loop-step:nth-child(4n) {
@@ -995,8 +991,7 @@ const principles = [
 			padding-top: 0;
 		}
 
-		.method-row,
-		.principle-row {
+		.method-row {
 			grid-template-columns: 1fr;
 			gap: 0.5rem;
 		}

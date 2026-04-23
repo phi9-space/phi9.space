@@ -1,0 +1,105 @@
+---
+interface Props {
+	width?: string;
+	height?: string;
+	color?: string;
+	class?: string;
+}
+
+const {
+	width = "2.5rem",
+	height = "2rem",
+	color = "var(--color-text)",
+	class: className = "",
+} = Astro.props;
+---
+
+<svg
+	class:list={["multiply-fork", className]}
+	style={`--fork-width: ${width}; --fork-height: ${height}; --fork-color: ${color};`}
+	viewBox="0 0 96 64"
+	fill="none"
+	aria-hidden="true"
+>
+	<path d="M8 32H34L52 18H88" pathLength="100" />
+	<path d="M34 32H88" pathLength="100" />
+	<path d="M34 32L52 46H88" pathLength="100" />
+	<circle cx="8" cy="32" r="5" />
+	<circle class="multiply-fork__out multiply-fork__out--a" cx="88" cy="18" r="4.5" />
+	<circle class="multiply-fork__out multiply-fork__out--b" cx="88" cy="32" r="4.5" />
+	<circle class="multiply-fork__out multiply-fork__out--c" cx="88" cy="46" r="4.5" />
+</svg>
+
+<style>
+	.multiply-fork {
+		width: var(--fork-width);
+		height: var(--fork-height);
+		display: block;
+	}
+
+	.multiply-fork path {
+		stroke: var(--fork-color);
+		stroke-width: 4;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+	}
+
+	.multiply-fork circle {
+		fill: var(--fork-color);
+	}
+
+	.multiply-fork circle:first-of-type {
+		fill: color-mix(in srgb, var(--fork-color) 80%, var(--color-accent) 20%);
+	}
+
+	@media (prefers-reduced-motion: no-preference) {
+		.multiply-fork path {
+			stroke-dasharray: 100;
+			animation: fork-flow 3.2s ease-in-out infinite;
+		}
+
+		.multiply-fork path:nth-of-type(2) {
+			animation-delay: 0.18s;
+		}
+
+		.multiply-fork path:nth-of-type(3) {
+			animation-delay: 0.36s;
+		}
+
+		.multiply-fork__out {
+			transform-origin: 88px center;
+			transform-box: fill-box;
+			animation: fork-echo 2.4s ease-in-out infinite;
+		}
+
+		.multiply-fork__out--b {
+			animation-delay: 0.2s;
+		}
+
+		.multiply-fork__out--c {
+			animation-delay: 0.4s;
+		}
+	}
+
+	@keyframes fork-flow {
+		0%,
+		100% {
+			stroke-dashoffset: 110;
+		}
+		55% {
+			stroke-dashoffset: 0;
+		}
+	}
+
+	@keyframes fork-echo {
+		0%,
+		100% {
+			transform: scale(1);
+			opacity: 0.7;
+		}
+		50% {
+			transform: scale(1.25);
+			opacity: 1;
+		}
+	}
+</style>
