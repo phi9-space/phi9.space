@@ -18,65 +18,57 @@ const { Content } = await page.render();
 
 const capabilities = [
 	{
-		label: "Motion capture",
-		desc: "Full-body pose at 120+ Hz. Joint angles, limb trajectories, skeletal.",
+		label: "Highest-fidelity motion",
+		desc: "120+ Hz full-body pose with body and hand trajectories. Calibrated per session, minimal drift.",
 	},
 	{
-		label: "Ego-centric video",
-		desc: "First-person RGB aligned to the motion within one millisecond.",
+		label: "Real-time multi-modal sync",
+		desc: "Every modality — motion, video, depth, IMU, tactile — aligned to within a millisecond at capture.",
 	},
 	{
-		label: "IMU",
-		desc: "Wrist and body inertial data for context and redundancy.",
+		label: "Manipulative + locomotive",
+		desc: "Fine-motor tool use and whole-body movement, captured on the same rig without a setup swap.",
+	},
+	{
+		label: "Parent + subtask labels",
+		desc: "Hierarchical demonstration structure — parent task, subtasks, intent, success, and failure.",
+	},
+	{
+		label: "Pipeline-ready exports",
+		desc: "Drop straight into pretraining, policy training, or world-model pipelines. Format-native, simulation-ready.",
+	},
+	{
+		label: "Multi-view video",
+		desc: "Ego-centric and wrist POV streams together — first-person context plus close-object detail.",
 	},
 	{
 		label: "Depth",
-		desc: "Stereo and time-of-flight streams where geometry matters.",
+		desc: "Stereo and time-of-flight streams where geometry carries information the RGB does not.",
+	},
+	{
+		label: "IMU",
+		desc: "Wrist and body inertial signals. Context, redundancy, and sub-motion detail the cameras miss.",
 	},
 	{
 		label: "Tactile",
-		desc: "Glove-level force feedback for contact and manipulation.",
-	},
-	{
-		label: "Wrist POV",
-		desc: "Close-object manipulation frames sync’d to body motion.",
-	},
-	{
-		label: "Hand tracking",
-		desc: "Finger-level pose and grip state alongside full-body motion.",
-	},
-	{
-		label: "Manipulative capture",
-		desc: "Fine-motor and tool-use behavior — from pouring coffee to rewiring a plug.",
-	},
-	{
-		label: "Locomotive capture",
-		desc: "Whole-body movement, gait, and navigation across real environments.",
-	},
-	{
-		label: "Object state",
-		desc: "Poses, affordances, and transitions of the objects in the scene.",
+		desc: "Glove-level force feedback for contact, grasp, and manipulation states.",
 	},
 	{
 		label: "Scene metadata",
-		desc: "Lighting, layout, calibration, and environmental context per capture.",
+		desc: "Object state, lighting, layout, and calibration quality — the full context around every capture.",
 	},
 	{
-		label: "Task labels",
-		desc: "Segmented demonstrations with start, end, success, and intent.",
-	},
-	{
-		label: "Retargeting",
-		desc: "Skeletal maps ready for humanoids and robot arms.",
+		label: "Retargeting-ready",
+		desc: "Skeletal maps export cleanly to humanoids, robot arms, and simulated agents.",
 	},
 	{
 		label: "Evaluation traces",
-		desc: "Success cases, failure modes, and transfer results across setups.",
+		desc: "Success cases, failure modes, and transfer results across setups and environments.",
 	},
 ];
 
 const stats = [
-	{ value: "14+", label: "Modalities per capture" },
+	{ value: "12+", label: "Modalities per capture" },
 	{ value: "25+", label: "Environment types" },
 	{ value: "3", label: "Downstream pipelines" },
 ];
@@ -137,13 +129,14 @@ const environmentItems = environments.map((e) => e.toUpperCase());
 				Data
 			</p>
 			<h1 class="data-hero__title">
-				Building the most complete sensorimotor dataset for physical intelligence.
+				Building the highest-fidelity sensorimotor dataset for physical intelligence.
 			</h1>
 			<span class="rule data-hero__rule" aria-hidden="true"></span>
 			<p class="data-hero__dek">
-				Phi9 builds the capture systems, sourcing networks, and structured data products
-				that turn real-world behavior into data models can actually learn from — and that
-				evaluation can actually trust.
+				Multi-modal, real-time synced, and exportable straight into pretraining, policy,
+				and world-model pipelines. Phi9 captures the full shape of human behavior —
+				manipulative and locomotive, body and hand, intent and failure — at the fidelity
+				training and evaluation actually need.
 			</p>
 			<ul class="data-hero__modalities">
 				<li>Tactile force feedback</li>
@@ -177,8 +170,10 @@ const environmentItems = environments.map((e) => e.toUpperCase());
 				<span class="section-kicker">Capabilities</span>
 				<h2>What every capture carries.</h2>
 				<p>
-					Modalities are recorded together, timed to the millisecond, and structured so any
-					one of them can feed a training or evaluation workflow without rebuilding the rest.
+					Twelve capabilities ship with every phi9 capture — not a menu to pick from. They
+					are recorded together, timed to the millisecond, and structured so each one can
+					feed a pretraining, policy, or world-model pipeline without the others being
+					rebuilt.
 				</p>
 			</div>
 
