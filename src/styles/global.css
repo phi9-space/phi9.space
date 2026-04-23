@@ -138,13 +138,17 @@ h3 {
 	width: 18ch;
 }
 
-/* Auto-rule under section headings — skip when .section-heading has .no-rule */
+/* Auto-rule under section headings. Supports two markup patterns:
+   (a) <div class="section-heading"><h2>…</h2></div>
+   (b) <h2 class="section-heading">…</h2>
+   Opt out with .section-heading--no-rule. */
 .section-heading h2 {
 	position: relative;
 	margin-bottom: 0.9rem;
 }
 
-.section-heading h2::after {
+.section-heading h2::after,
+h2.section-heading::after {
 	content: "";
 	display: block;
 	width: var(--rule-length-md);
@@ -153,7 +157,8 @@ h3 {
 	margin-top: clamp(0.85rem, 2vw, 1.25rem);
 }
 
-.section-heading--no-rule h2::after {
+.section-heading--no-rule h2::after,
+h2.section-heading--no-rule::after {
 	display: none;
 }
 

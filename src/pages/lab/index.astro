@@ -1,5 +1,10 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
+import DotGrid from "@components/visuals/DotGrid.astro";
+import HalfCircle from "@components/visuals/HalfCircle.astro";
+import InkRect from "@components/visuals/InkRect.astro";
+import SignalCircle from "@components/visuals/SignalCircle.astro";
+import VerticalBar from "@components/visuals/VerticalBar.astro";
 import { contactMailto } from "@lib/site";
 ---
 
@@ -32,30 +37,19 @@ import { contactMailto } from "@lib/site";
       </p>
       <div class="products-grid">
         <a href="/lab/mocap-rig" class="product-card reveal">
-          <div class="product-card__image">
-            <div class="product-card__placeholder product-card__placeholder--capture" aria-hidden="true">
-              <div class="product-card__trace">
-                <span>motion</span>
-                <div class="product-card__track">
-                  <i class="product-card__pulse product-card__pulse--short"></i>
-                  <i class="product-card__pulse product-card__pulse--medium"></i>
-                  <i class="product-card__pulse product-card__pulse--long"></i>
-                </div>
+          <div class="product-card__image" aria-hidden="true">
+            <div class="product-card__poster product-card__poster--rig">
+              <div class="product-card__poster-circle">
+                <SignalCircle size="clamp(4rem, 7vw, 6rem)" />
               </div>
-              <div class="product-card__trace">
-                <span>video</span>
-                <div class="product-card__track product-card__track--frames">
-                  <i class="product-card__frame"></i>
-                  <i class="product-card__frame"></i>
-                  <i class="product-card__frame"></i>
-                </div>
+              <div class="product-card__poster-rect">
+                <InkRect
+                  width="clamp(2rem, 4vw, 3rem)"
+                  height="clamp(5rem, 9vw, 7rem)"
+                />
               </div>
-              <div class="product-card__trace">
-                <span>tasks</span>
-                <div class="product-card__track">
-                  <i class="product-card__pulse product-card__pulse--medium"></i>
-                  <i class="product-card__pulse product-card__pulse--short"></i>
-                </div>
+              <div class="product-card__poster-dots">
+                <DotGrid rows={3} cols={5} spacing="0.35rem" dotSize="0.25rem" />
               </div>
             </div>
           </div>
@@ -71,19 +65,29 @@ import { contactMailto } from "@lib/site";
         </a>
 
         <div class="product-card product-card--coming reveal" style="transition-delay: 0.1s">
-          <div class="product-card__image">
-            <div class="product-card__placeholder product-card__placeholder--catalog" aria-hidden="true">
-              <div class="product-card__catalog-row">
-                <span>source</span>
-                <strong>field capture</strong>
+          <div class="product-card__image" aria-hidden="true">
+            <div class="product-card__poster product-card__poster--catalog">
+              <div class="product-card__poster-half">
+                <HalfCircle
+                  size="clamp(4rem, 7vw, 6rem)"
+                  orientation="right"
+                />
               </div>
-              <div class="product-card__catalog-row">
-                <span>structure</span>
-                <strong>task + metadata</strong>
-              </div>
-              <div class="product-card__catalog-row">
-                <span>reuse</span>
-                <strong>training + eval</strong>
+              <div class="product-card__poster-bars">
+                <VerticalBar
+                  width="clamp(0.6rem, 1vw, 0.9rem)"
+                  height="clamp(3rem, 5vw, 4rem)"
+                  color="var(--color-text)"
+                />
+                <VerticalBar
+                  width="clamp(0.6rem, 1vw, 0.9rem)"
+                  height="clamp(4rem, 7vw, 5.5rem)"
+                  color="var(--color-text)"
+                />
+                <VerticalBar
+                  width="clamp(0.6rem, 1vw, 0.9rem)"
+                  height="clamp(2.5rem, 4.5vw, 3.5rem)"
+                />
               </div>
             </div>
           </div>
@@ -233,109 +237,50 @@ import { contactMailto } from "@lib/site";
 
   .product-card__image {
     overflow: hidden;
-  }
-
-  .product-card__placeholder {
-    aspect-ratio: 16/9;
-    background: var(--color-bg-elevated);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 0.7rem;
-    padding: 1rem;
-  }
-
-  .product-card__placeholder--capture,
-  .product-card__placeholder--catalog {
-    background:
-      linear-gradient(180deg, color-mix(in srgb, var(--color-accent) 6%, var(--color-bg) 94%), var(--color-bg)),
-      var(--color-bg-elevated);
-  }
-
-  .product-card__trace {
-    display: grid;
-    grid-template-columns: 4.5rem minmax(0, 1fr);
-    gap: 0.8rem;
-    align-items: center;
-  }
-
-  .product-card__trace span,
-  .product-card__catalog-row span {
-    font-family: var(--font-mono);
-    font-size: 0.6875rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--color-accent);
-  }
-
-  .product-card__track {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    min-height: 2.5rem;
-    padding: 0.6rem;
-    border-radius: var(--radius-md);
-    border: 1px solid var(--color-border);
-    background:
-      repeating-linear-gradient(
-        90deg,
-        transparent,
-        transparent 1rem,
-        color-mix(in srgb, var(--color-border) 75%, transparent 25%) 1rem,
-        color-mix(in srgb, var(--color-border) 75%, transparent 25%) 1.06rem
-      ),
-      var(--color-bg);
-  }
-
-  .product-card__track--frames {
-    justify-content: space-between;
-  }
-
-  .product-card__pulse,
-  .product-card__frame {
-    display: block;
-    border-radius: 999px;
-    background: var(--color-accent);
-  }
-
-  .product-card__pulse {
-    height: 0.42rem;
-    opacity: 0.88;
-  }
-
-  .product-card__pulse--short { width: 18%; }
-  .product-card__pulse--medium { width: 30%; }
-  .product-card__pulse--long { width: 44%; }
-
-  .product-card__frame {
-    width: 28%;
-    min-height: 1.2rem;
-    height: 100%;
-    border-radius: 0.55rem;
-    background: color-mix(in srgb, var(--color-accent) 18%, var(--color-bg) 82%);
-    border: 1px solid color-mix(in srgb, var(--color-accent) 32%, var(--color-border) 68%);
-  }
-
-  .product-card__catalog-row {
-    display: flex;
-    justify-content: space-between;
-    gap: 0.75rem;
-    align-items: baseline;
-    padding: 0.7rem 0;
     border-bottom: 1px solid var(--color-border);
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    letter-spacing: 0.04em;
-    color: var(--color-muted);
   }
 
-  .product-card__catalog-row:last-child {
-    border-bottom: none;
+  .product-card__poster {
+    position: relative;
+    aspect-ratio: 16/9;
+    background: var(--color-surface);
+    padding: clamp(1rem, 2vw, 1.75rem);
   }
 
-  .product-card__catalog-row strong {
-    color: var(--color-text);
-    font-weight: 500;
+  .product-card__poster-circle,
+  .product-card__poster-rect,
+  .product-card__poster-dots,
+  .product-card__poster-half,
+  .product-card__poster-bars {
+    position: absolute;
+  }
+
+  .product-card__poster--rig .product-card__poster-circle {
+    top: clamp(0.75rem, 1.5vw, 1.25rem);
+    right: clamp(0.75rem, 2vw, 1.5rem);
+  }
+
+  .product-card__poster--rig .product-card__poster-rect {
+    top: clamp(2.25rem, 5vw, 3.5rem);
+    right: clamp(4.5rem, 9vw, 7rem);
+  }
+
+  .product-card__poster--rig .product-card__poster-dots {
+    bottom: clamp(0.75rem, 1.5vw, 1.25rem);
+    left: clamp(0.75rem, 2vw, 1.5rem);
+  }
+
+  .product-card__poster--catalog .product-card__poster-half {
+    top: clamp(0.75rem, 2vw, 1.4rem);
+    left: clamp(0.75rem, 2vw, 1.4rem);
+  }
+
+  .product-card__poster--catalog .product-card__poster-bars {
+    bottom: clamp(0.75rem, 1.5vw, 1.25rem);
+    right: clamp(0.75rem, 2vw, 1.5rem);
+    display: flex;
+    align-items: flex-end;
+    gap: 0.35rem;
   }
 
   .product-card__body {

@@ -55,8 +55,8 @@ Captured data should flow directly into training and evaluation.
 
 Phi9 is interested in outputs that are format-native, simulation-ready, and useful across research workflows rather than trapped inside one collection surface.
 
-## What comes next
+## Get in touch
 
-This page will expand into specific modalities, sourcing pathways, capture systems, and dataset views as those surfaces are published.
+If you are working on collection, structured datasets, or research infrastructure for embodied systems, we want to hear from you.
 
-For now, it should read as the operating model underneath the data itself.
+Write to [research@phi9.space](mailto:research@phi9.space).

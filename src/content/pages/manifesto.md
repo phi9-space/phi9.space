@@ -46,6 +46,8 @@ That is acceptable. Open questions, partial systems, failed assumptions, and evo
 
 ## Commitment
 
-The goal is not spectacle. The goal is surplus through autonomy.
+The goal is not spectacle. The goal is transfer.
+
+A benchmark matters only if it predicts behavior outside itself. A demonstration matters only if it can be reused. A system matters only if it reduces the distance between research and operation.
 
 We are working toward systems that can operate reliably for real workflows, with better data, better evaluation, and better transfer from research to deployment. The institution should make that ambition clear without inflating what has already been solved.
