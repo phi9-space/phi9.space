@@ -1,6 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import BaseLayout from "@layouts/BaseLayout.astro";
+import NewsletterForm from "@components/NewsletterForm.astro";
 
 const posts = (await getCollection("blog"))
 	.filter((post) => !post.data.draft)
@@ -73,10 +74,7 @@ const posts = (await getCollection("blog"))
         <p class="newsletter__description">
           Technical writing on physical AI, datasets, and deployment. Published when there is something worth sharing.
         </p>
-        <a href="https://substack.com/@phi9" target="_blank" rel="noopener noreferrer" class="btn btn-primary newsletter__button">
-          Subscribe on Substack
-        </a>
-        <p class="newsletter__privacy">No spam. One-click unsubscribe anytime.</p>
+        <NewsletterForm />
       </div>
     </div>
   </section>
