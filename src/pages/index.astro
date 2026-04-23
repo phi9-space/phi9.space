@@ -29,19 +29,19 @@ const structuredData = {
 const openProblems = [
 	{
 		title: "Data that carries intent, not just observation.",
-		desc: "Most pipelines still capture what happened on screen, not what the body did, what the task required, or what the demonstration was trying to achieve.",
+		desc: "Most pipelines record what happened on screen. We are building capture that also records what the body was trying to do, so models learn tasks instead of patterns.",
 	},
 	{
-		title: "Generalization from scarce real-world behavior.",
-		desc: "Physical data is expensive, messy, and uneven. Scaling it requires better multiplication, not just more collection.",
+		title: "Physical data is expensive.",
+		desc: "You cannot scrape physical behavior. Every demonstration takes a rig, a subject, a calibration, and a clean task. Stretching each one further is one of the real constraints.",
 	},
 	{
-		title: "Evaluation that predicts transfer.",
-		desc: "Benchmarks are useful only if they tell us what survives outside the benchmark.",
+		title: "Benchmarks that predict real-world performance.",
+		desc: "A benchmark score means nothing if a policy falls apart on an unscripted task. The evaluation we trust is the one that predicts deployment behavior.",
 	},
 	{
-		title: "Research systems that close the loop.",
-		desc: "Capture, structure, training, and evaluation are still too often treated as separate problems.",
+		title: "One loop, not three stages.",
+		desc: "Capture, training, and evaluation still get treated as separate departments. We are wiring them into one research system so progress stays visible end-to-end.",
 	},
 ];
 
@@ -104,9 +104,9 @@ const principles = [
 					</h1>
 					<span class="rule" aria-hidden="true"></span>
 					<p class="home-hero__copy">
-						Phi9 builds the systems that turn physical behavior into usable intelligence. We
-						capture data in the world, structure it for training, and use it to build research
-						infrastructure, products, and evaluation loops for physical AI.
+						Phi9 builds the capture-to-deployment stack for physical AI: motion capture
+						rigs, structured data pipelines, training loops, and evaluation systems that
+						turn real-world human behavior into autonomous action.
 					</p>
 					<div class="home-hero__actions">
 						<a href="/lab" class="btn btn-primary">Explore the Lab</a>
@@ -220,7 +220,7 @@ const principles = [
 							</div>
 							<div class="featured-system__rail-copy">
 								<span>capture</span>
-								<p>Full-body motion, synchronized egocentric video, structured task traces.</p>
+								<p>Full-body motion and first-person video, timed and labeled by task.</p>
 							</div>
 						</li>
 						<li class="featured-system__rail">
@@ -246,11 +246,12 @@ const principles = [
 
 				<div class="featured-system__content reveal">
 					<span class="section-kicker">Featured system</span>
-					<h2>Data capture built for physical AI.</h2>
+					<h2>Capture built for physical AI.</h2>
 					<p>
-						Phi9 MoCap Rig is one part of a larger data surface. It captures full-body motion,
-						synchronized egocentric video, and structured task traces that can be used for
-						research, post-training, and deployment workflows.
+						The Phi9 MoCap Rig records full-body motion and first-person video together,
+						timed and labeled by task. The output is reusable training data — not one-off
+						recordings — so the same demonstration can move through training,
+						fine-tuning, and deployment.
 					</p>
 					<a href="/data" class="featured-system__link">See the Data</a>
 				</div>
