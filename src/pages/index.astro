@@ -2,7 +2,6 @@
 import { getCollection } from "astro:content";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import ContactCTA from "@components/ContactCTA.astro";
-import NewsletterForm from "@components/NewsletterForm.astro";
 import BraillePulse from "@components/visuals/BraillePulse.astro";
 import DataStreamRail from "@components/visuals/DataStreamRail.astro";
 import DotGrid from "@components/visuals/DotGrid.astro";
@@ -467,19 +466,6 @@ const principles = [
 					})
 				}
 			</ol>
-		</div>
-	</section>
-
-	<section class="section newsletter-section">
-		<div class="container">
-			<div class="newsletter reveal">
-				<h2>Research Dispatch</h2>
-				<p class="newsletter__description">
-					Technical writing on physical AI, datasets, and deployment.
-					Published when there is something worth sharing.
-				</p>
-				<NewsletterForm />
-			</div>
 		</div>
 	</section>
 
@@ -1018,42 +1004,6 @@ const principles = [
 		.home-hero {
 			padding-top: 6.5rem;
 		}
-	}
-
-	/* Newsletter Section */
-	.newsletter-section {
-		padding: clamp(4rem, 8vw, 6rem) 0;
-	}
-
-	.newsletter {
-		max-width: 600px;
-		margin: 0 auto;
-		text-align: center;
-	}
-
-	.newsletter h2 {
-		margin: 0 0 0.75rem;
-		font-size: clamp(1.5rem, 3vw, 2rem);
-	}
-
-	.newsletter__description {
-		margin: 0 0 1.25rem;
-		color: var(--color-muted);
-		font-size: 1.05rem;
-		line-height: 1.6;
-	}
-
-	.newsletter__button {
-		display: inline-block;
-		margin-bottom: 0.75rem;
-	}
-
-	.newsletter__privacy {
-		margin: 0;
-		font-family: var(--font-mono);
-		font-size: 0.75rem;
-		color: var(--color-muted);
-		letter-spacing: 0.02em;
 	}
 
 </style>

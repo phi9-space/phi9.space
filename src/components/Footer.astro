@@ -1,9 +1,21 @@
 ---
+import NewsletterForm from "@components/NewsletterForm.astro";
 import { footerLinkGroups, siteBrandCopy } from "@lib/site";
 ---
 
 <footer class="site-footer">
   <div class="site-footer__inner container">
+    <div class="site-footer__dispatch">
+      <div class="site-footer__dispatch-copy">
+        <span class="site-footer__dispatch-label">Research Dispatch</span>
+        <p class="site-footer__dispatch-body">
+          Technical writing on physical AI, datasets, and deployment. Published when there
+          is something worth sharing.
+        </p>
+      </div>
+      <NewsletterForm class="site-footer__dispatch-form" />
+    </div>
+
     <div class="site-footer__columns">
       <div class="site-footer__brand">
         <p class="site-footer__brand-copy">{siteBrandCopy}</p>
@@ -42,6 +54,42 @@ import { footerLinkGroups, siteBrandCopy } from "@lib/site";
     flex-direction: column;
     gap: 2.5rem;
     padding-top: 0.25rem;
+  }
+
+  .site-footer__dispatch {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(1.25rem, 3vw, 2.5rem);
+    padding-bottom: 1.75rem;
+    border-bottom: 1px solid var(--color-border);
+    align-items: center;
+  }
+
+  .site-footer__dispatch-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .site-footer__dispatch-label {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+
+  .site-footer__dispatch-body {
+    margin: 0;
+    color: var(--color-muted);
+    font-size: 0.92rem;
+    line-height: 1.5;
+    max-width: 42ch;
+  }
+
+  .site-footer__dispatch-form {
+    margin: 0;
+    max-width: none;
   }
 
   .site-footer__columns {
@@ -104,6 +152,11 @@ import { footerLinkGroups, siteBrandCopy } from "@lib/site";
   }
 
   @media (max-width: 960px) {
+    .site-footer__dispatch {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
     .site-footer__columns {
       grid-template-columns: repeat(2, minmax(160px, 1fr));
       gap: 2rem;

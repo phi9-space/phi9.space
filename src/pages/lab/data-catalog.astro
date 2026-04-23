@@ -1,0 +1,192 @@
+---
+import { getEntry } from "astro:content";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import ContactCTA from "@components/ContactCTA.astro";
+import BraillePulse from "@components/visuals/BraillePulse.astro";
+import DataStreamRail from "@components/visuals/DataStreamRail.astro";
+
+const page = await getEntry("pages", "data-catalog");
+if (!page) {
+	throw new Error("Pages collection: entry 'data-catalog' not found. Run `astro sync` and restart dev server.");
+}
+const { Content } = await page.render();
+
+const environments = [
+	"Homes",
+	"Kitchens",
+	"Household tours",
+	"Gardening",
+	"Workshops",
+	"Labs",
+	"Assembly lines",
+	"Warehouses",
+	"Packaging",
+	"Delivery",
+	"Logistics",
+	"Retail",
+	"Restaurants",
+	"Hospitality",
+	"Bars",
+	"Automotive service",
+	"Car repair",
+	"Car cleaning",
+	"Mechanic shops",
+	"Industrial",
+	"Construction",
+	"Manufacturing",
+	"Horticulture",
+	"Farms",
+	"Outdoors",
+	"Healthcare",
+	"Plumbing",
+	"Electrical work",
+	"Parking lots",
+	"Transportation",
+];
+
+const environmentItems = environments.map((e) => e.toUpperCase());
+---
+
+<BaseLayout
+	fullWidth={true}
+	title={`${page.data.title} — phi9.space`}
+	description={page.data.description}
+	pageType="article"
+>
+	<link slot="head" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css" />
+
+	<section class="catalog-hero">
+		<div class="container">
+			<p class="catalog-hero__eyebrow">
+				<BraillePulse class="catalog-hero__eyebrow-pulse" />
+				Lab / Data Catalog
+			</p>
+			<h1 class="catalog-hero__title">{page.data.heroSubtitle ?? page.data.title}</h1>
+			<span class="rule catalog-hero__rule" aria-hidden="true"></span>
+			<p class="catalog-hero__dek">{page.data.description}</p>
+		</div>
+	</section>
+
+	<section class="section catalog-environments">
+		<div class="container">
+			<div class="section-heading reveal">
+				<span class="section-kicker">Environments</span>
+				<h2>Domain-diverse, not narrow.</h2>
+				<p>
+					Real physical AI requires data from real places — homes, kitchens, workshops,
+					warehouses, the field. The catalog spans the environments where human behavior
+					actually varies.
+				</p>
+			</div>
+		</div>
+		<DataStreamRail items={environmentItems} speed="180s" variant="muted" />
+	</section>
+
+	<section class="section catalog-body-section">
+		<div class="container">
+			<div class="section-heading reveal">
+				<span class="section-kicker">Operating model</span>
+				<h2>How the catalog works.</h2>
+			</div>
+			<div class="catalog-body">
+				<Content />
+			</div>
+		</div>
+	</section>
+
+	<ContactCTA
+		eyebrow="Contact"
+		headline="Working with a physical AI data catalog?"
+		body="If you need structured, synced, domain-diverse data for your pipeline, write to us."
+		secondaryHref="/data"
+		secondaryLabel="See the data surface"
+	/>
+</BaseLayout>
+
+<style>
+	.catalog-hero {
+		padding: clamp(7rem, 13vw, 11rem) 0 clamp(2rem, 4vw, 3rem);
+	}
+
+	.catalog-hero__eyebrow {
+		margin: 0 0 1.25rem;
+		font-family: var(--font-mono);
+		font-size: 0.78rem;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		color: var(--color-accent);
+		display: inline-flex;
+		align-items: center;
+		gap: 0.45rem;
+	}
+
+	.catalog-hero__eyebrow-pulse {
+		font-size: 0.95rem;
+		line-height: 1;
+	}
+
+	.catalog-hero__title {
+		font-size: var(--type-display-lg);
+		line-height: 0.98;
+		letter-spacing: -0.04em;
+		max-width: 22ch;
+		margin: 0 0 1.25rem;
+		font-weight: 600;
+	}
+
+	.catalog-hero__rule {
+		width: 12ch;
+		margin: 0 0 1.5rem;
+	}
+
+	.catalog-hero__dek {
+		max-width: 62ch;
+		color: var(--color-muted);
+		margin: 0;
+		line-height: 1.55;
+		font-size: clamp(1rem, 1.3vw, 1.15rem);
+	}
+
+	.catalog-body-section {
+		padding: clamp(3rem, 6vw, 5rem) 0;
+	}
+
+	.catalog-body {
+		max-width: 720px;
+		margin: 0 auto;
+	}
+
+	.catalog-body :global(h2) {
+		font-size: clamp(1.5rem, 2.8vw, 2rem);
+		margin-top: 2.5rem;
+		margin-bottom: 0.75rem;
+		padding-top: 1.25rem;
+		position: relative;
+	}
+
+	.catalog-body :global(h2)::before {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: var(--rule-length-sm);
+		height: var(--rule-weight);
+		background: var(--color-rule);
+	}
+
+	.catalog-body :global(h2:first-child) {
+		margin-top: 0;
+		padding-top: 0;
+	}
+
+	.catalog-body :global(p) {
+		margin-bottom: 1.1rem;
+		line-height: 1.7;
+		font-size: 1.05rem;
+	}
+
+	.catalog-body :global(strong) {
+		color: var(--color-text);
+		font-weight: 600;
+	}
+</style>

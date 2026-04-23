@@ -14,7 +14,6 @@ const page = await getEntry("pages", "data");
 if (!page) {
 	throw new Error("Pages collection: entry 'data' not found. Run `astro sync` and restart dev server.");
 }
-const { Content } = await page.render();
 
 const capabilities = [
 	{
@@ -79,41 +78,6 @@ const pipelines = [
 	"World-model data",
 ];
 
-const environments = [
-	"Homes",
-	"Kitchens",
-	"Household tours",
-	"Gardening",
-	"Workshops",
-	"Labs",
-	"Assembly lines",
-	"Warehouses",
-	"Packaging",
-	"Delivery",
-	"Logistics",
-	"Retail",
-	"Restaurants",
-	"Hospitality",
-	"Bars",
-	"Automotive service",
-	"Car repair",
-	"Car cleaning",
-	"Mechanic shops",
-	"Industrial",
-	"Construction",
-	"Manufacturing",
-	"Horticulture",
-	"Farms",
-	"Outdoors",
-	"Healthcare",
-	"Plumbing",
-	"Electrical work",
-	"Parking lots",
-	"Transportation",
-];
-
-// Environments run through the same moving rail visual language.
-const environmentItems = environments.map((e) => e.toUpperCase());
 ---
 
 <BaseLayout
@@ -164,28 +128,6 @@ const environmentItems = environments.map((e) => e.toUpperCase());
 		</div>
 	</section>
 
-	<section class="section custom-capture-section">
-		<div class="container">
-			<div class="custom-capture reveal">
-				<span class="section-kicker">Custom capture</span>
-				<h2 class="custom-capture__headline">Data your research actually needs.</h2>
-				<span class="rule" aria-hidden="true"></span>
-				<p class="custom-capture__body">
-					Your research should not stall while you build a data pipeline. Phi9 captures
-					custom, private, proprietary datasets — scoped to your task, your environment,
-					and your evaluation criteria. We run the rig, synchronize the modalities, label
-					the demonstrations, and hand back pipeline-ready data.
-				</p>
-				<div class="custom-capture__actions">
-					<a href="mailto:research@phi9.space?subject=Custom capture inquiry" class="custom-capture__primary">
-						Commission a capture <span aria-hidden="true">→</span>
-					</a>
-					<a href="/lab/mocap-rig" class="custom-capture__secondary">See the rig</a>
-				</div>
-			</div>
-		</div>
-	</section>
-
 	<section class="section capabilities-section">
 		<div class="container">
 			<div class="section-heading reveal">
@@ -221,7 +163,7 @@ const environmentItems = environments.map((e) => e.toUpperCase());
 		<div class="container">
 			<div class="section-heading reveal">
 				<span class="section-kicker">Outputs</span>
-				<h2>Three downstream pipelines, one capture.</h2>
+				<h2>Three training pipelines, one capture.</h2>
 				<p>
 					The same demonstration feeds pretraining data for foundation work, policy training
 					data for robot skills, and world-model data for simulation and planning.
@@ -238,29 +180,60 @@ const environmentItems = environments.map((e) => e.toUpperCase());
 		</div>
 	</section>
 
-	<section class="section environments-section">
+	<section class="section custom-capture-section">
 		<div class="container">
-			<div class="section-heading reveal">
-				<span class="section-kicker">Environments</span>
-				<h2>Domain-diverse, not narrow.</h2>
-				<p>
-					Real physical AI requires data from real places — not lab benches. We capture
-					across a widening set of environments where human behavior varies, from homes
-					and kitchens to workshops, warehouses, and the field.
+			<div class="custom-capture reveal">
+				<span class="section-kicker">Custom capture</span>
+				<h2 class="custom-capture__headline">Request data your research actually needs.</h2>
+				<span class="rule" aria-hidden="true"></span>
+				<p class="custom-capture__body">
+					Your research should not stall while you build a data pipeline. Phi9 captures
+					custom, private, proprietary datasets — scoped to your task, your environment,
+					and your evaluation criteria. We run the rig, synchronize the modalities, label
+					the demonstrations, and hand back pipeline-ready data.
 				</p>
-			</div>
-		</div>
-		<DataStreamRail items={environmentItems} speed="180s" variant="muted" class="environments-rail" />
-	</section>
 
-	<section class="section data-body-section">
-		<div class="container">
-			<div class="section-heading reveal">
-				<span class="section-kicker">Detail</span>
-				<h2>How the data layer operates.</h2>
-			</div>
-			<div class="data-body">
-				<Content />
+				<form
+					class="request-form"
+					name="data-request"
+					method="POST"
+					data-netlify="true"
+					netlify-honeypot="bot-field"
+					action="/?data-request=thanks"
+				>
+					<input type="hidden" name="form-name" value="data-request" />
+					<p class="request-form__honeypot" hidden>
+						<label>Do not fill this: <input name="bot-field" /></label>
+					</p>
+
+					<div class="request-form__row">
+						<label class="request-form__field">
+							<span>Email</span>
+							<input type="email" name="email" required autocomplete="email" placeholder="you@lab.edu" />
+						</label>
+						<label class="request-form__field">
+							<span>Affiliation</span>
+							<input type="text" name="affiliation" placeholder="Lab, team, or company" />
+						</label>
+					</div>
+
+					<label class="request-form__field">
+						<span>Task or data you need</span>
+						<textarea
+							name="task"
+							required
+							rows="4"
+							placeholder="What are you trying to train, evaluate, or simulate? Which environments, modalities, or demonstration types?"
+						></textarea>
+					</label>
+
+					<div class="request-form__actions">
+						<button type="submit" class="request-form__submit">Request data →</button>
+						<a href="mailto:research@phi9.space?subject=Custom capture inquiry" class="request-form__mail">
+							Or email research@phi9.space
+						</a>
+					</div>
+				</form>
 			</div>
 		</div>
 	</section>
@@ -542,51 +515,105 @@ const environmentItems = environments.map((e) => e.toUpperCase());
 		letter-spacing: -0.02em;
 	}
 
-	.environments-rail {
-		margin-top: clamp(1.5rem, 3vw, 2.5rem);
+	.request-form {
+		margin-top: 0.5rem;
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+		max-width: 640px;
 	}
 
-	.data-body-section {
-		padding: clamp(3rem, 6vw, 5rem) 0;
+	.request-form__honeypot {
+		display: none;
 	}
 
-	.data-body {
-		max-width: 720px;
-		margin: 0 auto;
+	.request-form__row {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 1rem;
 	}
 
-	.data-body :global(h2) {
-		font-size: clamp(1.5rem, 2.8vw, 2rem);
-		margin-top: 2.5rem;
-		margin-bottom: 0.75rem;
-		padding-top: 1.25rem;
-		position: relative;
+	.request-form__field {
+		display: flex;
+		flex-direction: column;
+		gap: 0.4rem;
 	}
 
-	.data-body :global(h2)::before {
-		content: "";
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: var(--rule-length-sm);
-		height: var(--rule-weight);
-		background: var(--color-rule);
+	.request-form__field span {
+		font-family: var(--font-mono);
+		font-size: 0.72rem;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: var(--color-muted);
 	}
 
-	.data-body :global(h2:first-child) {
-		margin-top: 0;
-		padding-top: 0;
-	}
-
-	.data-body :global(p) {
-		margin-bottom: 1.1rem;
-		line-height: 1.7;
-		font-size: 1.05rem;
-	}
-
-	.data-body :global(strong) {
+	.request-form__field input,
+	.request-form__field textarea {
+		border: none;
+		border-bottom: 1.5px solid var(--color-text);
+		background: transparent;
+		padding: 0.55rem 0;
+		font-family: var(--font-body);
+		font-size: 1.02rem;
 		color: var(--color-text);
-		font-weight: 600;
+		outline: none;
+	}
+
+	.request-form__field textarea {
+		min-height: 6.5rem;
+		resize: vertical;
+	}
+
+	.request-form__field input::placeholder,
+	.request-form__field textarea::placeholder {
+		color: color-mix(in srgb, var(--color-muted) 65%, transparent);
+	}
+
+	.request-form__actions {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.75rem 1.25rem;
+		margin-top: 0.4rem;
+	}
+
+	.request-form__submit {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.45rem;
+		padding: 0.55rem 1.1rem;
+		border: none;
+		background: var(--color-text);
+		color: var(--color-bg);
+		font-family: var(--font-mono);
+		font-size: 0.82rem;
+		letter-spacing: 0.05em;
+		cursor: pointer;
+		transition: background 0.2s ease, color 0.2s ease;
+	}
+
+	.request-form__submit:hover {
+		background: var(--color-accent);
+		color: var(--color-text-inverse);
+	}
+
+	.request-form__mail {
+		font-family: var(--font-mono);
+		font-size: 0.78rem;
+		letter-spacing: 0.04em;
+		color: var(--color-muted);
+		text-decoration: none;
+	}
+
+	.request-form__mail:hover {
+		color: var(--color-accent);
+		text-decoration: none;
+	}
+
+	@media (max-width: 560px) {
+		.request-form__row {
+			grid-template-columns: 1fr;
+		}
 	}
 
 	@media (max-width: 1100px) {
