@@ -1,5 +1,6 @@
 ---
 import CopyLinkButton from "./CopyLinkButton.astro";
+import BraillePulse from "./visuals/BraillePulse.astro";
 
 interface Props {
 	title: string;
@@ -33,7 +34,12 @@ const metaItems = [
 
 <article class="article">
 	<header class="article__header container">
-		{leadTag && <p class="article__eyebrow">{leadTag}</p>}
+		{leadTag && (
+			<p class="article__eyebrow">
+				<BraillePulse class="article__eyebrow-pulse" />
+				{leadTag}
+			</p>
+		)}
 		<h1 class="article__title">{title}</h1>
 		<span class="rule article__rule" aria-hidden="true"></span>
 		{dek && <p class="article__dek">{dek}</p>}
@@ -91,6 +97,14 @@ const metaItems = [
 		letter-spacing: 0.12em;
 		text-transform: uppercase;
 		color: var(--color-accent);
+		display: inline-flex;
+		align-items: center;
+		gap: 0.45rem;
+	}
+
+	.article__eyebrow-pulse {
+		font-size: 0.95rem;
+		line-height: 1;
 	}
 
 	.article__title {

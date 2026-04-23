@@ -9,4 +9,13 @@ if (!page) {
 const { Content } = await page.render();
 ---
 
-<DocumentLayout entry={page} Content={Content} eyebrow="Lab / Product" />
+<DocumentLayout
+	entry={page}
+	Content={Content}
+	eyebrow="Lab / Product"
+	showContactCTA
+	contactHeadline="Building capture systems for physical AI?"
+	contactBody="If you are working on motion capture, multi-modal data collection, or training pipelines for physical AI, write to us."
+	contactSecondaryHref="/data"
+	contactSecondaryLabel="See the data"
+/>

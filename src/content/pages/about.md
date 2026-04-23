@@ -1,7 +1,7 @@
 ---
 title: About
 description: phi9.space is a physical AI research lab owning the full stack from data capture to autonomous deployment.
-heroSubtitle: A small research team building the physical AI stack end-to-end.
+heroSubtitle: A research lab building physical AI end-to-end.
 published: 2026-04-18
 updated: 2026-04-18
 author: Phi9

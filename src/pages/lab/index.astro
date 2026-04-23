@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
 import ContactCTA from "@components/ContactCTA.astro";
+import BraillePulse from "@components/visuals/BraillePulse.astro";
 import DotGrid from "@components/visuals/DotGrid.astro";
 import HalfCircle from "@components/visuals/HalfCircle.astro";
 import InkRect from "@components/visuals/InkRect.astro";
@@ -16,7 +17,7 @@ import VerticalBar from "@components/visuals/VerticalBar.astro";
   <!-- Hero -->
   <section class="lab-hero">
     <div class="lab-hero__content container">
-      <span class="eyebrow">Lab</span>
+      <span class="eyebrow"><BraillePulse class="eyebrow-pulse" /> Lab</span>
       <h1 class="lab-hero__title">The lab is where data becomes systems.</h1>
       <span class="rule" aria-hidden="true"></span>
       <p class="lab-hero__sub">
@@ -104,44 +105,6 @@ import VerticalBar from "@components/visuals/VerticalBar.astro";
     </div>
   </section>
 
-  <!-- How we work -->
-  <section class="section how-section">
-    <div class="container">
-      <h2 class="section-heading reveal">Infrastructure stack</h2>
-      <p class="section-copy reveal">
-        Our stack spans capture, processing, annotation, post-training, and evaluation. Each layer
-        exists to make the others more useful.
-      </p>
-      <div class="how-grid reveal">
-        <div class="how-step">
-          <span class="how-step__num">01</span>
-          <h3>Capture</h3>
-          <p>Multi-modal rigs that record motion, video, and task context together — not narrow lab demos.</p>
-        </div>
-        <div class="how-step">
-          <span class="how-step__num">02</span>
-          <h3>Processing</h3>
-          <p>Segmentation, formatting, and synchronization that keep each demonstration usable after capture.</p>
-        </div>
-        <div class="how-step">
-          <span class="how-step__num">03</span>
-          <h3>Annotation &amp; retargeting</h3>
-          <p>Metadata, skeletal retargeting, and augmentation that stretch scarce real-world behavior further.</p>
-        </div>
-        <div class="how-step">
-          <span class="how-step__num">04</span>
-          <h3>Training</h3>
-          <p>Policy and post-training workflows that stay close to the structure of the captured data.</p>
-        </div>
-        <div class="how-step">
-          <span class="how-step__num">05</span>
-          <h3>Evaluation &amp; transfer</h3>
-          <p>Benchmarks, failure analysis, and deployment feedback that make real-world performance visible.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <ContactCTA
     eyebrow="Contact"
     headline="Working in physical AI?"
@@ -173,6 +136,14 @@ import VerticalBar from "@components/visuals/VerticalBar.astro";
     color: var(--color-accent);
     font-weight: 500;
     margin: 0 0 1.25rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .eyebrow-pulse {
+    font-size: 0.95rem;
+    line-height: 1;
   }
 
   .lab-hero__title {
@@ -313,41 +284,4 @@ import VerticalBar from "@components/visuals/VerticalBar.astro";
   .product-card--coming {
     opacity: 0.82;
   }
-
-  /* How we work */
-  .how-section {
-    background: var(--color-surface);
-  }
-
-  .how-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 2rem;
-  }
-
-  .how-step {
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-  }
-
-  .how-step__num {
-    font-family: var(--font-mono);
-    font-size: 0.8125rem;
-    color: var(--color-accent);
-    font-weight: 500;
-  }
-
-  .how-step h3 {
-    margin: 0;
-    font-size: 1.0625rem;
-  }
-
-  .how-step p {
-    margin: 0;
-    color: var(--color-muted);
-    font-size: 0.9375rem;
-    line-height: 1.5;
-  }
-
 </style>

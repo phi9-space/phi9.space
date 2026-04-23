@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import NewsletterForm from "@components/NewsletterForm.astro";
+import BraillePulse from "@components/visuals/BraillePulse.astro";
 
 const posts = (await getCollection("blog"))
 	.filter((post) => !post.data.draft)
@@ -16,7 +17,7 @@ const posts = (await getCollection("blog"))
   <!-- Hero -->
   <section class="research-hero">
     <div class="research-hero__content container">
-      <span class="eyebrow">Research</span>
+      <span class="eyebrow"><BraillePulse class="eyebrow-pulse" /> Research</span>
       <h1 class="research-hero__title">Research notes, experiments, and technical evidence from the lab.</h1>
       <span class="rule" aria-hidden="true"></span>
       <p class="research-hero__sub">
@@ -102,6 +103,14 @@ const posts = (await getCollection("blog"))
     color: var(--color-accent);
     font-weight: 500;
     margin: 0 0 1.25rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .eyebrow-pulse {
+    font-size: 0.95rem;
+    line-height: 1;
   }
 
   .research-hero__title {

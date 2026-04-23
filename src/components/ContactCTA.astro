@@ -1,4 +1,5 @@
 ---
+import BraillePulse from "./visuals/BraillePulse.astro";
 import { contactEmail } from "@lib/site";
 
 interface Props {
@@ -25,7 +26,10 @@ const mailto = `mailto:${contactEmail}`;
 <section class:list={["contact-cta", className]}>
 	<div class="container">
 		<div class="contact-cta__inner reveal">
-			<p class="contact-cta__eyebrow">{eyebrow}</p>
+			<p class="contact-cta__eyebrow">
+				<BraillePulse class="contact-cta__eyebrow-pulse" />
+				{eyebrow}
+			</p>
 			<h2 class="contact-cta__headline">{headline}</h2>
 			<span class="rule contact-cta__rule" aria-hidden="true"></span>
 			<p class="contact-cta__body">{body}</p>
@@ -114,6 +118,14 @@ const mailto = `mailto:${contactEmail}`;
 		letter-spacing: 0.14em;
 		text-transform: uppercase;
 		color: var(--color-accent);
+		display: inline-flex;
+		align-items: center;
+		gap: 0.45rem;
+	}
+
+	.contact-cta__eyebrow-pulse {
+		font-size: 0.95rem;
+		line-height: 1;
 	}
 
 	.contact-cta__headline {
