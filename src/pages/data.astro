@@ -6,4 +6,13 @@ const page = await getEntry("pages", "data");
 const { Content } = await page.render();
 ---
 
-<DocumentLayout entry={page} Content={Content} eyebrow="Data" />
+<DocumentLayout
+	entry={page}
+	Content={Content}
+	eyebrow="Data"
+	showContactCTA
+	contactHeadline="Building data systems for physical AI?"
+	contactBody="If you are working on collection, structured datasets, or research infrastructure for embodied systems, write to us."
+	contactSecondaryHref="/lab"
+	contactSecondaryLabel="See the lab"
+/>

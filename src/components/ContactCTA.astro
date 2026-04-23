@@ -1,0 +1,248 @@
+---
+import { contactEmail } from "@lib/site";
+
+interface Props {
+	eyebrow?: string;
+	headline?: string;
+	body?: string;
+	secondaryHref?: string;
+	secondaryLabel?: string;
+	class?: string;
+}
+
+const {
+	eyebrow = "Contact",
+	headline = "Building in physical AI?",
+	body = "If you are working on data, research systems, or deployment infrastructure for physical intelligence, write to us.",
+	secondaryHref = "/manifesto",
+	secondaryLabel = "Read the manifesto",
+	class: className = "",
+} = Astro.props;
+
+const mailto = `mailto:${contactEmail}`;
+---
+
+<section class:list={["contact-cta", className]}>
+	<div class="container">
+		<div class="contact-cta__inner reveal">
+			<p class="contact-cta__eyebrow">{eyebrow}</p>
+			<h2 class="contact-cta__headline">{headline}</h2>
+			<span class="rule contact-cta__rule" aria-hidden="true"></span>
+			<p class="contact-cta__body">{body}</p>
+
+			<div class="contact-cta__email">
+				<span class="contact-cta__email-label">Write to</span>
+				<div class="contact-cta__email-row">
+					<a href={mailto} class="contact-cta__email-link">{contactEmail}</a>
+					<button
+						type="button"
+						class="contact-cta__copy"
+						data-contact-copy
+						data-value={contactEmail}
+						aria-label="Copy email address"
+					>
+						<svg viewBox="0 0 24 24" aria-hidden="true">
+							<rect x="9" y="9" width="10" height="12" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.6" />
+							<path d="M6 15V5.5A1.5 1.5 0 0 1 7.5 4H15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+						</svg>
+						<span class="contact-cta__copy-text">Copy</span>
+					</button>
+				</div>
+			</div>
+
+			{secondaryHref && secondaryLabel && (
+				<a href={secondaryHref} class="contact-cta__secondary">
+					{secondaryLabel} <span aria-hidden="true">→</span>
+				</a>
+			)}
+		</div>
+	</div>
+</section>
+
+<script is:inline>
+	for (const btn of document.querySelectorAll("[data-contact-copy]")) {
+		btn.addEventListener("click", async () => {
+			const value = btn.getAttribute("data-value");
+			if (!value) return;
+			try {
+				await navigator.clipboard.writeText(value);
+			} catch (err) {
+				const textarea = document.createElement("textarea");
+				textarea.value = value;
+				textarea.style.position = "fixed";
+				textarea.style.opacity = "0";
+				document.body.appendChild(textarea);
+				textarea.select();
+				try {
+					document.execCommand("copy");
+				} catch {
+					// ignore
+				}
+				document.body.removeChild(textarea);
+			}
+			const text = btn.querySelector(".contact-cta__copy-text");
+			if (text) {
+				const original = text.textContent;
+				text.textContent = "Copied";
+				btn.setAttribute("data-copied", "true");
+				setTimeout(() => {
+					text.textContent = original;
+					btn.removeAttribute("data-copied");
+				}, 1800);
+			}
+		});
+	}
+</script>
+
+<style>
+	.contact-cta {
+		padding: clamp(4rem, 8vw, 6rem) 0 clamp(4rem, 8vw, 6rem);
+	}
+
+	.contact-cta__inner {
+		max-width: 640px;
+		margin: 0 auto;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+	}
+
+	.contact-cta__eyebrow {
+		margin: 0 0 1.25rem;
+		font-family: var(--font-mono);
+		font-size: 0.78rem;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: var(--color-accent);
+	}
+
+	.contact-cta__headline {
+		font-family: var(--font-heading);
+		font-size: var(--type-display-md);
+		line-height: 1.02;
+		letter-spacing: -0.035em;
+		font-weight: 600;
+		margin: 0 0 1.25rem;
+		max-width: 16ch;
+	}
+
+	.contact-cta__rule {
+		width: 10ch;
+		margin: 0 0 1.5rem;
+	}
+
+	.contact-cta__body {
+		margin: 0 0 2rem;
+		color: var(--color-muted);
+		line-height: 1.6;
+		max-width: 55ch;
+	}
+
+	.contact-cta__email {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+		width: 100%;
+		margin-bottom: 1.25rem;
+	}
+
+	.contact-cta__email-label {
+		font-family: var(--font-mono);
+		font-size: 0.72rem;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: var(--color-muted);
+	}
+
+	.contact-cta__email-row {
+		display: flex;
+		align-items: stretch;
+		gap: 0.75rem;
+		border-bottom: 1.5px solid var(--color-text);
+		padding-bottom: 0.4rem;
+	}
+
+	.contact-cta__email-link {
+		flex: 1;
+		min-width: 0;
+		padding: 0.55rem 0;
+		color: var(--color-text);
+		font-family: var(--font-body);
+		font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+		text-decoration: none;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.contact-cta__email-link:hover {
+		color: var(--color-accent);
+		text-decoration: none;
+	}
+
+	.contact-cta__copy {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4rem;
+		padding: 0.4rem 0.75rem;
+		border: none;
+		background: var(--color-text);
+		color: var(--color-bg);
+		font-family: var(--font-mono);
+		font-size: 0.78rem;
+		letter-spacing: 0.05em;
+		cursor: pointer;
+		transition:
+			background 0.2s ease,
+			color 0.2s ease;
+	}
+
+	.contact-cta__copy:hover {
+		background: var(--color-accent);
+		color: var(--color-text-inverse);
+	}
+
+	.contact-cta__copy[data-copied="true"] {
+		background: var(--color-accent);
+		color: var(--color-text-inverse);
+	}
+
+	.contact-cta__copy svg {
+		width: 0.9rem;
+		height: 0.9rem;
+	}
+
+	.contact-cta__secondary {
+		font-family: var(--font-mono);
+		font-size: 0.82rem;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		color: var(--color-accent);
+		text-decoration: none;
+		transition: color 0.15s ease;
+	}
+
+	.contact-cta__secondary:hover {
+		color: var(--color-accent-hover);
+		text-decoration: none;
+	}
+
+	@media (max-width: 520px) {
+		.contact-cta__email-row {
+			flex-direction: column;
+			align-items: stretch;
+			border-bottom: none;
+			gap: 0.6rem;
+			padding-bottom: 0;
+		}
+
+		.contact-cta__email-link {
+			border-bottom: 1.5px solid var(--color-text);
+			padding: 0.55rem 0;
+		}
+
+		.contact-cta__copy {
+			justify-content: center;
+		}
+	}
+</style>

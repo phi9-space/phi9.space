@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content";
+import ContactCTA from "@components/ContactCTA.astro";
 import LongformArticleShell from "@components/LongformArticleShell.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import { formatLongDate, getReadingTime } from "@lib/site";
@@ -8,9 +9,23 @@ interface Props {
 	entry: CollectionEntry<"pages">;
 	Content: any;
 	eyebrow?: string;
+	showContactCTA?: boolean;
+	contactHeadline?: string;
+	contactBody?: string;
+	contactSecondaryHref?: string;
+	contactSecondaryLabel?: string;
 }
 
-const { entry, Content, eyebrow = "Document" } = Astro.props as Props;
+const {
+	entry,
+	Content,
+	eyebrow = "Document",
+	showContactCTA = false,
+	contactHeadline,
+	contactBody,
+	contactSecondaryHref,
+	contactSecondaryLabel,
+} = Astro.props as Props;
 const publishedDate = entry.data.published ?? entry.data.updated ?? null;
 const publishedLabel = publishedDate ? formatLongDate(publishedDate) : null;
 const updatedLabel = entry.data.updated && publishedDate && entry.data.updated.valueOf() !== publishedDate.valueOf()
@@ -40,4 +55,13 @@ const authorLabel = entry.data.author ?? "Phi9";
   >
     <Content />
   </LongformArticleShell>
+
+  {showContactCTA && (
+    <ContactCTA
+      headline={contactHeadline}
+      body={contactBody}
+      secondaryHref={contactSecondaryHref}
+      secondaryLabel={contactSecondaryLabel}
+    />
+  )}
 </BaseLayout>

@@ -1,11 +1,11 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
+import ContactCTA from "@components/ContactCTA.astro";
 import DotGrid from "@components/visuals/DotGrid.astro";
 import HalfCircle from "@components/visuals/HalfCircle.astro";
 import InkRect from "@components/visuals/InkRect.astro";
 import SignalCircle from "@components/visuals/SignalCircle.astro";
 import VerticalBar from "@components/visuals/VerticalBar.astro";
-import { contactMailto } from "@lib/site";
 ---
 
 <BaseLayout
@@ -142,22 +142,13 @@ import { contactMailto } from "@lib/site";
     </div>
   </section>
 
-  <!-- CTA -->
-  <section class="section">
-    <div class="container">
-      <div class="lab-cta reveal">
-        <h2>See the research. Follow the data.</h2>
-        <p>
-          The lab is one surface in a larger loop. Go deeper into the capture and data layer
-          underneath it, or get in touch if you are building in physical AI.
-        </p>
-        <div class="lab-cta__actions">
-          <a href={contactMailto} class="btn btn-primary">Get in touch</a>
-          <a href="/data" class="btn btn-secondary">See the Data</a>
-        </div>
-      </div>
-    </div>
-  </section>
+  <ContactCTA
+    eyebrow="Contact"
+    headline="Working in physical AI?"
+    body="The lab is one surface in a larger loop. Get in touch if you are working on data, research systems, or deployment infrastructure for physical intelligence."
+    secondaryHref="/data"
+    secondaryLabel="See the data"
+  />
 </BaseLayout>
 
 <style>
@@ -359,29 +350,4 @@ import { contactMailto } from "@lib/site";
     line-height: 1.5;
   }
 
-  /* CTA */
-  .lab-cta {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    padding: clamp(2rem, 5vw, 3rem) 0;
-  }
-
-  .lab-cta h2 { margin: 0; }
-
-  .lab-cta p {
-    color: var(--color-muted);
-    max-width: 45ch;
-    margin: 0;
-    line-height: 1.6;
-  }
-
-  .lab-cta__actions {
-    display: flex;
-    gap: 0.75rem;
-    flex-wrap: wrap;
-    margin-top: 0.5rem;
-  }
 </style>

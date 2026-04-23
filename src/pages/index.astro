@@ -1,13 +1,14 @@
 ---
 import { getCollection } from "astro:content";
 import BaseLayout from "@layouts/BaseLayout.astro";
+import ContactCTA from "@components/ContactCTA.astro";
 import NewsletterForm from "@components/NewsletterForm.astro";
 import DotGrid from "@components/visuals/DotGrid.astro";
 import HalfCircle from "@components/visuals/HalfCircle.astro";
 import InkRect from "@components/visuals/InkRect.astro";
 import SignalCircle from "@components/visuals/SignalCircle.astro";
 import VerticalBar from "@components/visuals/VerticalBar.astro";
-import { contactMailto, formatLongDate, getReadingTime } from "@lib/site";
+import { formatLongDate, getReadingTime } from "@lib/site";
 
 const allPosts = await getCollection("blog", ({ data }) => !data.draft);
 const latestPosts = allPosts
@@ -464,28 +465,13 @@ const principles = [
 		</div>
 	</section>
 
-	<section class="section contact-section">
-		<div class="container">
-			<div class="contact-cta reveal">
-				<span class="section-kicker">Get in touch</span>
-				<div class="contact-cta__content">
-					<h2>Building in physical AI?</h2>
-					<p>
-						If you are working on data, research systems, or deployment infrastructure for
-						physical intelligence, get in touch.
-					</p>
-				</div>
-				<div class="contact-cta__actions">
-					<a href={contactMailto} class="btn btn-primary contact-cta__button">
-						Get in touch
-					</a>
-					<a href="/manifesto" class="btn btn-secondary contact-cta__button">
-						Read manifesto
-					</a>
-				</div>
-			</div>
-		</div>
-	</section>
+	<ContactCTA
+		eyebrow="Contact"
+		headline="Building in physical AI?"
+		body="If you are working on data, research systems, or deployment infrastructure for physical intelligence, write to us."
+		secondaryHref="/manifesto"
+		secondaryLabel="Read the manifesto"
+	/>
 </BaseLayout>
 
 <style>
@@ -1003,57 +989,4 @@ const principles = [
 		letter-spacing: 0.02em;
 	}
 
-	/* Contact CTA Section */
-	.contact-section {
-		padding: clamp(3.5rem, 7vw, 5.5rem) 0 clamp(5rem, 10vw, 7rem);
-	}
-
-	.contact-cta {
-		display: grid;
-		grid-template-columns: minmax(0, 1fr) auto;
-		align-items: end;
-		gap: clamp(1.4rem, 4vw, 3rem);
-		padding-top: clamp(1.25rem, 3vw, 2rem);
-		border-top: 1px solid var(--color-border);
-	}
-
-	.contact-cta__content h2 {
-		max-width: 12ch;
-		margin: 0 0 0.75rem;
-		font-size: clamp(2rem, 6vw, 4.35rem);
-		line-height: 0.98;
-	}
-
-	.contact-cta__content p {
-		margin: 0;
-		color: var(--color-muted);
-		max-width: 52ch;
-		font-size: clamp(1rem, 1.6vw, 1.18rem);
-	}
-
-	.contact-cta__actions {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: flex-end;
-		gap: 0.7rem;
-	}
-
-	.contact-cta__button {
-		white-space: nowrap;
-	}
-
-	@media (max-width: 760px) {
-		.contact-cta {
-			grid-template-columns: 1fr;
-			align-items: start;
-		}
-
-		.contact-cta__content h2 {
-			max-width: 10ch;
-		}
-
-		.contact-cta__actions {
-			justify-content: flex-start;
-		}
-	}
 </style>

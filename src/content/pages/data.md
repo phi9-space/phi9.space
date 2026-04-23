@@ -54,9 +54,3 @@ Timing drift, missing context, and weak metadata do not just reduce polish. They
 Captured data should flow directly into training and evaluation.
 
 Phi9 is interested in outputs that are format-native, simulation-ready, and useful across research workflows rather than trapped inside one collection surface.
-
-## Get in touch
-
-If you are working on collection, structured datasets, or research infrastructure for embodied systems, we want to hear from you.
-
-Write to [research@phi9.space](mailto:research@phi9.space).

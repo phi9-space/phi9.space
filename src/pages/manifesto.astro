@@ -6,4 +6,13 @@ const page = await getEntry("pages", "manifesto");
 const { Content } = await page.render();
 ---
 
-<DocumentLayout entry={page} Content={Content} eyebrow="Manifesto" />
+<DocumentLayout
+	entry={page}
+	Content={Content}
+	eyebrow="Manifesto"
+	showContactCTA
+	contactHeadline="Working toward physical intelligence?"
+	contactBody="If this aligns with what you are building — in data, research, or deployment — write to us."
+	contactSecondaryHref="/research"
+	contactSecondaryLabel="Read the research"
+/>
